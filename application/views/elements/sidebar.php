@@ -29,7 +29,7 @@
                 </a>
               </li>
 
-              <li @click="loadSiswa">
+              <li @click="siswa.getSiswa(siswa.limit, siswa.offset)">
                 <a href="javascript:void(0)" >
                   <span class="nav-icon">
                     <i class="material-icons">people

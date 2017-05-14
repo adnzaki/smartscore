@@ -10,7 +10,7 @@
  * @link        http://wolestech.com
  * @version     1.0.0
  */
- 
+
 class SiswaController extends CI_Controller
 {
     public function __construct()
@@ -19,15 +19,21 @@ class SiswaController extends CI_Controller
         $this->load->model('SiswaModel');
     }
 
-    public function fetchSiswa()
+    public function fetchSiswa($limit, $start)
     {
-        $data = $this->SiswaModel->getSiswa();
+        $data = $this->SiswaModel->getSiswa($limit, $start);
         $formatted = [];
         foreach($data as $data)
         {
             $data->tgl_lahir_siswa = $this->ostiumdate->format('d-Mm-y', reverse($data->tgl_lahir_siswa, '-'));
             array_push($formatted, $data);
         }
-        echo json_encode($formatted);
+
+        $res = [
+            'dataSiswa' => $formatted,
+            'totalRows' => $this->SiswaModel->getTotalRows()
+        ];
+        echo json_encode($res);
     }
+
 }

@@ -10,14 +10,20 @@
  * @link        http://wolestech.com
  * @version     1.0.0
  */
- 
+
 class SiswaModel extends CI_Model
 {
-    public function getSiswa()
+    public function getSiswa($limit, $start)
     {
         $select = 'nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
-        $query = $this->db->select($select)->from('siswa');
+        $query = $this->db->select($select)->from('siswa')->limit($limit, $start);
         $result = $query->get()->result();
         return $result;
+    }
+
+    public function getTotalRows()
+    {
+        $query = $this->db->get('siswa');
+        return $query->num_rows();
     }
 }
