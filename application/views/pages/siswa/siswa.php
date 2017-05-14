@@ -6,9 +6,6 @@
                     <div class="box">
                         <div class="box-header">
                             <h2>Data Siswa</h2>
-                            <small>
-                            Use .table-striped to add zebra-striping to any table row within the &lt;tbody>.
-                          </small>
                         </div>
                         <table class="table table-striped b-t">
                             <thead>
@@ -19,7 +16,7 @@
                                     <th>Tanggal Lahir</th>
                                 </tr>
                             </thead>
-                            <tbody>{{ tglLahir }}
+                            <tbody>
                                 <tr v-for="list in daftarSiswa">
                                     <td>{{ list.nama_siswa }}</td>
                                     <td>{{ list.j_kelamin_siswa }}</td>
