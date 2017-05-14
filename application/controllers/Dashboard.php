@@ -1,5 +1,16 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Smartscore
+ * Aplikasi Pengolahan Nilai Siswa berbasis Kurikulum 2013 untuk tingkat Sekolah Dasar (SD)
+ *
+ * @copyright   Copyright (c) 2017, Adnan Zaki
+ * @license     MIT License | https://opensource.org/licenses/MIT
+ * @author      Adnan Zaki
+ * @link        http://wolestech.com
+ * @version     1.0.0
+ */
+
 class Dashboard extends CI_Controller
 {
     public function __construct()
