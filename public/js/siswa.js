@@ -1,8 +1,11 @@
+
+
 var siswa = new Vue({
     el: '#dataSiswa',
     data: {
         daftarSiswa: '',
         showDaftarSiswa: false,
+        showFormAdd: false,
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
         prev: 0, next: 0, first: 0,
@@ -10,6 +13,7 @@ var siswa = new Vue({
     },
     methods: {
         getSiswa: function(limit, start) {
+            this.showFormAdd = false;
             var obj = siswa;
             offset = start * limit;
             this.prev = start - 1;
@@ -34,6 +38,33 @@ var siswa = new Vue({
             }
             this.last = countLink;
             return this.pageLinks;
+        },
+        showForm: function() {
+            this.showDaftarSiswa = false;
+            setTimeout(function() {
+                siswa.showFormAdd = true;
+            }, 400);
+        },
+        closeForm: function() {
+            this.showFormAdd = false;
+            setTimeout(function() {
+                siswa.showDaftarSiswa = true;
+            }, 400);
         }
     },
 })
+
+$("#datetimepicker1").datetimepicker({
+    format: 'DD/MM/YYYY',
+    icons: {
+      time: 'fa fa-clock-o',
+      date: 'fa fa-calendar',
+      up: 'fa fa-chevron-up',
+      down: 'fa fa-chevron-down',
+      previous: 'fa fa-chevron-left',
+      next: 'fa fa-chevron-right',
+      today: 'fa fa-screenshot',
+      clear: 'fa fa-trash',
+      close: 'fa fa-remove'
+    }
+});

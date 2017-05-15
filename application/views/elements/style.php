@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{css}material-design-icons/material-design-icons.css" type="text/css" />
 
 <link rel="stylesheet" href="{css}bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="{css}bootstrap/bootstrap-datetimepicker.min.css" type="text/css" />
 <!-- build:css ../assets/styles/app.min.css -->
 <link rel="stylesheet" href="{css}styles/app.css" type="text/css" />
 <!-- endbuild -->

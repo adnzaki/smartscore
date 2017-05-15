@@ -40,7 +40,7 @@
                 </a>
               </li>
 
-              <li @click="siswa.showDaftarSiswa = !siswa.showDaftarSiswa">
+              <li @click="siswa.showDaftarSiswa = false">
                 <a href="javascript:void(0)" >
                   <span class="nav-icon">
                     <i class="material-icons">person

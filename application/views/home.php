@@ -16,7 +16,10 @@
 			<?php $this->view('elements/app-footer') ?>
 			<div ui-view class="app-body" id="view">
 				<?php $this->view('content/loader') ?>
-				<?php $this->view('pages/siswa/siswa') ?>
+				<div id="dataSiswa">
+					<?php $this->view('pages/siswa/siswa') ?>
+					<?php $this->view('pages/siswa/tambah-siswa') ?>
+				</div>
 			</div>
 		</div>
 	</div>

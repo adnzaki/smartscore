@@ -16,6 +16,7 @@
   <script src="{js}plugins/pace.min.js"></script>
   <script src="{js}plugins/moment.min.js"></script>
   <script src="{js}plugins/moment.id.js"></script>
+  <script src="{js}plugins/bootstrap-datetimepicker.min.js"></script>
 
   <script src="{js}app/config.lazyload.js"></script>
 
