@@ -1,8 +1,23 @@
+.loader-wrapper {
+    width: calc(100% - 12.5rem);
+    position: absolute;
+    background-color: #2e3e4e;
+    height: calc(100vh - 3.5rem);
+    overflow-x: hidden;
+    z-index: 1270;
+}
+
+@media (max-width: 992px) {
+    .loader-wrapper {
+        width: 100%;
+    }
+}
+
 .cssload-thecube {
 width: 60px;
 height: 60px;
 margin: 0 auto;
-margin-top: 49px;
+margin-top: 80px;
 position: relative;
 transform: rotateZ(45deg);
     -o-transform: rotateZ(45deg);
