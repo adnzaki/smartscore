@@ -1,5 +1,3 @@
-
-
 var siswa = new Vue({
     el: '#dataSiswa',
     data: {
@@ -18,7 +16,7 @@ var siswa = new Vue({
             offset = start * limit;
             this.prev = start - 1;
             $.ajax({
-                url: baseUrl + 'SiswaController/fetchSiswa/' + limit + '/' + offset,
+                url: baseUrl + 'admin/SiswaController/fetchSiswa/' + limit + '/' + offset,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -30,9 +28,14 @@ var siswa = new Vue({
             })
         },
         pagination: function(num) {
+            // reset links
             this.pageLinks = [];
+
+            // hitung jumlah halaman yang dibutuhkan untuk link pagination
             let countLink = num / this.limit;
             countLink = Math.ceil(countLink);
+
+            // generate link pagination....
             for(let i = 0; i < countLink; i++) {
                 this.pageLinks.push(i + 1);
             }
@@ -43,6 +46,22 @@ var siswa = new Vue({
             this.showDaftarSiswa = false;
             setTimeout(function() {
                 siswa.showFormAdd = true;
+                setTimeout(function() {
+                    $("#datetimepicker1").datetimepicker({
+                        format: 'DD/MM/YYYY',
+                        icons: {
+                          time: 'fa fa-clock-o',
+                          date: 'fa fa-calendar',
+                          up: 'fa fa-chevron-up',
+                          down: 'fa fa-chevron-down',
+                          previous: 'fa fa-chevron-left',
+                          next: 'fa fa-chevron-right',
+                          today: 'fa fa-screenshot',
+                          clear: 'fa fa-trash',
+                          close: 'fa fa-remove'
+                        }
+                    });
+                }, 100)
             }, 400);
         },
         closeForm: function() {
@@ -50,21 +69,6 @@ var siswa = new Vue({
             setTimeout(function() {
                 siswa.showDaftarSiswa = true;
             }, 400);
-        }
+        },
     },
 })
-
-$("#datetimepicker1").datetimepicker({
-    format: 'DD/MM/YYYY',
-    icons: {
-      time: 'fa fa-clock-o',
-      date: 'fa fa-calendar',
-      up: 'fa fa-chevron-up',
-      down: 'fa fa-chevron-down',
-      previous: 'fa fa-chevron-left',
-      next: 'fa fa-chevron-right',
-      today: 'fa fa-screenshot',
-      clear: 'fa fa-trash',
-      close: 'fa fa-remove'
-    }
-});
