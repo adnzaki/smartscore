@@ -1,3 +1,8 @@
+Vue.component('sserror', {
+    props: ['msg'],
+    template: '<p class="ss-error">{{ msg }}</p>'
+})
+
 var siswa = new Vue({
     el: '#dataSiswa',
     data: {
@@ -7,7 +12,13 @@ var siswa = new Vue({
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
         prev: 0, next: 0, first: 0,
-        last: 0, setStart: 0
+        last: 0, setStart: 0,
+        // error messages
+        error: {
+            nama: '', nis: '', nisn: '', tmptLahir: '', tglLahir: '',
+            pendSblm: '', alamatSiswa: '', namaAyah: '', namaIbu: '',
+            alamatOrtu: '', telpOrtu: '', namaWali: '', alamatWali: '', telpWali: ''
+        }
     },
     methods: {
         getSiswa: function(limit, start) {
@@ -24,6 +35,39 @@ var siswa = new Vue({
                     obj.showDaftarSiswa = true;
                     obj.pagination(data['totalRows']);
                     start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
+                }
+            })
+        },
+        insertSiswa: function() {
+            var dataForm = $("#formTambahSiswa").serialize();
+            var obj = siswa;
+            //alert(dataForm);
+            $.ajax({
+                url: baseUrl + 'admin/SiswaController/setSiswa/insert',
+                type: 'POST',
+                dataType: 'json',
+                data: dataForm,
+                success: function(msg) {
+                    if(msg !== 'success') {
+                        obj.error.nama = msg.nama_siswa;
+                        obj.error.nis = msg.nis;
+                        obj.error.nisn = msg.nisn;
+                        obj.error.tmptLahir = msg.tempat_lahir_siswa;
+                        obj.error.tglLahir = msg.tgl_lahir_siswa;
+                        obj.error.pendSblm = msg.pend_sblm;
+                        obj.error.alamatSiswa = msg.alamat_siswa;
+                        obj.error.namaAyah = msg.nama_ayah;
+                        obj.error.namaIbu = msg.nama_ibu;
+                        obj.error.alamatOrtu = msg.alamat_ortu;
+                        obj.error.telpOrtu = msg.telp_ortu;
+                        obj.error.namaWali = msg.nama_wali;
+                        obj.error.alamatWali = msg.alamat_wali;
+                        obj.error.telpWali = msg.telp_wali;
+                    }
+                    else {
+                        obj.showFormAdd = false;
+                        obj.getSiswa(obj.limit, 0);
+                    }
                 }
             })
         },
