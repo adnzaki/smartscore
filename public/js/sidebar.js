@@ -6,11 +6,12 @@ var sidebar = new Vue({
         }
     },
     methods: {
-        forceShowDaftarSiswa: function() {
+        forceShowDaftarSiswa() {
             siswa.showFormAdd = false;
             this.modal.siswaIsFilled = false;
             setTimeout(() => {
                 siswa.getSiswa(siswa.limit, siswa.offset);
+                siswa.clearMessages();
             }, 100);
         }
     }

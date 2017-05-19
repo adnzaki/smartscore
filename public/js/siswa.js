@@ -21,7 +21,7 @@ var siswa = new Vue({
         }
     },
     methods: {
-        getSiswa: function(limit, start) {
+        getSiswa(limit, start) {
             if(this.showFormAdd) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
@@ -30,10 +30,10 @@ var siswa = new Vue({
                 offset = start * limit;
                 this.prev = start - 1;
                 $.ajax({
-                    url: baseUrl + 'admin/SiswaController/fetchSiswa/' + limit + '/' + offset,
+                    url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${offset}`,
                     type: 'GET',
                     dataType: 'json',
-                    success: function(data) {
+                    success: (data) => {
                         obj.daftarSiswa = data['dataSiswa'];
                         obj.showDaftarSiswa = true;
                         obj.pagination(data['totalRows']);
@@ -43,16 +43,16 @@ var siswa = new Vue({
             }
 
         },
-        insertSiswa: function() {
+        insertSiswa() {
             var dataForm = $("#formTambahSiswa").serialize();
             var obj = siswa;
             //alert(dataForm);
             $.ajax({
-                url: baseUrl + 'admin/SiswaController/setSiswa/insert',
+                url: `${baseUrl}admin/SiswaController/setSiswa/insert`,
                 type: 'POST',
                 dataType: 'json',
                 data: dataForm,
-                success: function(msg) {
+                success: (msg) => {
                     if(msg !== 'success') {
                         obj.error.nama = msg.nama_siswa;
                         obj.error.nis = msg.nis;
@@ -76,7 +76,7 @@ var siswa = new Vue({
                 }
             })
         },
-        pagination: function(num) {
+        pagination(num) {
             // reset links
             this.pageLinks = [];
 
@@ -91,11 +91,11 @@ var siswa = new Vue({
             this.last = countLink;
             return this.pageLinks;
         },
-        showForm: function() {
+        showForm() {
             this.showDaftarSiswa = false;
-            setTimeout(function() {
+            setTimeout(() => {
                 siswa.showFormAdd = true;
-                setTimeout(function() {
+                setTimeout(() => {
                     $("#datetimepicker1").datetimepicker({
                         format: 'DD/MM/YYYY',
                         icons: {
@@ -113,14 +113,14 @@ var siswa = new Vue({
                 }, 100)
             }, 400);
         },
-        closeForm: function() {
+        closeForm() {
             this.showFormAdd = false;
             this.clearMessages();
-            setTimeout(function() {
+            setTimeout(() => {
                 siswa.showDaftarSiswa = true;
             }, 400);
         },
-        clearMessages: function() {
+        clearMessages() {
             this.error.nama = '';
             this.error.nis = '';
             this.error.nisn = '';
