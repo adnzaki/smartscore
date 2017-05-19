@@ -23,7 +23,7 @@ var siswa = new Vue({
     methods: {
         getSiswa: function(limit, start) {
             this.showFormAdd = false;
-            var obj = siswa;
+            var obj = siswa,
             offset = start * limit;
             this.prev = start - 1;
             $.ajax({
@@ -110,9 +110,26 @@ var siswa = new Vue({
         },
         closeForm: function() {
             this.showFormAdd = false;
+            this.clearMessages();
             setTimeout(function() {
                 siswa.showDaftarSiswa = true;
             }, 400);
         },
+        clearMessages: function() {
+            this.error.nama = '';
+            this.error.nis = '';
+            this.error.nisn = '';
+            this.error.tmptLahir = '';
+            this.error.tglLahir = '';
+            this.error.pendSblm = '';
+            this.error.alamatSiswa = '';
+            this.error.namaAyah = '';
+            this.error.namaIbu = '';
+            this.error.alamatOrtu = '';
+            this.error.telpOrtu = '';
+            this.error.namaWali = '';
+            this.error.alamatWali = '';
+            this.error.telpWali = '';
+        }
     },
 })
