@@ -22,21 +22,26 @@ var siswa = new Vue({
     },
     methods: {
         getSiswa: function(limit, start) {
-            this.showFormAdd = false;
-            var obj = siswa,
-            offset = start * limit;
-            this.prev = start - 1;
-            $.ajax({
-                url: baseUrl + 'admin/SiswaController/fetchSiswa/' + limit + '/' + offset,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    obj.daftarSiswa = data['dataSiswa'];
-                    obj.showDaftarSiswa = true;
-                    obj.pagination(data['totalRows']);
-                    start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
-                }
-            })
+            if(this.showFormAdd) {
+                sidebar.modal.siswaIsFilled = true;
+            } else {
+                this.showFormAdd = false;
+                var obj = siswa,
+                offset = start * limit;
+                this.prev = start - 1;
+                $.ajax({
+                    url: baseUrl + 'admin/SiswaController/fetchSiswa/' + limit + '/' + offset,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        obj.daftarSiswa = data['dataSiswa'];
+                        obj.showDaftarSiswa = true;
+                        obj.pagination(data['totalRows']);
+                        start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
+                    }
+                })
+            }
+
         },
         insertSiswa: function() {
             var dataForm = $("#formTambahSiswa").serialize();

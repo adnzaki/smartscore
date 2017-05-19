@@ -10,3 +10,8 @@
 .ss-error {
     color: rgb(241, 89, 63);
 }
+
+.ss-modal {
+    display: block !important;
+    background-color: rgba(187, 187, 187, 0.21);
+}
