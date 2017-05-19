@@ -4,8 +4,11 @@ untuk tingkat Sekolah Dasar (SD). Aplikasi ini saya jadikan sebagai proyek open-
 dapat mengembangkannya. Proyek ini baru saja dimulai beriringan dengan proyek open-source saya lainnya yang sudah berjalan
 yaitu OstiumCMS.
 
-## Kebutuhan Server
-Dibutuhkan versi PHP minimal 5.6, sangat direkomendasikan untuk menggunakan PHP 7 ke atas, karena aplikasi ini akan selalu diupdate sesuai dengan perkembangan teknologi PHP terbaru.
+## Requirements
+Smartscore adalah aplikasi yang menggunakan teknologi web terbaru sehingga membutuhkan sistem yang up-to-date untuk menjalankannya. Hal ini dilakukan agar Smartscore dapat memaksimalkan perkembangan teknologi yang ada sehingga dapat  memberikan pengalaman penggunaan yang terbaik serta menghasilkan sebuah program yang <i>highly maintainable</i> bagi kami selaku pengembang. Berikut adalah beberapa kebutuhan minimal sistem agar Smartscore dapat berjalan pada perangkat anda:
+- Sistem Operasi : Windows 7 SP2 atau yang lebih tinggi
+- Browser versi terbaru untuk Chrome, Firefox, Edge, Opera atau Safari (tidak mendukung Internet Explorer)
+- PHP 5.6 atau lebih tinggi (disarankan PHP 7+)
 
 ## Back-end Framework
 Smartscore dibangun di atas framework PHP yaitu CodeIgniter. CodeIgniter merupakan framework yang sederhana namun memiliki fitur yang cukup lengkap serta memiliki performa yang memadai untuk pembuatan aplikasi berbasis web.
