@@ -125,6 +125,7 @@ var siswa = new Vue({
                 this.showFormAdd = false;
                 this.clearMessages();
                 this.showAlert = false;
+                this.getSiswa(this.limit, 0);
                 setTimeout(() => {
                     siswa.showDaftarSiswa = true;
                 }, 400);
