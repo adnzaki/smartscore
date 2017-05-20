@@ -36,7 +36,7 @@ var siswa = new Vue({
                     url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${offset}`,
                     type: 'GET',
                     dataType: 'json',
-                    success: (data) => {
+                    success: data => {
                         obj.daftarSiswa = data['dataSiswa'];
                         obj.showDaftarSiswa = true;
                         obj.pagination(data['totalRows']);
@@ -55,7 +55,7 @@ var siswa = new Vue({
                 type: 'POST',
                 dataType: 'json',
                 data: dataForm,
-                success: (msg) => {
+                success: msg => {
                     if(msg !== 'success') {
                         obj.error.nama = msg.nama_siswa;
                         obj.error.nis = msg.nis;

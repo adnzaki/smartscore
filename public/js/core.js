@@ -10,7 +10,7 @@ var core = new Vue({
                 fields.push($(this).val());
             });
 
-            var notBlankFields = fields.filter((fields) => {
+            var notBlankFields = fields.filter(fields => {
                 return fields.length > 0;
             })
 
