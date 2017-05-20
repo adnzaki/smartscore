@@ -15,3 +15,12 @@
     display: block !important;
     background-color: rgba(187, 187, 187, 0.21);
 }
+
+.less-m-b {
+    margin-bottom: -50px !important;
+}
+
+/* No border radius! */
+.ss-no-b-r {
+    border-radius: 0 !important;
+}

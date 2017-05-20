@@ -1,3 +1,12 @@
+<!-- Success alert -->
+<div class="padding less-m-b">
+	<div class="alert alert-success alert-dismissible ss-no-b-r" role="alert" v-if="showAlert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Sukses!</strong> Data siswa baru berhasil disimpan.
+		<a href="javascript:void(0)"><b><u>Lihat detail</u></b></a>
+	</div>
+</div>
+
 <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
 	<div class="padding" v-if="showFormAdd">
 		<div class="row">
@@ -196,10 +205,12 @@
 									<sserror :msg="error.telpWali"></sserror>
 								</div>
 							</div>
-							<!-- ########################################### -->
+							<!-- ################### END OF FORM ######################## -->
 							<div class="form-group row m-t-md">
 								<div class="offset-sm-8 col-sm-4 text-right">
-									<button type="button" class="btn btn-fw success" @click="insertSiswa">Simpan</button>
+									<a ui-scroll-to="content">
+										<button type="button" class="btn btn-fw success" @click="insertSiswa">Simpan</button>
+									</a>
 									<button type="button" class="btn btn-fw info" @click="closeForm">Tutup</button>
 								</div>
 							</div>
@@ -211,6 +222,7 @@
 	</div>
 </transition>
 
+<!-- Warning modal -->
 <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 	<div class="modal ss-modal" data-backdrop="true" v-if="sidebar.modal.siswaIsFilled">
 		<div class="modal-dialog">

@@ -9,6 +9,7 @@ var siswa = new Vue({
         daftarSiswa: '',
         showDaftarSiswa: false,
         showFormAdd: false,
+        showAlert: false,
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
         prev: 0, next: 0, first: 0,
@@ -26,6 +27,7 @@ var siswa = new Vue({
                 sidebar.modal.siswaIsFilled = true;
             } else {
                 this.showFormAdd = false;
+                this.showAlert = false;
                 var obj = siswa,
                 offset = start * limit;
                 this.prev = start - 1;
@@ -70,8 +72,9 @@ var siswa = new Vue({
                         obj.error.telpWali = msg.telp_wali;
                     }
                     else {
-                        obj.showFormAdd = false;
-                        obj.getSiswa(obj.limit, 0);
+                        obj.clearMessages();
+                        $('#formTambahSiswa').trigger("reset");
+                        obj.showAlert = true;
                     }
                 }
             })
@@ -116,6 +119,7 @@ var siswa = new Vue({
         closeForm() {
             this.showFormAdd = false;
             this.clearMessages();
+            this.showAlert = false;
             setTimeout(() => {
                 siswa.showDaftarSiswa = true;
             }, 400);
