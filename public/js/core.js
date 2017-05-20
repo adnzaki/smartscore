@@ -3,5 +3,22 @@ var core = new Vue({
     data: {
         showLoader: false
     },
-    methods: {}
+    methods: {
+        getFields(form) {
+            var fields = [];
+            $(`${form} :input[type='text']`).each(function() {
+                fields.push($(this).val());
+            });
+
+            var notBlankFields = fields.filter((fields) => {
+                return fields.length > 0;
+            })
+
+            if(notBlankFields.length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+    }
 })

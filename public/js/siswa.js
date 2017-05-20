@@ -10,7 +10,6 @@ var siswa = new Vue({
         showDaftarSiswa: false,
         showFormAdd: false,
         showAlert: false,
-        isFilled: false,
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
         prev: 0, next: 0, first: 0,
@@ -24,8 +23,8 @@ var siswa = new Vue({
     },
     methods: {
         getSiswa(limit, start) {
-            this.getFields();
-            if(this.getFields()) {
+            core.getFields("#formTambahSiswa");
+            if(core.getFields("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
                 this.showFormAdd = false;
@@ -81,22 +80,6 @@ var siswa = new Vue({
                 }
             })
         },
-        getFields() {
-            var fields = [];
-            $("#formTambahSiswa :input[type='text']").each(function() {
-                fields.push($(this).val());
-            });
-
-            var notBlankFields = fields.filter((fields) => {
-                return fields.length > 0;
-            })
-
-            if(notBlankFields.length > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        },
         pagination(num) {
             // reset links
             this.pageLinks = [];
@@ -135,8 +118,8 @@ var siswa = new Vue({
             }, 400);
         },
         closeForm() {
-            this.getFields();
-            if(this.getFields()) {
+            core.getFields("#formTambahSiswa");
+            if(core.getFields("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
                 this.showFormAdd = false;
