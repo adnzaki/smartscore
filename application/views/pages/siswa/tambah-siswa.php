@@ -1,7 +1,7 @@
 <!-- Success alert -->
 <div class="padding less-m-b">
 	<div class="alert alert-success alert-dismissible ss-no-b-r" role="alert" v-if="showAlert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<button type="button" class="close" @click="showAlert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<strong>Sukses!</strong> Data siswa baru berhasil disimpan.
 		<a href="javascript:void(0)"><b><u>Lihat detail</u></b></a>
 	</div>
