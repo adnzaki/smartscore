@@ -10,6 +10,7 @@ var siswa = new Vue({
         showDaftarSiswa: false,
         showFormAdd: false,
         showAlert: false,
+        isFilled: false,
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
         prev: 0, next: 0, first: 0,
@@ -23,7 +24,8 @@ var siswa = new Vue({
     },
     methods: {
         getSiswa(limit, start) {
-            if(this.showFormAdd) {
+            this.getFields();
+            if(this.getFields()) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
                 this.showFormAdd = false;
@@ -79,6 +81,22 @@ var siswa = new Vue({
                 }
             })
         },
+        getFields() {
+            var fields = [];
+            $("#formTambahSiswa :input[type='text']").each(function() {
+                fields.push($(this).val());
+            });
+
+            var notBlankFields = fields.filter((fields) => {
+                return fields.length > 0;
+            })
+
+            if(notBlankFields.length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         pagination(num) {
             // reset links
             this.pageLinks = [];
@@ -117,12 +135,17 @@ var siswa = new Vue({
             }, 400);
         },
         closeForm() {
-            this.showFormAdd = false;
-            this.clearMessages();
-            this.showAlert = false;
-            setTimeout(() => {
-                siswa.showDaftarSiswa = true;
-            }, 400);
+            this.getFields();
+            if(this.getFields()) {
+                sidebar.modal.siswaIsFilled = true;
+            } else {
+                this.showFormAdd = false;
+                this.clearMessages();
+                this.showAlert = false;
+                setTimeout(() => {
+                    siswa.showDaftarSiswa = true;
+                }, 400);
+            }
         },
         clearMessages() {
             this.error.nama = '';
