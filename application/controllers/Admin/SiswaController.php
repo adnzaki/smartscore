@@ -40,6 +40,7 @@ class SiswaController extends CI_Controller
     {
         $this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
         $this->form_validation->set_message('max_length', 'Panjang kolom %s tidak boleh lebih dari %s karakter');
+        $this->form_validation->set_message('min_length', 'Panjang kolom %s minimal %s karakter');
         $this->form_validation->set_message('exact_length', 'Panjang kolom %s harus %s karakter');
         $this->form_validation->set_message('numeric', 'Kolom {field} hanya boleh diisi angka');
         $this->form_validation->set_message('is_unique', 'Data %s sudah ada');
@@ -61,7 +62,7 @@ class SiswaController extends CI_Controller
                 'telp_ortu'     => form_error('telp_ortu'),
                 'nama_wali'     => form_error('nama_wali'),
                 'alamat_wali'   => form_error('alamat_wali'),
-                'telp_wali'      => form_error('telp_wali'),
+                'telp_wali'     => form_error('telp_wali'),
             ];
             echo json_encode($errors);
         }

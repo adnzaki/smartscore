@@ -67,7 +67,7 @@ $config = [
         [
             'field' => 'telp_ortu',
             'label' => 'nomor telepon orang tua',
-            'rules' => 'required|max_length[15]|numeric'
+            'rules' => 'required|min_length[11]|max_length[15]|numeric'
         ],
         [
             'field' => 'nama_wali',
@@ -82,7 +82,7 @@ $config = [
         [
             'field' => 'telp_wali',
             'label' => 'nomor telepon wali',
-            'rules' => 'max_length[15]|numeric'
+            'rules' => 'min_length[11]|max_length[15]|numeric'
         ],
     ]
 ];
