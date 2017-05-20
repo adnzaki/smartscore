@@ -23,8 +23,8 @@ var siswa = new Vue({
     },
     methods: {
         getSiswa(limit, start) {
-            core.getFields("#formTambahSiswa");
-            if(core.getFields("#formTambahSiswa")) {
+            core.formHasValue("#formTambahSiswa");
+            if(core.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
                 this.showFormAdd = false;
@@ -118,8 +118,8 @@ var siswa = new Vue({
             }, 400);
         },
         closeForm() {
-            core.getFields("#formTambahSiswa");
-            if(core.getFields("#formTambahSiswa")) {
+            core.formHasValue("#formTambahSiswa");
+            if(core.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
                 this.showFormAdd = false;

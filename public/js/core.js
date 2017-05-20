@@ -4,7 +4,7 @@ var core = new Vue({
         showLoader: false
     },
     methods: {
-        getFields(form) {
+        formHasValue(form) {
             var fields = [];
             $(`${form} :input[type='text']`).each(function() {
                 fields.push($(this).val());
