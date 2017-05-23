@@ -227,9 +227,9 @@ var siswa = new Vue({
                 this.clearMessages();
                 this.insertAlert = false;
                 this.updateAlert = false;
-
+                let start = this.offset / this.limit;
                 setTimeout(() => {
-                    this.getSiswa(this.limit, 0);
+                    this.getSiswa(this.limit, start);
                     siswa.showDaftarSiswa = true;
                 }, 400);
             }
