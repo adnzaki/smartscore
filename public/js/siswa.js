@@ -52,8 +52,13 @@ var siswa = new Vue({
                             obj.showDaftarSiswa = true;
                         }, 400)
 
+                        // simpan data total baris
                         obj.totalRows = data['totalRows'];
+
+                        // perbarui data pagination
                         obj.pagination(data['totalRows']);
+
+                        // atur nilai default untuk next page
                         start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
                     }
                 })
@@ -70,7 +75,6 @@ var siswa = new Vue({
                 param = `${event}/${id}`;
             }
             var obj = siswa;
-            // alert(dataForm + ' ============ ' + param);
             $.ajax({
                 url: `${baseUrl}admin/SiswaController/setSiswa/${param}`,
                 type: 'POST',
@@ -150,10 +154,15 @@ var siswa = new Vue({
                 type: 'POST',
                 success: () => {
                     siswa.deleteConfirm = false;
+
+                    // lakukan pengecekan total baris dalam satu halaman tabel siswa
+                    // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
+                    // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
                     let diff = siswa.totalRows - siswa.offset;
                     if(diff == 1) {
                         siswa.offset -= siswa.limit;
                     }
+
                     let start = siswa.offset / siswa.limit;
                     siswa.getSiswa(siswa.limit, start);
                 }
