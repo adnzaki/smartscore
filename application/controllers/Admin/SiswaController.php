@@ -163,7 +163,11 @@ class SiswaController extends CI_Controller
                 $this->SiswaModel->updateSiswa($key);
             }
 
-            echo json_encode('success');
+            $data = [
+                'msg'   => 'success',
+                'id'    => $this->SiswaModel->getIdSiswa()
+            ];
+            echo json_encode($data);
         }
     }
 

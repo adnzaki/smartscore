@@ -27,6 +27,13 @@ class SiswaModel extends CI_Model
         return $query->result();
     }
 
+    public function getIdSiswa()
+    {
+        $query = $this->db->select('id_siswa')->from('siswa')
+            ->where('nis', $this->input->post('nis'));
+        return $query->get()->result();
+    }
+
     public function getTotalRows()
     {
         $query = $this->db->get('siswa');

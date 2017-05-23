@@ -11,6 +11,7 @@ var siswa = new Vue({
         showDaftarSiswa: false,
         showFormAdd: false,
         showFormEdit: false,
+        idSiswa: '',
 
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false,
@@ -69,7 +70,7 @@ var siswa = new Vue({
                 dataType: 'json',
                 data: dataForm,
                 success: msg => {
-                    if(msg !== 'success') {
+                    if(msg.msg !== 'success') {
                         obj.error.nama = msg.nama_siswa;
                         obj.error.nis = msg.nis;
                         obj.error.nisn = msg.nisn;
@@ -87,9 +88,16 @@ var siswa = new Vue({
                     }
                     else {
                         obj.clearMessages();
+
+                        // jika event nya adalah insert data siswa
+                        // maka bersihkan form, lalu tampilkan alert dan ambil id_siswa
                         if(event === 'insert') {
                             form.trigger("reset");
                             obj.insertAlert = true;
+                            obj.idSiswa = msg['id'][0].id_siswa;
+
+                        // selain itu, jika event nya adalah update data siswa,
+                        // maka tampilkan kembali form edit siswa dan tampilkan alert
                         } else {
                             siswa.editSiswa(id);
                             obj.updateAlert = true;
@@ -98,10 +106,11 @@ var siswa = new Vue({
                 }
             })
         },
-        updateSiswa(id) {
-
-        },
         editSiswa(id) {
+            if(this.showFormAdd) {
+                this.showFormAdd = false;
+            }
+            this.insertAlert = false;
             this.showForm('showFormEdit');
             $.ajax({
                 url: `${baseUrl}admin/SiswaController/editSiswa/${id}`,
