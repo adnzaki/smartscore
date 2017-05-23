@@ -7,9 +7,15 @@ var siswa = new Vue({
     el: '#dataSiswa',
     data: {
         daftarSiswa: '',
+        detailSiswa: '',
         showDaftarSiswa: false,
         showFormAdd: false,
-        showAlert: false,
+        showFormEdit: false,
+
+        // alert
+        insertAlert: false, updateAlert: false, deleteAlert: false,
+        alertMessage: '',
+
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
         prev: 0, next: 0, first: 0,
@@ -19,7 +25,7 @@ var siswa = new Vue({
             nama: '', nis: '', nisn: '', tmptLahir: '', tglLahir: '',
             pendSblm: '', alamatSiswa: '', namaAyah: '', namaIbu: '',
             alamatOrtu: '', telpOrtu: '', namaWali: '', alamatWali: '', telpWali: ''
-        }
+        },
     },
     methods: {
         getSiswa(limit, start) {
@@ -44,14 +50,21 @@ var siswa = new Vue({
                     }
                 })
             }
-
         },
-        insertSiswa() {
-            var dataForm = $("#formTambahSiswa").serialize();
+        insertSiswa(event, id) {
+            if(event === 'insert') {
+                form = $("#formTambahSiswa");
+                dataForm = form.serialize();
+                param = event;
+            } else {
+                form = $("#formEditSiswa");
+                dataForm = form.serialize();
+                param = `${event}/${id}`;
+            }
             var obj = siswa;
-            //alert(dataForm);
+            // alert(dataForm + ' ============ ' + param);
             $.ajax({
-                url: `${baseUrl}admin/SiswaController/setSiswa/insert`,
+                url: `${baseUrl}admin/SiswaController/setSiswa/${param}`,
                 type: 'POST',
                 dataType: 'json',
                 data: dataForm,
@@ -74,9 +87,54 @@ var siswa = new Vue({
                     }
                     else {
                         obj.clearMessages();
-                        $('#formTambahSiswa').trigger("reset");
-                        obj.showAlert = true;
+                        if(event === 'insert') {
+                            form.trigger("reset");
+                            obj.insertAlert = true;
+                        } else {
+                            siswa.editSiswa(id);
+                            obj.updateAlert = true;
+                        }
                     }
+                }
+            })
+        },
+        updateSiswa(id) {
+
+        },
+        editSiswa(id) {
+            this.showForm('showFormEdit');
+            $.ajax({
+                url: `${baseUrl}admin/SiswaController/editSiswa/${id}`,
+                type: 'GET',
+                dataType: 'json',
+                success: data => {
+                    siswa.detailSiswa = data;
+
+                    // berikan timeout 500 mili detik untuk menjalankan fungsi
+                    // radio button mana yg harus dicek
+                    // karena timeout untuk membuka form adalah 400 mili detik
+                    setTimeout(() => {
+                        siswa.isChecked();
+                        siswa.isSelected('agama_siswa');
+                        siswa.isSelected('job_ayah');
+                        siswa.isSelected('job_ibu');
+                        siswa.isSelected('job_wali');
+                    }, 500);
+
+                }
+            })
+        },
+        isChecked() {
+            if(this.detailSiswa.j_kelamin_siswa === $("#j_laki").val()) {
+                $("#j_laki").prop("checked", true);
+            } else {
+                $("#j_perempuan").prop("checked", true);
+            }
+        },
+        isSelected(target) {
+            $(`#${target} option`).each(function() {
+                if(siswa.detailSiswa[target] === $(this).val()) {
+                    $(this).attr("selected", "selected");
                 }
             })
         },
@@ -95,10 +153,10 @@ var siswa = new Vue({
             this.last = countLink;
             return this.pageLinks;
         },
-        showForm() {
+        showForm(form) {
             this.showDaftarSiswa = false;
             setTimeout(() => {
-                siswa.showFormAdd = true;
+                siswa[form] = true;
                 setTimeout(() => {
                     $("#datetimepicker1").datetimepicker({
                         format: 'DD/MM/YYYY',
@@ -117,16 +175,18 @@ var siswa = new Vue({
                 }, 100)
             }, 400);
         },
-        closeForm() {
+        closeForm(form) {
             core.formHasValue("#formTambahSiswa");
             if(core.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
-                this.showFormAdd = false;
+                this[form] = false
                 this.clearMessages();
-                this.showAlert = false;
-                this.getSiswa(this.limit, 0);
+                this.insertAlert = false;
+                this.updateAlert = false;
+
                 setTimeout(() => {
+                    this.getSiswa(this.limit, 0);
                     siswa.showDaftarSiswa = true;
                 }, 400);
             }

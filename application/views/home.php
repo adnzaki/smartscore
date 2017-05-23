@@ -19,6 +19,7 @@
 				<div id="dataSiswa">
 					<?php $this->view('pages/siswa/siswa') ?>
 					<?php $this->view('pages/siswa/tambah-siswa') ?>
+					<?php $this->view('pages/siswa/edit-siswa') ?>
 				</div>
 			</div>
 		</div>

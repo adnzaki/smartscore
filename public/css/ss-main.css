@@ -24,3 +24,7 @@
 .ss-no-b-r {
     border-radius: 0 !important;
 }
+
+.ss-btn-edit {
+    cursor: pointer;
+}

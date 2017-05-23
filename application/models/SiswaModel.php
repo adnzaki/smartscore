@@ -15,10 +15,16 @@ class SiswaModel extends CI_Model
 {
     public function getSiswa($limit, $start)
     {
-        $select = 'nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
+        $select = 'id_siswa, nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
         $query = $this->db->select($select)->from('siswa')->limit($limit, $start);
         $result = $query->get()->result();
         return $result;
+    }
+
+    public function getDetailSiswa($id)
+    {
+        $query = $this->db->get_where('siswa', ['id_siswa' => $id]);
+        return $query->result();
     }
 
     public function getTotalRows()
@@ -31,6 +37,12 @@ class SiswaModel extends CI_Model
     {
         $data = $this->tableSiswaValue();
         $this->db->insert('siswa', $data);
+    }
+
+    public function updateSiswa($id)
+    {
+        $data = $this->tableSiswaValue();
+        $this->db->update('siswa', $data, ['id_siswa' => $id]);
     }
 
     protected function tableSiswaValue()
@@ -55,7 +67,7 @@ class SiswaModel extends CI_Model
             'nama_wali'             => $this->input->post('nama_wali', true),
             'alamat_wali'           => $this->input->post('alamat_wali', true),
             'job_wali'              => $this->input->post('job_wali', true),
-            'telp_wali'             => $this->input->post('job_wali', true),
+            'telp_wali'             => $this->input->post('telp_wali', true),
         ];
 
         return $data;

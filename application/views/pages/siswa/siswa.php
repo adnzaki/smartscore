@@ -7,7 +7,7 @@
 						<h2>Data Siswa</h2>
 					</div>
 					<div class="box-body">
-						<button class="btn btn-fw white" @click="showForm"><i class="fa fa-plus"></i>&nbsp Tambah</button>
+						<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp Tambah</button>
 					</div>
 
 					<table class="table table-striped b-t">
@@ -26,7 +26,7 @@
 								<td>{{ list.j_kelamin_siswa }}</td>
 								<td>{{ list.tempat_lahir_siswa }}</td>
 								<td>{{ list.tgl_lahir_siswa }}</td>
-								<td class="text-center"><i class="material-icons">edit</i></td>
+								<td class="text-center ss-btn-edit" @click="editSiswa(list.id_siswa)"><i class="material-icons">edit</i></td>
 								<td class="text-center"><i class="material-icons">delete</i></td>
 							</tr>
 						</tbody>

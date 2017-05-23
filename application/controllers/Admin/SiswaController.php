@@ -167,4 +167,16 @@ class SiswaController extends CI_Controller
         }
     }
 
+    public function editSiswa($id)
+    {
+        $data = $this->SiswaModel->getDetailSiswa($id);
+        $formatted = [];
+        foreach($data as $data)
+        {
+            $data->tgl_lahir_siswa = reverse($data->tgl_lahir_siswa, '-', "/");
+            array_push($formatted, $data);
+        }
+        echo json_encode($data);
+    }
+
 }
