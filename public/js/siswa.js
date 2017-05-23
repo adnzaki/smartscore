@@ -44,7 +44,13 @@ var siswa = new Vue({
                     dataType: 'json',
                     success: data => {
                         obj.daftarSiswa = data['dataSiswa'];
-                        obj.showDaftarSiswa = true;
+
+                        // penggunaan setTimeout() baru akan terasa manfaatnya ketika
+                        // nanti tidak ada lagi blank page pada aplikasi
+                        setTimeout(() => {
+                            obj.showDaftarSiswa = true;
+                        }, 400)
+
                         obj.pagination(data['totalRows']);
                         start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
                     }
@@ -184,7 +190,6 @@ var siswa = new Vue({
             }, 400);
         },
         closeForm(form) {
-            core.formHasValue("#formTambahSiswa");
             if(core.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
