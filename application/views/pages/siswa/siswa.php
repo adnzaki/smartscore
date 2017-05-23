@@ -26,8 +26,8 @@
 								<td>{{ list.j_kelamin_siswa }}</td>
 								<td>{{ list.tempat_lahir_siswa }}</td>
 								<td>{{ list.tgl_lahir_siswa }}</td>
-								<td class="text-center ss-btn-edit" @click="editSiswa(list.id_siswa)"><i class="material-icons">edit</i></td>
-								<td class="text-center"><i class="material-icons">delete</i></td>
+								<td class="text-center ss-cursor-pointer" @click="editSiswa(list.id_siswa)"><i class="material-icons">edit</i></td>
+								<td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_siswa)"><i class="material-icons">delete</i></td>
 							</tr>
 						</tbody>
 						<tfoot>
@@ -49,6 +49,28 @@
 							</td>
 						</tfoot>
 					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</transition>
+
+<!-- Konfirmai hapus data -->
+<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	<div class="modal ss-modal" data-backdrop="true" v-if="deleteConfirm">
+		<div class="modal-dialog">
+			<div class="col-sm-8 offset-sm-2">
+				<div class="modal-content black lt m-b">
+					<div class="modal-header">
+						<h5 class="modal-title">Konfirmasi</h5>
+					</div>
+					<div class="modal-body">
+						<p>Apakah anda yakin ingin menghapus data ini? {{ idSiswa }}, {{ offset }}, {{ totalRows }}</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn white" @click="deleteConfirm = false">Cancel</button>
+						<button class="btn primary" @click="deleteSiswa">OK</button>
+					</div>
 				</div>
 			</div>
 		</div>

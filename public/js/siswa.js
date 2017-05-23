@@ -12,6 +12,7 @@ var siswa = new Vue({
         showFormAdd: false,
         showFormEdit: false,
         idSiswa: '',
+        deleteConfirm: false,
 
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false,
@@ -20,7 +21,7 @@ var siswa = new Vue({
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
         prev: 0, next: 0, first: 0,
-        last: 0, setStart: 0,
+        last: 0, setStart: 0, totalRows: 0,
         // error messages
         error: {
             nama: '', nis: '', nisn: '', tmptLahir: '', tglLahir: '',
@@ -35,11 +36,11 @@ var siswa = new Vue({
             } else {
                 this.showFormAdd = false;
                 this.showAlert = false;
-                var obj = siswa,
-                offset = start * limit;
+                var obj = siswa;
+                this.offset = start * limit;
                 this.prev = start - 1;
                 $.ajax({
-                    url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${offset}`,
+                    url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}`,
                     type: 'GET',
                     dataType: 'json',
                     success: data => {
@@ -51,6 +52,7 @@ var siswa = new Vue({
                             obj.showDaftarSiswa = true;
                         }, 400)
 
+                        obj.totalRows = data['totalRows'];
                         obj.pagination(data['totalRows']);
                         start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
                     }
@@ -135,6 +137,25 @@ var siswa = new Vue({
                         siswa.isSelected('job_wali');
                     }, 500);
 
+                }
+            })
+        },
+        showDeleteConfirm(id) {
+            this.idSiswa = id;
+            this.deleteConfirm = true;
+        },
+        deleteSiswa() {
+            $.ajax({
+                url: `${baseUrl}admin/SiswaController/deleteSiswa/${this.idSiswa}`,
+                type: 'POST',
+                success: () => {
+                    siswa.deleteConfirm = false;
+                    let diff = siswa.totalRows - siswa.offset;
+                    if(diff == 1) {
+                        siswa.offset -= siswa.limit;
+                    }
+                    let start = siswa.offset / siswa.limit;
+                    siswa.getSiswa(siswa.limit, start);
                 }
             })
         },

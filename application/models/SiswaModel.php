@@ -16,7 +16,7 @@ class SiswaModel extends CI_Model
     public function getSiswa($limit, $start)
     {
         $select = 'id_siswa, nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
-        $query = $this->db->select($select)->from('siswa')->limit($limit, $start);
+        $query = $this->db->select($select)->from('siswa')->order_by('nama_siswa', 'ASC')->limit($limit, $start);
         $result = $query->get()->result();
         return $result;
     }
@@ -50,6 +50,11 @@ class SiswaModel extends CI_Model
     {
         $data = $this->tableSiswaValue();
         $this->db->update('siswa', $data, ['id_siswa' => $id]);
+    }
+
+    public function deleteSiswa($id)
+    {
+        $this->db->delete('siswa', ['id_siswa' => $id]);
     }
 
     protected function tableSiswaValue()
