@@ -1,3 +1,11 @@
+<!-- Delete alert -->
+<div class="padding less-m-b">
+	<div class="alert alert-success alert-dismissible ss-no-b-r" role="alert" v-if="deleteAlert">
+		<button type="button" class="close" @click="deleteAlert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Sukses!</strong> Data siswa berhasil dihapus
+	</div>
+</div>
+
 <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
 	<div class="padding" v-if="showDaftarSiswa">
 		<div class="row">
@@ -65,11 +73,11 @@
 						<h5 class="modal-title">Konfirmasi</h5>
 					</div>
 					<div class="modal-body">
-						<p>Apakah anda yakin ingin menghapus data ini? {{ idSiswa }}, {{ offset }}, {{ totalRows }}</p>
+						<p>Apakah anda yakin ingin menghapus data ini?</p>
 					</div>
 					<div class="modal-footer">
 						<button class="btn white" @click="deleteConfirm = false">Cancel</button>
-						<button class="btn primary" @click="deleteSiswa">OK</button>
+						<button class="btn primary" @click="deleteSiswa" ui-scroll-to="content">OK</button>
 					</div>
 				</div>
 			</div>
