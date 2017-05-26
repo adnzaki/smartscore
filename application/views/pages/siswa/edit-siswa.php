@@ -2,7 +2,7 @@
 <div class="padding less-m-b">
 	<div class="alert alert-success alert-dismissible ss-no-b-r" role="alert" v-if="updateAlert">
 		<button type="button" class="close" @click="updateAlert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<strong>Sukses!</strong> Data siswa berhasil diperbarui
+		<strong>Sukses!</strong> {{ alertMessage }}
 	</div>
 </div>
 
