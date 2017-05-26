@@ -164,11 +164,7 @@ var siswa = new Vue({
                     }
 
                     let start = siswa.offset / siswa.limit;
-                    siswa.deleteAlert = true;
                     siswa.getSiswa(siswa.limit, start);
-                    setTimeout(() => {
-                        siswa.deleteAlert = false;
-                    }, 5000);
                 }
             })
         },
