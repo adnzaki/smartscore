@@ -105,6 +105,7 @@ var siswa = new Vue({
                         if(event === 'insert') {
                             form.trigger("reset");
                             obj.insertAlert = true;
+                            obj.alertMessage = "Data siswa baru berhasil disimpan";
                             obj.idSiswa = msg['id'][0].id_siswa;
 
                         // selain itu, jika event nya adalah update data siswa,
@@ -112,6 +113,7 @@ var siswa = new Vue({
                         } else {
                             siswa.editSiswa(id);
                             obj.updateAlert = true;
+                            obj.alertMessage = "Data siswa baru berhasil diperbarui";
                         }
                     }
                 }
@@ -164,7 +166,12 @@ var siswa = new Vue({
                     }
 
                     let start = siswa.offset / siswa.limit;
+                    siswa.deleteAlert = true;
+                    siswa.alertMessage = "Data siswa berhasil dihapus";
                     siswa.getSiswa(siswa.limit, start);
+                    setTimeout(() => {
+                        siswa.deleteAlert = false;
+                    }, 5000)
                 }
             })
         },

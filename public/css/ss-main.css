@@ -28,3 +28,21 @@
 .ss-cursor-pointer {
     cursor: pointer;
 }
+
+.ss-fly-alert {
+    position: fixed;
+    z-index: 1024;
+    width: calc(100% - 250px);
+}
+
+@media (max-width: 991px) {
+    .ss-fly-alert {
+        width: calc(100% - 32px);
+    }
+}
+
+@media (max-width: 767px) {
+    .ss-fly-alert {
+        width: calc(100% - 15px);
+    }
+}
