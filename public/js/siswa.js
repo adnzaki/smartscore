@@ -35,7 +35,7 @@ var siswa = new Vue({
                 sidebar.modal.siswaIsFilled = true;
             } else {
                 this.showFormAdd = false;
-                this.showAlert = false;
+                this.showFormEdit = false;
                 var obj = siswa;
                 this.offset = start * limit;
                 this.prev = start - 1;
