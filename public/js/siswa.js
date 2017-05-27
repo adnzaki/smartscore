@@ -16,7 +16,7 @@ var siswa = new Vue({
 
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false,
-        alertMessage: '',
+        errorInsert: false, errorUpdate: false, alertMessage: '',
 
         // data for pagination
         pageLinks: [], limit: 10, offset: 0,
@@ -82,6 +82,8 @@ var siswa = new Vue({
                 data: dataForm,
                 success: msg => {
                     if(msg.msg !== 'success') {
+                        event === 'insert' ? obj.errorInsert = true : obj.errorUpdate = true;
+                        obj.alertMessage = "Data siswa tidak dapat disimpan, silakan isi form dengan benar.";
                         obj.error.nama = msg.nama_siswa;
                         obj.error.nis = msg.nis;
                         obj.error.nisn = msg.nisn;
@@ -105,6 +107,7 @@ var siswa = new Vue({
                         if(event === 'insert') {
                             form.trigger("reset");
                             obj.insertAlert = true;
+                            obj.errorInsert = false;
                             obj.alertMessage = "Data siswa baru berhasil disimpan";
                             obj.idSiswa = msg['id'][0].id_siswa;
 
@@ -113,6 +116,7 @@ var siswa = new Vue({
                         } else {
                             siswa.editSiswa(id);
                             obj.updateAlert = true;
+                            obj.errorUpdate = false;
                             obj.alertMessage = "Data siswa baru berhasil diperbarui";
                         }
                     }
@@ -234,6 +238,8 @@ var siswa = new Vue({
                 this.clearMessages();
                 this.insertAlert = false;
                 this.updateAlert = false;
+                this.errorInsert = false;
+                this.errorUpdate = false;
                 let start = this.offset / this.limit;
                 setTimeout(() => {
                     this.getSiswa(this.limit, start);

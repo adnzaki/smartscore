@@ -6,6 +6,14 @@
 	</div>
 </div>
 
+<!-- Error alert -->
+<div class="padding less-m-b">
+	<div class="alert alert-danger alert-dismissible ss-no-b-r" role="alert" v-if="errorUpdate">
+		<button type="button" class="close" @click="insertAlert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Error!</strong> {{ alertMessage }}
+	</div>
+</div>
+
 <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
 	<div class="padding" v-if="showFormEdit">
 		<div class="row">
