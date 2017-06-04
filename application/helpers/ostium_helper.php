@@ -238,7 +238,7 @@ if(! function_exists('reverse'))
      * @param string $separator
      * @return string
      */
-    function reverse($word, $separator, $newSeparator)
+    function reverse($word, $separator, $newSeparator = '')
     {
         $explode = explode($separator, $word);
         $reverseWord = '';
