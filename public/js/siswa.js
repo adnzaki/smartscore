@@ -8,11 +8,15 @@ var siswa = new Vue({
     data: {
         daftarSiswa: '',
         detailSiswa: '',
+        filename: '',
+        loadingText: '',
         showDaftarSiswa: false,
         showFormAdd: false,
         showFormEdit: false,
         idSiswa: '',
         deleteConfirm: false,
+        importDialog: false,
+        importProgress: false,
 
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false,
@@ -122,6 +126,27 @@ var siswa = new Vue({
                     }
                 }
             })
+        },
+        importSiswa() {
+            var form = document.forms.namedItem('imporSiswa'),
+                data = new FormData(form),
+                req = new XMLHttpRequest();
+            req.open("POST", `${baseUrl}admin/SiswaController/importSiswa`, true);
+            this.importDialog = false;
+            this.filename = '';
+            this.importProgress = true;
+            this.loadingText = "Mengimpor data...";
+            req.responseType = 'json';
+            req.onload = objEvent => {
+                this.loadingText = `${req.response.success}, ${req.response.failed}`;
+                let start = this.offset / this.limit;
+                this.getSiswa(this.limit, start);
+            }
+            req.send(data);
+        },
+        closeImportDialog() {
+            this.filename = '';
+            this.importDialog = false;
         },
         editSiswa(id) {
             if(this.showFormAdd) {

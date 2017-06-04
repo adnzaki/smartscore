@@ -16,6 +16,19 @@
 					</div>
 					<div class="box-body">
 						<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp Tambah</button>
+						<div class="dropdown inline">
+							<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="{base_url}public/docs/FormatDataSiswa.xlsx">
+									<i class="material-icons">file_download</i>
+									Download Format Data Siswa (Excel)
+								</a>
+								<a class="dropdown-item" href="javascript:void(0)" @click="importDialog = true">
+									<i class="material-icons">file_upload</i>
+									Upload Data Siswa
+								</a>
+							</div>
+						</div>
 					</div>
 
 					<table class="table table-striped b-t">
@@ -46,8 +59,7 @@
 										<li><a href="javascript:void(0)" @click="getSiswa(limit, prev)"><i class="material-icons">navigate_before</i></a></li>
 										<li>
 											<div class="col-xs-3">
-												<input type="text" class="form-control" v-model="setStart" placeholder="Enter email"
-												@keyup.enter="getSiswa(limit, setStart - 1)">
+												<input type="text" class="form-control" v-model="setStart" placeholder="Enter email" @keyup.enter="getSiswa(limit, setStart - 1)">
 											</div>
 										</li>
 										<li><a href="javascript:void(0)" @click="getSiswa(limit, next)"><i class="material-icons">navigate_next</i></a></li>
@@ -78,6 +90,66 @@
 					<div class="modal-footer">
 						<button class="btn white" @click="deleteConfirm = false">Cancel</button>
 						<button class="btn primary" @click="deleteSiswa">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</transition>
+
+<!-- Modal dialog untuk impor data siswa -->
+<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	<div class="modal ss-modal" data-backdrop="true" v-if="importDialog">
+		<div class="modal-dialog">
+			<div class="col-sm-8 offset-sm-2">
+				<div class="modal-content black lt m-b">
+					<div class="modal-header">
+						<h5 class="modal-title">Impor Data</h5>
+					</div>
+					<div class="modal-body">
+						<p>Silakan pilih file Excel yang telah terisi dengan data valid.</p>
+						<p>
+							<form action="" name="imporSiswa" method="post" enctype="multipart/form-data">
+								<div class="row">
+									<div class="col-xs-12">
+										<input type="text" v-model="filename" disabled class="form-control ss-m-t-5">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-4 offset-xs-8">
+										<label class="ss-browse">
+											<input type="file" name="file" id="file" v-model="filename" />
+											<span class="ss-browse-label">Browse</span>
+										</label>
+									</div>
+								</div>
+							</form>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn white" @click="closeImportDialog">Cancel</button>
+						<button class="btn primary" @click="importSiswa">Impor</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</transition>
+
+<!-- Modal saat pemrosesan import data... -->
+<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	<div class="modal ss-modal" data-backdrop="true" v-if="importProgress">
+		<div class="modal-dialog">
+			<div class="col-sm-8 offset-sm-2">
+				<div class="modal-content black lt m-b">
+					<div class="modal-header">
+						<h5 class="modal-title">Info</h5>
+					</div>
+					<div class="modal-body">
+						<p class="text-center ss-loading-text">{{ loadingText }}</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn primary" @click="importProgress = false">Tutup</button>
 					</div>
 				</div>
 			</div>

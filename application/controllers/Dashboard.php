@@ -25,6 +25,7 @@ class Dashboard extends CI_Controller
             'js'    => base_url('public/js/'),
             'fonts' => base_url('public/fonts/'),
             'img'   => base_url('public/img/'),
+            'base_url' => base_url(),
             'title' => 'Smartscore App',
             'welcome_message'   => 'Selamat Datang di Smartscore',
             'app_description'   => 'Aplikasi Pengolahan Nilai Siswa berbasis Kurikulum 2013 untuk tingkat Sekolah Dasar'

@@ -11,6 +11,10 @@
     color: rgb(241, 89, 63);
 }
 
+.ss-loading-text {
+    font-weight: bold;
+}
+
 .ss-modal {
     display: block !important;
     background-color: rgba(187, 187, 187, 0.21);
@@ -18,6 +22,10 @@
 
 .less-m-b {
     margin-bottom: -50px !important;
+}
+
+.ss-m-t-5 {
+    margin-top: 5px;
 }
 
 /* No border radius! */
@@ -45,4 +53,37 @@
     .ss-fly-alert {
         width: calc(100% - 15px);
     }
+}
+
+/*
+    Thanks to Joeytje50 for his answer StackOverflow
+    https://stackoverflow.com/questions/21842274/cross-browser-custom-styling-for-file-upload-button
+*/
+label.ss-browse input[type="file"] {
+    position: fixed;
+    top: -1000px;
+}
+
+.ss-browse {
+    border-radius: 2px;
+    padding: 10px 20px;
+    margin: 2px;
+    background: rgb(99, 132, 215);
+    display: inline-block;
+}
+.ss-browse:hover {
+    background: rgb(78, 111, 194);
+    cursor: pointer;
+}
+.ss-browse:active {
+    background: rgb(78, 111, 194);
+}
+.ss-browse :invalid + span {
+    color: #A44;
+}
+.ss-browse :valid + span {
+    color: #4A4;
+}
+.ss-browse-label {
+    color: #fff !important;
 }
