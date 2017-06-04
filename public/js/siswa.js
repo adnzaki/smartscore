@@ -149,9 +149,13 @@ var siswa = new Vue({
             this.importProgress = true;
             req.responseType = 'json';
             req.onload = objEvent => {
-                this.loadingText = `${req.response.success}, ${req.response.failed}`;
-                let start = this.offset / this.limit;
-                this.getSiswa(this.limit, start);
+                if(req.response === 0) {
+                    this.loadingText = "Format file yang anda masukkan tidak sesuai";
+                } else {
+                    this.loadingText = `${req.response.success}, ${req.response.failed}`;
+                    let start = this.offset / this.limit;
+                    this.getSiswa(this.limit, start);
+                }                
             }
             req.send(data);
         },

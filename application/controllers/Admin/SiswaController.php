@@ -196,7 +196,7 @@ class SiswaController extends CI_Controller
         $this->upload->initialize($config);
         if(! $this->upload->do_upload('file'))
         {
-            echo json_encode($this->upload->display_errors());
+            echo json_encode(0);
         }
         else
         {
