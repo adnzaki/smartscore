@@ -9,7 +9,7 @@
 <!-- Error alert -->
 <div class="padding less-m-b">
 	<div class="alert alert-danger alert-dismissible ss-no-b-r" role="alert" v-if="errorUpdate">
-		<button type="button" class="close" @click="insertAlert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<button type="button" class="close" @click="errorInsert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<strong>Error!</strong> {{ alertMessage }}
 	</div>
 </div>
