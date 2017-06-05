@@ -15,7 +15,7 @@
 						<h2>Data Siswa</h2>
 					</div>
 					<div class="box-body">
-						<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp Tambah</button>
+						<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 						<div class="dropdown inline">
 							<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
 							<div class="dropdown-menu">

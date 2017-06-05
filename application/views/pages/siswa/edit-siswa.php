@@ -60,13 +60,13 @@
 								<label class="col-sm-2 form-control-label">Jenis Kelamin</label>
 								<div class="col-sm-10">
 									<label class="md-check">
-                                        <input type="radio" id="j_laki" name="j_kelamin_siswa" value="L">
-                                        <i class="green"></i>Laki-laki
-                                    </label>&nbsp &nbsp &nbsp
+										<input type="radio" id="j_laki" name="j_kelamin_siswa" value="L">
+										<i class="green"></i>Laki-laki
+									</label>&nbsp &nbsp &nbsp
 									<label class="md-check">
-                                        <input type="radio" id="j_perempuan" name="j_kelamin_siswa" value="P">
-                                        <i class="green"></i>Perempuan
-                                    </label>
+										<input type="radio" id="j_perempuan" name="j_kelamin_siswa" value="P">
+										<i class="green"></i>Perempuan
+									</label>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -83,7 +83,7 @@
 										<div class='input-group date' id='datetimepicker1'>
 											<input type='text' class="form-control" v-model="detailSiswa.tgl_lahir_siswa" name="tgl_lahir_siswa" minlength="10" maxlength="10" />
 											<span class="input-group-addon">
-						                        <span class="fa fa-calendar"></span>
+												<span class="fa fa-calendar"></span>
 											</span>
 										</div>
 										<sserror :msg="error.tglLahir"></sserror>
@@ -95,12 +95,12 @@
 								<div class="col-sm-10">
 									<div class="form-group">
 										<select class="form-control c-select" id="agama_siswa" name="agama_siswa">
-                                          <option value="Islam">Islam</option>
-                                          <option value="Katholik">Katholik</option>
-                                          <option value="Protestan">Kristen Protestan</option>
-                                          <option value="Hindu">Hindu</option>
-                                          <option value="Buddha">Buddha</option>
-                                        </select>
+											<option value="Islam">Islam</option>
+											<option value="Katholik">Katholik</option>
+											<option value="Protestan">Kristen Protestan</option>
+											<option value="Hindu">Hindu</option>
+											<option value="Buddha">Buddha</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -137,13 +137,13 @@
 								<div class="col-sm-10">
 									<div class="form-group">
 										<select class="form-control c-select" id="job_ayah" name="job_ayah">
-                                          <option value="PNS">PNS</option>
-                                          <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                          <option value="Wiraswasta">Wiraswasta</option>
-                                          <option value="Buruh">Buruh</option>
-                                          <option value="Tidak Bekerja">Tidak Bekerja</option>
-                                          <option value="Lain-lain">Lain-lain</option>
-                                        </select>
+											<option value="PNS">PNS</option>
+											<option value="Karyawan Swasta">Karyawan Swasta</option>
+											<option value="Wiraswasta">Wiraswasta</option>
+											<option value="Buruh">Buruh</option>
+											<option value="Tidak Bekerja">Tidak Bekerja</option>
+											<option value="Lain-lain">Lain-lain</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -152,13 +152,13 @@
 								<div class="col-sm-10">
 									<div class="form-group">
 										<select class="form-control c-select" id="job_ibu" name="job_ibu">
-                                          <option value="PNS">PNS</option>
-                                          <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                          <option value="Wiraswasta">Wiraswasta</option>
-                                          <option value="Buruh">Buruh</option>
-                                          <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
-                                          <option value="Lain-lain">Lain-lain</option>
-                                        </select>
+											<option value="PNS">PNS</option>
+											<option value="Karyawan Swasta">Karyawan Swasta</option>
+											<option value="Wiraswasta">Wiraswasta</option>
+											<option value="Buruh">Buruh</option>
+											<option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+											<option value="Lain-lain">Lain-lain</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -195,13 +195,13 @@
 								<div class="col-sm-10">
 									<div class="form-group">
 										<select class="form-control c-select" id="job_wali" name="job_wali">
-                                          <option value="PNS">PNS</option>
-                                          <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                          <option value="Wiraswasta">Wiraswasta</option>
-                                          <option value="Buruh">Buruh</option>
-                                          <option value="Tidak Bekerja">Tidak Bekerja</option>
-                                          <option value="Lain-lain">Lain-lain</option>
-                                        </select>
+											<option value="PNS">PNS</option>
+											<option value="Karyawan Swasta">Karyawan Swasta</option>
+											<option value="Wiraswasta">Wiraswasta</option>
+											<option value="Buruh">Buruh</option>
+											<option value="Tidak Bekerja">Tidak Bekerja</option>
+											<option value="Lain-lain">Lain-lain</option>
+										</select>
 									</div>
 								</div>
 							</div>
