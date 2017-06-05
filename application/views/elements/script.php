@@ -3,7 +3,7 @@
 </script>
 
 <!-- build:js scripts/app.html.js -->
-<script src="{js}app/vue.min.js"></script>
+<script src="{js}app/vue233.min.js"></script>
 
 <!-- jQuery -->
   <script src="{js}plugins/jquery.min.js"></script>
