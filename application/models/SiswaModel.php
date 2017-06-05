@@ -13,8 +13,12 @@
 
 class SiswaModel extends CI_Model
 {
-    public function getSiswa($limit, $start)
+    public function getSiswa($limit, $start, $search)
     {
+        if(! empty($search))
+        {
+            $this->db->like('nama_siswa', $search);
+        }
         $select = 'id_siswa, nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
         $query = $this->db->select($select)->from('siswa')->order_by('nama_siswa', 'ASC')->limit($limit, $start);
         $result = $query->get()->result();
@@ -34,8 +38,12 @@ class SiswaModel extends CI_Model
         return $query->get()->result();
     }
 
-    public function getTotalRows()
+    public function getTotalRows($search)
     {
+        if(! empty($search))
+        {
+            $this->db->like('nama_siswa', $search);
+        }
         $query = $this->db->get('siswa');
         return $query->num_rows();
     }

@@ -15,18 +15,25 @@
 						<h2>Data Siswa</h2>
 					</div>
 					<div class="box-body">
-						<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
-						<div class="dropdown inline">
-							<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="{base_url}public/docs/FormatDataSiswa.xlsx">
-									<i class="material-icons">file_download</i>
-									Download Format Data Siswa (Excel)
-								</a>
-								<a class="dropdown-item" href="javascript:void(0)" @click="importDialog = true">
-									<i class="material-icons">file_upload</i>
-									Upload Data Siswa
-								</a>
+						<div class="row">
+							<div class="col-sm-8 col-xs-12">
+								<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
+								<div class="dropdown inline">
+									<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="{base_url}public/docs/FormatDataSiswa.xlsx">
+											<i class="material-icons">file_download</i>
+											Download Format Data Siswa (Excel)
+										</a>
+										<a class="dropdown-item" href="javascript:void(0)" @click="importDialog = true">
+											<i class="material-icons">file_upload</i>
+											Upload Data Siswa
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 col-xs-12">
+								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(limit, 0, cariSiswa)" placeholder="Ketik nama dan enter untuk mencari">
 							</div>
 						</div>
 					</div>
@@ -53,17 +60,17 @@
 						</tbody>
 						<tfoot>
 							<td colspan="4" class="text-center">
-								<div class="col-sm-4 offset-sm-8 text-center">
+								<div class="col-sm-4 text-center">
 									<ul class="pagination pagination-sm m-a-0">
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, first)"><i class="material-icons">skip_previous</i></a></li>
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, prev)"><i class="material-icons">navigate_before</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(limit, first, cariSiswa)"><i class="material-icons">skip_previous</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(limit, prev, cariSiswa)"><i class="material-icons">navigate_before</i></a></li>
 										<li>
 											<div class="col-xs-3">
-												<input type="text" class="form-control" v-model="setStart" placeholder="Enter email" @keyup.enter="getSiswa(limit, setStart - 1)">
+												<input type="text" class="form-control" v-model="setStart" @keyup.enter="getSiswa(limit, setStart - 1, cariSiswa)">
 											</div>
 										</li>
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, next)"><i class="material-icons">navigate_next</i></a></li>
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, last)"><i class="material-icons">skip_next</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(limit, next, cariSiswa)"><i class="material-icons">navigate_next</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(limit, last, cariSiswa)"><i class="material-icons">skip_next</i></a></li>
 									</ul>
 								</div>
 							</td>

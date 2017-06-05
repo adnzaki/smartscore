@@ -8,7 +8,7 @@
  * @link        http://wolestech.com
  * @version     1.0.0
  */
- 
+
 Vue.component('sserror', {
     props: ['msg'],
     template: '<p class="ss-error">{{ msg }}</p>'
@@ -21,6 +21,7 @@ var siswa = new Vue({
         detailSiswa: '',
         filename: '',
         loadingText: '',
+        cariSiswa: '',
         showDaftarSiswa: false,
         showFormAdd: false,
         showFormEdit: false,
@@ -45,7 +46,7 @@ var siswa = new Vue({
         },
     },
     methods: {
-        getSiswa(limit, start) {
+        getSiswa(limit, start, search) {
             if(core.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true;
             } else {
@@ -55,7 +56,7 @@ var siswa = new Vue({
                 this.offset = start * limit;
                 this.prev = start - 1;
                 $.ajax({
-                    url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}`,
+                    url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}/${search}`,
                     type: 'GET',
                     dataType: 'json',
                     success: data => {
@@ -154,7 +155,7 @@ var siswa = new Vue({
                 } else {
                     this.loadingText = `${req.response.success}, ${req.response.failed}`;
                     let start = this.offset / this.limit;
-                    this.getSiswa(this.limit, start);
+                    this.getSiswa(this.limit, start, this.cariSiswa);
                 }
             }
             req.send(data);
@@ -212,7 +213,7 @@ var siswa = new Vue({
                     let start = siswa.offset / siswa.limit;
                     siswa.deleteAlert = true;
                     siswa.alertMessage = "Data siswa berhasil dihapus";
-                    siswa.getSiswa(siswa.limit, start);
+                    siswa.getSiswa(siswa.limit, start, siswa.cariSiswa);
                     setTimeout(() => {
                         siswa.deleteAlert = false;
                     }, 5000)
@@ -282,7 +283,7 @@ var siswa = new Vue({
                 this.errorUpdate = false;
                 let start = this.offset / this.limit;
                 setTimeout(() => {
-                    this.getSiswa(this.limit, start);
+                    this.getSiswa(this.limit, start, this.cariSiswa);
                     siswa.showDaftarSiswa = true;
                 }, 400);
             }

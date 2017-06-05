@@ -29,7 +29,7 @@
                 </a>
               </li>
 
-              <li @click="siswa.getSiswa(siswa.limit, 0)">
+              <li @click="siswa.getSiswa(siswa.limit, 0, '')">
                 <a href="javascript:void(0)" >
                   <span class="nav-icon">
                     <i class="material-icons">people

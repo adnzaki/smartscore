@@ -19,9 +19,9 @@ class SiswaController extends CI_Controller
         $this->load->model('SiswaModel');
     }
 
-    public function fetchSiswa($limit, $start)
+    public function fetchSiswa($limit, $start, $search = '')
     {
-        $data = $this->SiswaModel->getSiswa($limit, $start);
+        $data = $this->SiswaModel->getSiswa($limit, $start, $search);
         $formatted = [];
         foreach($data as $data)
         {
@@ -31,7 +31,7 @@ class SiswaController extends CI_Controller
 
         $res = [
             'dataSiswa' => $formatted,
-            'totalRows' => $this->SiswaModel->getTotalRows()
+            'totalRows' => $this->SiswaModel->getTotalRows($search)
         ];
         echo json_encode($res);
     }
