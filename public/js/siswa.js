@@ -8,7 +8,7 @@
  * @link        http://wolestech.com
  * @version     1.0.0
  */
-
+ 
 Vue.component('sserror', {
     props: ['msg'],
     template: '<p class="ss-error">{{ msg }}</p>'
@@ -155,7 +155,7 @@ var siswa = new Vue({
                     this.loadingText = `${req.response.success}, ${req.response.failed}`;
                     let start = this.offset / this.limit;
                     this.getSiswa(this.limit, start);
-                }                
+                }
             }
             req.send(data);
         },
