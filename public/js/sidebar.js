@@ -21,8 +21,9 @@ var sidebar = new Vue({
             $('#formTambahSiswa').trigger("reset");
             setTimeout(() => {
                 this.modal.siswaIsFilled = false;
-                siswa.getSiswa(siswa.limit, siswa.offset);
+                siswa.getSiswa(siswa.limit, siswa.offset, siswa.cariSiswa);
                 siswa.clearMessages();
+                siswa.errorInsert = false;
             }, 100);
         }
     }
