@@ -54,7 +54,6 @@ var siswa = new Vue({
                 this.showFormEdit = false;
                 var obj = siswa;
                 this.offset = start * limit;
-                this.prev = start - 1;
                 $.ajax({
                     url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}/${search}`,
                     type: 'GET',
@@ -76,6 +75,7 @@ var siswa = new Vue({
 
                         // atur nilai default untuk next page
                         start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
+                        start === obj.first ? obj.prev = start : obj.prev = start - 1;
                     }
                 })
             }
@@ -248,6 +248,27 @@ var siswa = new Vue({
             }
             this.last = countLink;
             return this.pageLinks;
+        },
+        dataTo() {
+            let currentPage = this.offset / this.limit,
+                range;
+            if(currentPage === this.last) {
+                range = this.totalRows;
+            } else {
+                range = this.offset + this.limit;
+            }
+
+            return range;
+        },
+        dataFrom() {
+            let from;
+            if(this.offset === 0) {
+                from = 1;
+            } else {
+                from = this.offset + 1;
+            }
+
+            return from;
         },
         showForm(form) {
             this.showDaftarSiswa = false;

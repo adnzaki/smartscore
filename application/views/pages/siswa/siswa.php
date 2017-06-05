@@ -60,6 +60,9 @@
 						</tbody>
 						<tfoot>
 							<td colspan="4" class="text-center">
+								<div class="col-sm-8 text-left">
+									<p>Menampilkan baris <b>{{ dataFrom() }}</b> - <b>{{ dataTo() }}</b> dari <b>{{ totalRows }}</b> baris.</p>
+								</div>
 								<div class="col-sm-4 text-center">
 									<ul class="pagination pagination-sm m-a-0">
 										<li><a href="javascript:void(0)" @click="getSiswa(limit, first, cariSiswa)"><i class="material-icons">skip_previous</i></a></li>
