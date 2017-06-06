@@ -75,6 +75,8 @@ var siswa = new Vue({
 
                         // atur nilai default untuk next page
                         start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1;
+
+                        // atur nilai default untuk previous page
                         start === obj.first ? obj.prev = start : obj.prev = start - 1;
                     }
                 })
@@ -233,6 +235,10 @@ var siswa = new Vue({
                     $(this).attr("selected", "selected");
                 }
             })
+        },
+        showPerPage(limit) {
+            this.limit = limit;
+            this.getSiswa(limit, this.offset, this.cariSiswa);
         },
         pagination(num) {
             // reset links

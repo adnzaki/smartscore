@@ -16,7 +16,7 @@
 					</div>
 					<div class="box-body">
 						<div class="row">
-							<div class="col-sm-8 col-xs-12">
+							<div class="col-sm-5 col-xs-12">
 								<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 								<div class="dropdown inline">
 									<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
@@ -29,6 +29,20 @@
 											<i class="material-icons">file_upload</i>
 											Upload Data Siswa
 										</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3 col-xs-12">
+								<div class="form-group row">
+									<label for="" class="col-sm-3 form-control-label">Tampilkan</label>
+									<div class="col-sm-9">
+										<select class="form-control">
+											<option @click="showPerPage(10)">10 baris</option>
+											<option @click="showPerPage(25)">25 baris</option>
+											<option @click="showPerPage(50)">50 baris</option>
+											<option @click="showPerPage(100)">100 baris</option>
+											<option @click="showPerPage(250)">250 baris</option>
+										</select>
 									</div>
 								</div>
 							</div>
