@@ -252,7 +252,7 @@ var siswa = new Vue({
         },
         showPerPage(limit) {
             this.limit = limit
-            this.getSiswa(limit, this.offset, this.cariSiswa)
+            this.getSiswa(this.limit, 0, this.cariSiswa)
         },
         pagination(num) {
             // reset links
