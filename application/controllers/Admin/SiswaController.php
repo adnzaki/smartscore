@@ -67,6 +67,11 @@ class SiswaController extends CI_Controller
                 'rules' => 'required'.$is_unique[1].'|exact_length[10]|numeric'
             ],
             [
+                'field' => 'j_kelamin_siswa',
+                'label' => 'jenis kelamin',
+                'rules' => 'required'
+            ],
+            [
                 'field' => 'tempat_lahir_siswa',
                 'label' => 'tempat lahir',
                 'rules' => 'required|max_length[100]'
@@ -138,6 +143,7 @@ class SiswaController extends CI_Controller
                 'nama_siswa'    => form_error('nama_siswa'),
                 'nis'           => form_error('nis'),
                 'nisn'          => form_error('nisn'),
+                'j_kelamin_siswa' => form_error('j_kelamin_siswa'),
                 'tempat_lahir_siswa' => form_error('tempat_lahir_siswa'),
                 'tgl_lahir_siswa' => form_error('tgl_lahir_siswa'),
                 'pend_sblm'     => form_error('pend_sblm'),

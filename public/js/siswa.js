@@ -41,7 +41,7 @@ var siswa = new Vue({
         last: 0, setStart: 0, totalRows: 0,
         // error messages
         error: {
-            nama: '', nis: '', nisn: '', tmptLahir: '', tglLahir: '',
+            nama: '', nis: '', nisn: '', jKelaminSiswa: '', tmptLahir: '', tglLahir: '',
             pendSblm: '', alamatSiswa: '', namaAyah: '', namaIbu: '',
             alamatOrtu: '', telpOrtu: '', namaWali: '', alamatWali: '', telpWali: ''
         },
@@ -106,6 +106,7 @@ var siswa = new Vue({
                         obj.error.nama = msg.nama_siswa
                         obj.error.nis = msg.nis
                         obj.error.nisn = msg.nisn
+                        obj.error.jKelaminSiswa = msg.j_kelamin_siswa
                         obj.error.tmptLahir = msg.tempat_lahir_siswa
                         obj.error.tglLahir = msg.tgl_lahir_siswa
                         obj.error.pendSblm = msg.pend_sblm

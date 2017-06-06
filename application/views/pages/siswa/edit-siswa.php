@@ -67,6 +67,7 @@
 										<input type="radio" id="j_perempuan" name="j_kelamin_siswa" value="P">
 										<i class="green"></i>Perempuan
 									</label>
+									<sserror :msg="error.jKelaminSiswa"></sserror>
 								</div>
 							</div>
 							<div class="form-group row">
