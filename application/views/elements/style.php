@@ -11,6 +11,4 @@
 <!-- endbuild -->
 <!-- <link rel="stylesheet" href="{css}styles/font.css" type="text/css" /> -->
 <link rel="stylesheet" href="{fonts}roboto/font.css" type="text/css" />
-
-<link rel="stylesheet" href="{css}loader.css" type="text/css" />
 <link rel="stylesheet" href="{css}ss-main.css" type="text/css" />

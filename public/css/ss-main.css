@@ -1,3 +1,6 @@
+@import url('checkbox.css');
+@import url('loader.css');
+
 .ss-logout-btn {
     background-color: rgb(175, 61, 61);
 }
@@ -87,3 +90,5 @@ label.ss-browse input[type="file"] {
 .ss-browse-label {
     color: #fff !important;
 }
+
+/* Custom Checkbox */
