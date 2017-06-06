@@ -25,8 +25,9 @@ var siswa = new Vue({
         showDaftarSiswa: false,
         showFormAdd: false,
         showFormEdit: false,
-        idSiswa: '',
+        selectedID: [],
         deleteConfirm: false,
+        unableToDelete: false,
         importDialog: false,
         importProgress: false,
 
@@ -194,33 +195,45 @@ var siswa = new Vue({
             })
         },
         showDeleteConfirm(id) {
-            this.idSiswa = id;
+            this.selectedID = [];
+            this.unableToDelete = false;
+            this.selectedID.push(id);
             this.deleteConfirm = true;
         },
+        multipleDeleteSiswa() {
+            if(this.selectedID.length < 1) {
+                this.unableToDelete = true;
+                this.alertMessage = "Silakan pilih siswa yang ingin dihapus"
+            } else {
+                this.unableToDelete = false;
+                this.deleteConfirm = true;
+            }
+        },
         deleteSiswa() {
-            $.ajax({
-                url: `${baseUrl}admin/SiswaController/deleteSiswa/${this.idSiswa}`,
-                type: 'POST',
-                success: () => {
-                    siswa.deleteConfirm = false;
+            for(let i = 0; i < this.selectedID.length; i++) {
+                $.ajax({
+                    url: `${baseUrl}admin/SiswaController/deleteSiswa/${this.selectedID[i]}`,
+                    type: 'POST',
+                })
+            }
+            this.deleteConfirm = false;
+            this.selectedID = [];
 
-                    // lakukan pengecekan total baris dalam satu halaman tabel siswa
-                    // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
-                    // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
-                    let diff = siswa.totalRows - siswa.offset;
-                    if(diff == 1) {
-                        siswa.offset -= siswa.limit;
-                    }
+            // lakukan pengecekan total baris dalam satu halaman tabel siswa
+            // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
+            // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
+            let diff = this.totalRows - siswa.offset;
+            if(diff == 1) {
+                this.offset -= this.limit;
+            }
 
-                    let start = siswa.offset / siswa.limit;
-                    siswa.deleteAlert = true;
-                    siswa.alertMessage = "Data siswa berhasil dihapus";
-                    siswa.getSiswa(siswa.limit, start, siswa.cariSiswa);
-                    setTimeout(() => {
-                        siswa.deleteAlert = false;
-                    }, 5000)
-                }
-            })
+            let start = this.offset / this.limit;
+            this.deleteAlert = true;
+            this.alertMessage = "Data siswa berhasil dihapus";
+            this.getSiswa(this.limit, start, this.cariSiswa);
+            setTimeout(() => {
+                this.deleteAlert = false;
+            }, 5000)
         },
         isChecked() {
             if(this.detailSiswa.j_kelamin_siswa === $("#j_laki").val()) {

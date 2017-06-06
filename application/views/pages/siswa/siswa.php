@@ -6,6 +6,14 @@
 	</div>
 </div>
 
+<!-- Unable to delete -->
+<div class="padding less-m-b">
+	<div class="alert alert-danger alert-dismissible ss-no-b-r ss-fly-alert" role="alert" v-if="unableToDelete">
+		<button type="button" class="close" @click="unableToDelete = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Error!</strong> {{ alertMessage }}
+	</div>
+</div>
+
 <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
 	<div class="padding" v-if="showDaftarSiswa">
 		<div class="row">
@@ -16,8 +24,9 @@
 					</div>
 					<div class="box-body">
 						<div class="row">
-							<div class="col-sm-5 col-xs-12">
+							<div class="col-sm-6 col-xs-12">
 								<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
+								<button class="btn btn-fw white" @click="multipleDeleteSiswa"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
 								<div class="dropdown inline">
 									<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
 									<div class="dropdown-menu">
@@ -46,8 +55,8 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-4 col-xs-12">
-								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(limit, 0, cariSiswa)" placeholder="Ketik nama dan enter untuk mencari">
+							<div class="col-sm-3 col-xs-12">
+								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(limit, 0, cariSiswa)" placeholder="Cari siswa (ketik dan enter)">
 							</div>
 						</div>
 					</div>
@@ -55,6 +64,7 @@
 					<table class="table table-striped b-t">
 						<thead>
 							<tr>
+								<th width="30">#</th>
 								<th>Nama Siswa</th>
 								<th>Jenis Kelamin</th>
 								<th>Tempat Lahir</th>
@@ -64,6 +74,12 @@
 						</thead>
 						<tbody>
 							<tr v-for="list in daftarSiswa">
+								<td class="text-center">
+									<label class="control control--checkbox">
+										<input type="checkbox" v-model="selectedID" :value="list.id_siswa" />
+										<div class="control__indicator"></div>
+									</label>
+								</td>
 								<td>{{ list.nama_siswa }}</td>
 								<td>{{ list.j_kelamin_siswa }}</td>
 								<td>{{ list.tempat_lahir_siswa }}</td>
