@@ -32,7 +32,7 @@
   <script src="{js}app/ui-toggle-class.js"></script>
 
   <script src="{js}app/app.js"></script>
-  <script src="{js}core.js"></script>
+  <script src="{js}shared.js"></script>
   <script src="{js}sidebar.js"></script>
   <script src="{js}siswa.js"></script>
 

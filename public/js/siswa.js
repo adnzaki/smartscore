@@ -48,7 +48,7 @@ var siswa = new Vue({
     },
     methods: {
         getSiswa(limit, start, search) {
-            if(core.formHasValue("#formTambahSiswa")) {
+            if(shared.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true
             } else {
                 this.showFormAdd = false
@@ -201,6 +201,10 @@ var siswa = new Vue({
             this.selectedID.push(id)
             this.deleteConfirm = true
         },
+        closeDeleteConfirm() {
+            this.selectedID = []
+            this.deleteConfirm = false
+        },
         multipleDeleteSiswa() {
             if(this.selectedID.length < 1) {
                 this.unableToDelete = true
@@ -313,7 +317,7 @@ var siswa = new Vue({
             }, 400)
         },
         closeForm(form) {
-            if(core.formHasValue("#formTambahSiswa")) {
+            if(shared.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true
             } else {
                 this[form] = false

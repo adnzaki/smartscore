@@ -128,7 +128,7 @@
 						<p>Apakah anda yakin ingin menghapus data ini?</p>
 					</div>
 					<div class="modal-footer">
-						<button class="btn white" @click="deleteConfirm = false">Cancel</button>
+						<button class="btn white" @click="closeDeleteConfirm">Cancel</button>
 						<button class="btn primary" @click="deleteSiswa">OK</button>
 					</div>
 				</div>
