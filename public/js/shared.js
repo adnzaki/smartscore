@@ -9,7 +9,7 @@
  * @version     1.0.0
  */
 
-var core = new Vue({
+var shared = new Vue({
     el: '#loader',
     data: {
         showLoader: false
