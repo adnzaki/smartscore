@@ -18,7 +18,7 @@
                 <small class="text-muted">Master</small>
               </li>
 
-              <li>
+              <li @click="module.open('beranda')">
                 <a href="javascript:void(0)">
                   <span class="nav-icon">
                     <i class="material-icons">home
@@ -29,7 +29,7 @@
                 </a>
               </li>
 
-              <li @click="siswa.getSiswa(siswa.limit, 0, '')">
+              <li @click="module.open('siswa')">
                 <a href="javascript:void(0)" >
                   <span class="nav-icon">
                     <i class="material-icons">people
@@ -51,7 +51,7 @@
                 </a>
               </li>
 
-              <li>
+              <li @click="module.open('rombel')">
                 <a href="javascript:void(0)" >
                   <span class="nav-icon">
                     <i class="material-icons">airplay

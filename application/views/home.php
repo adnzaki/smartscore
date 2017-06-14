@@ -16,10 +16,16 @@
 			<?php $this->view('elements/app-footer') ?>
 			<div ui-view class="app-body" id="view">
 				<?php $this->view('content/loader') ?>
+				<div id="beranda">
+					<h2 v-if="showDashboard">Halaman dashboard</h2>
+				</div>
 				<div id="dataSiswa">
 					<?php $this->view('pages/siswa/siswa') ?>
 					<?php $this->view('pages/siswa/tambah-siswa') ?>
 					<?php $this->view('pages/siswa/edit-siswa') ?>
+				</div>
+				<div id="dataRombel">
+					<h2 v-if="showDaftarRombel">Ini adalah halaman pengelolaan rombel!!</h2>
 				</div>
 			</div>
 		</div>

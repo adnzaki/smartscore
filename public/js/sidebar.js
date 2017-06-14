@@ -21,7 +21,7 @@ var sidebar = new Vue({
             $('#formTambahSiswa').trigger("reset");
             setTimeout(() => {
                 this.modal.siswaIsFilled = false;
-                siswa.getSiswa(siswa.limit, siswa.offset, siswa.cariSiswa);
+                module.open(module.toOpen)
                 siswa.clearMessages();
                 siswa.errorInsert = false;
             }, 100);
