@@ -46,6 +46,10 @@
     width: calc(100% - 250px);
 }
 
+.text-black {
+    color: #000 !important;
+}
+
 @media (max-width: 991px) {
     .ss-fly-alert {
         width: calc(100% - 32px);

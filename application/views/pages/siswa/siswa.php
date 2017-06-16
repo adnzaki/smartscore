@@ -46,11 +46,11 @@
 									<label for="" class="col-sm-3 form-control-label">Tampilkan</label>
 									<div class="col-sm-9">
 										<select class="form-control">
-											<option @click="showPerPage(10)">10 baris</option>
-											<option @click="showPerPage(25)">25 baris</option>
-											<option @click="showPerPage(50)">50 baris</option>
-											<option @click="showPerPage(100)">100 baris</option>
-											<option @click="showPerPage(250)">250 baris</option>
+											<option @click="showPerPage(10)" class="text-black">10 baris</option>
+											<option @click="showPerPage(25)" class="text-black">25 baris</option>
+											<option @click="showPerPage(50)" class="text-black">50 baris</option>
+											<option @click="showPerPage(100)" class="text-black">100 baris</option>
+											<option @click="showPerPage(250)" class="text-black">250 baris</option>
 										</select>
 									</div>
 								</div>
