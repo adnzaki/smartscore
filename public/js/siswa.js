@@ -250,10 +250,6 @@ var siswa = new Vue({
                 }
             })
         },
-        showPerPage(limit) {
-            paging.limit = limit
-            this.getSiswa(paging.limit, 0, this.cariSiswa)
-        },
         showForm(form) {
             this.showDaftarSiswa = false
             setTimeout(() => {
