@@ -32,6 +32,7 @@
   <script src="{js}app/ui-toggle-class.js"></script>
 
   <script src="{js}app/app.js"></script>
+  <script src="{js}paging.js"></script>
   <script src="{js}shared.js"></script>
   <script src="{js}sidebar.js"></script>
   <script src="{js}dashboard.js"></script>

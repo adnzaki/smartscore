@@ -35,10 +35,6 @@ var siswa = new Vue({
         insertAlert: false, updateAlert: false, deleteAlert: false,
         errorInsert: false, errorUpdate: false, alertMessage: '',
 
-        // data for pagination
-        pageLinks: [], limit: 10, offset: 0,
-        prev: 0, next: 0, first: 0,
-        last: 0, setStart: 0, totalRows: 0,
         // error messages
         error: {
             nama: '', nis: '', nisn: '', jKelaminSiswa: '', tmptLahir: '', tglLahir: '',
@@ -54,9 +50,9 @@ var siswa = new Vue({
                 this.showFormAdd = false
                 this.showFormEdit = false
                 var obj = siswa
-                this.offset = start * limit
+                paging.offset = start * limit
                 $.ajax({
-                    url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}/${search}`,
+                    url: `${baseUrl}admin/SiswaController/fetchSiswa/${limit}/${paging.offset}/${search}`,
                     type: 'GET',
                     dataType: 'json',
                     success: data => {
@@ -69,16 +65,16 @@ var siswa = new Vue({
                         }, 400)
 
                         // simpan data total baris
-                        obj.totalRows = data['totalRows']
+                        paging.totalRows = data['totalRows']
 
                         // perbarui data pagination
-                        obj.pagination(data['totalRows'])
+                        paging.create(data['totalRows'])
 
                         // atur nilai default untuk next page
-                        start === (obj.last -= 1) ? obj.next = start : obj.next = start + 1
+                        start === (paging.last -= 1) ? paging.next = start : paging.next = start + 1
 
                         // atur nilai default untuk previous page
-                        start === obj.first ? obj.prev = start : obj.prev = start - 1
+                        start === paging.first ? paging.prev = start : paging.prev = start - 1
                     }
                 })
             }
@@ -158,8 +154,8 @@ var siswa = new Vue({
                     this.loadingText = "Format file yang anda masukkan tidak sesuai"
                 } else {
                     this.loadingText = `${req.response.success}, ${req.response.failed}`
-                    let start = this.offset / this.limit
-                    this.getSiswa(this.limit, start, this.cariSiswa)
+                    let start = paging.offset / paging.limit
+                    this.getSiswa(paging.limit, start, this.cariSiswa)
                 }
             }
             req.send(data)
@@ -227,15 +223,15 @@ var siswa = new Vue({
             // lakukan pengecekan total baris dalam satu halaman tabel siswa
             // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
             // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
-            let diff = this.totalRows - siswa.offset
+            let diff = paging.totalRows - siswa.offset
             if(diff == 1) {
-                this.offset -= this.limit
+                paging.offset -= paging.limit
             }
 
-            let start = this.offset / this.limit
+            let start = paging.offset / paging.limit
             this.deleteAlert = true
             this.alertMessage = "Data siswa berhasil dihapus"
-            this.getSiswa(this.limit, start, this.cariSiswa)
+            this.getSiswa(paging.limit, start, this.cariSiswa)
             setTimeout(() => {
                 this.deleteAlert = false
             }, 5000)
@@ -255,44 +251,8 @@ var siswa = new Vue({
             })
         },
         showPerPage(limit) {
-            this.limit = limit
-            this.getSiswa(this.limit, 0, this.cariSiswa)
-        },
-        pagination(num) {
-            // reset links
-            this.pageLinks = []
-
-            // hitung jumlah halaman yang dibutuhkan untuk link pagination
-            let countLink = num / this.limit
-            countLink = Math.ceil(countLink)
-
-            // generate link pagination....
-            for(let i = 0; i < countLink; i++) {
-                this.pageLinks.push(i + 1)
-            }
-            this.last = countLink
-            return this.pageLinks
-        },
-        dataTo() {
-            let currentPage = this.offset / this.limit,
-                range
-            if(currentPage === this.last) {
-                range = this.totalRows
-            } else {
-                range = this.offset + this.limit
-            }
-
-            return range
-        },
-        dataFrom() {
-            let from
-            if(this.offset === 0) {
-                from = 1
-            } else {
-                from = this.offset + 1
-            }
-
-            return from
+            paging.limit = limit
+            this.getSiswa(paging.limit, 0, this.cariSiswa)
         },
         showForm(form) {
             this.showDaftarSiswa = false

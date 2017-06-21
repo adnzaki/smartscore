@@ -17,22 +17,28 @@ var module = new Vue({
             this.toOpen = 'siswa'
             this.close()
             this.activeModule = 'siswa'
-            siswa.getSiswa(siswa.limit, 0, '')
+            siswa.getSiswa(paging.limit, 0, '')
         },
         rombel() {
             if(this.close() !== false) {
                 this.toOpen = 'rombel'
                 this.close()
                 this.activeModule = 'rombel'
-                rombel.getRombel()
+                rombel.getRombel(rombel.limit, 0)
             }
         },
         open(moduleName) {
             this.toOpen = moduleName
             switch (moduleName) {
                 case 'beranda': this.beranda(); break
-                case 'siswa': this.siswa(); break
-                case 'rombel': this.rombel(); break
+                case 'siswa':
+                    paging.reset()
+                    this.siswa()
+                    break
+                case 'rombel':
+                    paging.reset()
+                    this.rombel()
+                    break
                 default: 'Module name has not been initialized'
             }
         },

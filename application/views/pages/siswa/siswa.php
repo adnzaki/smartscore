@@ -56,7 +56,7 @@
 								</div>
 							</div>
 							<div class="col-sm-3 col-xs-12">
-								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(limit, 0, cariSiswa)" placeholder="Cari siswa (ketik dan enter)">
+								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(paging.limit, 0, cariSiswa)" placeholder="Cari siswa (ketik dan enter)">
 							</div>
 						</div>
 					</div>
@@ -91,19 +91,19 @@
 						<tfoot>
 							<td colspan="4" class="text-center">
 								<div class="col-sm-8 text-left">
-									<p>Menampilkan baris <b>{{ dataFrom() }}</b> - <b>{{ dataTo() }}</b> dari <b>{{ totalRows }}</b> baris.</p>
+									<p>Menampilkan baris <b>{{ paging.dataFrom() }}</b> - <b>{{ paging.dataTo() }}</b> dari <b>{{ paging.totalRows }}</b> baris.</p>
 								</div>
 								<div class="col-sm-4 text-center">
 									<ul class="pagination pagination-sm m-a-0">
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, first, cariSiswa)"><i class="material-icons">skip_previous</i></a></li>
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, prev, cariSiswa)"><i class="material-icons">navigate_before</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(paging.limit, paging.first, cariSiswa)"><i class="material-icons">skip_previous</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(paging.limit, paging.prev, cariSiswa)"><i class="material-icons">navigate_before</i></a></li>
 										<li>
 											<div class="col-xs-3">
-												<input type="text" class="form-control" v-model="setStart" @keyup.enter="getSiswa(limit, setStart - 1, cariSiswa)">
+												<input type="text" class="form-control" v-model="paging.setStart" @keyup.enter="getSiswa(paging.limit, paging.setStart - 1, cariSiswa)">
 											</div>
 										</li>
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, next, cariSiswa)"><i class="material-icons">navigate_next</i></a></li>
-										<li><a href="javascript:void(0)" @click="getSiswa(limit, last, cariSiswa)"><i class="material-icons">skip_next</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(paging.limit, paging.next, cariSiswa)"><i class="material-icons">navigate_next</i></a></li>
+										<li><a href="javascript:void(0)" @click="getSiswa(paging.limit, paging.last, cariSiswa)"><i class="material-icons">skip_next</i></a></li>
 									</ul>
 								</div>
 							</td>
