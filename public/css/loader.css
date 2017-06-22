@@ -1,8 +1,10 @@
 .loader-wrapper {
-    width: calc(100% - 12.5rem);
+    /*width: calc(100% - 12.5rem);*/
+    width: 100%;
     position: absolute;
     background-color: #2e3e4e;
-    height: calc(100vh - 3.5rem);
+    /*height: calc(100vh - 3.5rem);*/
+    height: 100vh;
     overflow-x: hidden;
     z-index: 1270;
 }
@@ -17,7 +19,7 @@
 width: 60px;
 height: 60px;
 margin: 0 auto;
-margin-top: 80px;
+margin-top: 180px;
 position: relative;
 transform: rotateZ(45deg);
     -o-transform: rotateZ(45deg);
