@@ -282,9 +282,9 @@ var siswa = new Vue({
                 this.updateAlert = false
                 this.errorInsert = false
                 this.errorUpdate = false
-                let start = this.offset / this.limit
+                let start = paging.offset / paging.limit
                 setTimeout(() => {
-                    this.getSiswa(this.limit, start, this.cariSiswa)
+                    this.getSiswa(paging.limit, start, this.cariSiswa)
                     siswa.showDaftarSiswa = true
                 }, 400)
             }
