@@ -25,7 +25,7 @@
 					<?php $this->view('pages/siswa/edit-siswa') ?>
 				</div>
 				<div id="dataRombel">
-					<h2 v-if="showDaftarRombel">Ini adalah halaman pengelolaan rombel!!</h2>
+					<?php $this->view('pages/rombel/rombel') ?>
 				</div>
 			</div>
 		</div>

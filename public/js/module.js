@@ -24,7 +24,7 @@ var module = new Vue({
                 this.toOpen = 'rombel'
                 this.close()
                 this.activeModule = 'rombel'
-                rombel.getRombel(rombel.limit, 0)
+                rombel.getRombel(paging.limit, 0)
             }
         },
         open(moduleName) {
