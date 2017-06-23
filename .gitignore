@@ -35,3 +35,4 @@ public/script/app.js
 public/script/vue.js
 public/script/vue.runtime.min.js
 public/script/vue.runtime.js
+*.trash
