@@ -1,6 +1,7 @@
-# smartscore
+# Smartscore User Interface
 
-> Percobaan
+> Source code di dalam folder ini merupakan user interface aplikasi Smartscore.
+> Untuk bisa menjalankan Smartscore, silakan lakukan beberapa langkah di bawah ini
 
 ## Build Setup
 
@@ -14,5 +15,3 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).

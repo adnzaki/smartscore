@@ -10,15 +10,16 @@ Smartscore adalah aplikasi yang menggunakan teknologi web terbaru sehingga membu
 - Sistem Operasi : Windows 7 SP2 atau yang lebih tinggi
 - Browser versi terbaru untuk Chrome, Firefox, Edge, Opera atau Safari (saat ini belum mendukung Internet Explorer)
 - PHP 5.6 atau lebih tinggi (disarankan PHP 7+)
+- Node.js versi 6.11.0 atau lebih tinggi
 
-## Back-end Framework
-Smartscore dibangun di atas framework PHP yaitu CodeIgniter. CodeIgniter merupakan framework yang sederhana namun memiliki fitur yang cukup lengkap serta memiliki performa yang memadai untuk pembuatan aplikasi berbasis web.
+## API Framework
+Smartscore menggunakan CodeIgniter sebagai framework untuk membangun Application Programming Interface (API) yang menghubungkan User Interface dengan database MySQL. CodeIgniter digunakan karena memiliki dukungan yang baik untuk database MySQL serta sudah dilengkapi fitur-fitur yang lengkap untuk kebutuhan aplikasi berbasis database MySQL.
 
-## Front-end Framework
-Smartscore menggunakan Vue.js sebagai framework untuk bagian front-end. Vue.js dipilih karena memiliki performa yang sangat baik, syntax yang sederhana dan mudah untuk dimaintain.
+## User Interface Framework
+Smartscore menggunakan Vue.js sebagai framework untuk membangun antarmuka penggunanya. UI Smartscore dijalakan melalui server Node.js untuk proses kompilasi kode Javascript yang di-bundle dengan Webpack. Seluruh template Smartscore menggunakan Vue Component untuk mendukung plugin vue-router sebagai engine Single-Page Application.
 
 ## Kontribusi
-Aplikasi ini dibangun berbasis CodeIgniter 3.1.3 untuk bagian back-end (dan akan terus diupgrade ke versi terbaru CodeIgniter) serta Vue.js untuk bagian front-end. Bagi siapapun yang ingin ikut berkontribusi dalam proyek ini, diwajibkan untuk menguasai CodeIgniter pada minimal tingkat menengah (tidak diperkenankan bagi yang baru mengenal CodeIgniter, silakan kunjungi proyek <a href="https://github.com/adnzaki/ostium_cms/">OstiumCMS</a> untuk pemula) serta memahami cara kerja framework Javascript Vue.js. Kemampuan dalam menggunakan Vue.js jauh lebih direkomendasikan dibandingkan hanya sekedar memahami cara kerjanya, karena Smartscore sangat bergantung pada framework ini, segala transaksi data atau alur kerja program tidak lepas dari peran Vue.js di dalamnya.
+Smartscore dibangun dengan menggunakan 2 framework, yang pertama adalah framework untuk API database MySQL yaitu CodeIgniter versi 3.1.3 saat ini. Framework yang kedua adalah Vue.js untuk membangun user interface. Tracking bug, usulan penambahan fitur dilakukan melalui Issue. Instalasi Smartscore dapat dilakukan dengan cara Clone repositori ini kemudian lakukan setup untuk menjalankan Smartscore via Node.js, lihat langkah-langkahnya [di sini](https://github.com/adnzaki/smartscore/blob/master/ui/README.md). Untuk kontribusi di bagian User Interface, pastikan anda telah memahami cara kerja *Adnvanced Javascript Application* dengan NPM, ES6 Module, Webpack dan Vue Component.
 
 ## Hak Cipta
 Smartscore dilisensikan di bawah <a href="https://github.com/adnzaki/smartscore/blob/master/license.txt">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License</a>, dimana pengguna diperbolehkan mendownload dan menyebarluaskan software ini untuk tujuan non-komersial dan tanpa memodifikasi isi program serta mencantumkan kredit pemilik software. Segala bentuk perubahan pada software ini harus berdasarkan izin dari kami selaku pemegang hak cipta. Segala bentuk penggunaan software yang tidak sesuai dengan aturan yang ada pada lisensi ini dapat dikenakan tindakan tegas yaitu penegakkan hukum atas penyalahgunaan kekayaan intelektual.
