@@ -1,6 +1,6 @@
 {
-  "name": "smartscore",
-  "description": "Percobaan",
+  "name": "Smartscore",
+  "description": "Aplikasi Pengolahan Nilai Siswa berbasis Kurikulum 2013 untuk tingkat Sekolah Dasar",
   "version": "1.0.0",
   "author": "Adnan Zaki",
   "private": true,
