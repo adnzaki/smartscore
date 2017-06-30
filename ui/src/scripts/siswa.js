@@ -11,6 +11,7 @@
 
 import Vue from 'vue'
 import { paging } from './paging.js'
+import { shared } from './shared.js'
 import global from './global.js'
 
 Vue.component('sserror', {
@@ -69,7 +70,7 @@ export default {
     },
     methods: {
         getSiswa(limit, start, search) {
-            if(this.formHasValue("#formTambahSiswa")) {
+            if(shared.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true
             } else {
                 this.showFormAdd = false
@@ -312,7 +313,7 @@ export default {
             }, 400)
         },
         closeForm(form) {
-            if(this.formHasValue("#formTambahSiswa")) {
+            if(shared.formHasValue("#formTambahSiswa")) {
                 sidebar.modal.siswaIsFilled = true
             } else {
                 this[form] = false
@@ -326,22 +327,6 @@ export default {
                     this.getSiswa(paging.limit, start, this.cariSiswa)
                     siswa.showDaftarSiswa = true
                 }, 400)
-            }
-        },
-        formHasValue(form) {
-            var fields = [];
-            $(`${form} :input[type='text']`).each(function() {
-                fields.push($(this).val());
-            });
-
-            var notBlankFields = fields.filter(fields => {
-                return fields.length > 0;
-            })
-
-            if(notBlankFields.length > 0) {
-                return true;
-            } else {
-                return false;
             }
         },
         clearMessages() {

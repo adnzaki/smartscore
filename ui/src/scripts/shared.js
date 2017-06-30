@@ -9,8 +9,9 @@
  * @version     1.0.0
  */
 
-var shared = new Vue({
-    el: '#loader',
+import Vue from 'vue'
+
+const shared = new Vue({
     data: {
         showLoader: false
     },
@@ -44,3 +45,5 @@ var shared = new Vue({
         },
     }
 })
+
+export { shared }
