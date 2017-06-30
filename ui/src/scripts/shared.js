@@ -32,17 +32,6 @@ const shared = new Vue({
                 return false;
             }
         },
-        showPerPage(limit) {
-            paging.limit = limit
-            switch (module.activeModule) {
-                case 'siswa':
-                    siswa.getSiswa(paging.limit, 0, siswa.cariSiswa)
-                    break
-                case 'rombel':
-                    rombel.getRombel(paging.limit, 0)
-                default: ""
-            }
-        },
     }
 })
 

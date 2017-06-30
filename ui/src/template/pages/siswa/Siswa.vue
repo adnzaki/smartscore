@@ -24,7 +24,7 @@
 	    					<div class="box-header">
 	    						<h2>Data Siswa</h2>
 	    					</div>
-	    					<!-- <div class="box-body">
+	    					<div class="box-body">
 	    						<div class="row">
 	    							<div class="col-sm-6 col-xs-12">
 	    								<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
@@ -48,20 +48,20 @@
 	    									<label for="" class="col-sm-3 form-control-label">Tampilkan</label>
 	    									<div class="col-sm-9">
 	    										<select class="form-control">
-	    											<option @click="shared.showPerPage(10)" class="text-black">10 baris</option>
-	    											<option @click="shared.showPerPage(25)" class="text-black">25 baris</option>
-	    											<option @click="shared.showPerPage(50)" class="text-black">50 baris</option>
-	    											<option @click="shared.showPerPage(100)" class="text-black">100 baris</option>
-	    											<option @click="shared.showPerPage(250)" class="text-black">250 baris</option>
+	    											<option @click="showPerPage(10)" class="text-black">10 baris</option>
+	    											<option @click="showPerPage(25)" class="text-black">25 baris</option>
+	    											<option @click="showPerPage(50)" class="text-black">50 baris</option>
+	    											<option @click="showPerPage(100)" class="text-black">100 baris</option>
+	    											<option @click="showPerPage(250)" class="text-black">250 baris</option>
 	    										</select>
 	    									</div>
 	    								</div>
 	    							</div>
 	    							<div class="col-sm-3 col-xs-12">
-	    								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(paging.limit, 0, cariSiswa)" placeholder="Cari siswa (ketik dan enter)">
+	    								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(dataPage.limit, 0, cariSiswa)" placeholder="Cari siswa (ketik dan enter)">
 	    							</div>
 	    						</div>
-	    					</div> -->
+	    					</div>
 
 	    					<table class="table table-striped b-t">
 	    						<thead>
@@ -77,10 +77,9 @@
 	    						<tbody>
 	    							<tr v-for="list in daftarSiswa">
 	    								<td class="text-center">
-	    									<label class="control control--checkbox">
-	    										<input type="checkbox" v-model="selectedID" :value="list.id_siswa" />
-	    										<div class="control__indicator"></div>
-	    									</label>
+											<label class="md-check"><input type="checkbox" v-model="selectedID" :value="list.id_siswa">
+												<i class="primary"></i>
+											</label>
 	    								</td>
 	    								<td>{{ list.nama_siswa }}</td>
 	    								<td>{{ list.j_kelamin_siswa }}</td>

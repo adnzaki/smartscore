@@ -119,6 +119,10 @@ export default {
             this.dataPage.to = paging.dataTo()
             this.dataPage.from = paging.dataFrom()
         },
+        showPerPage(limit) {
+            paging.limit = limit
+            this.getSiswa(paging.limit, 0, this.cariSiswa)
+        },
         insertSiswa(event, id) {
             if(event === 'insert') {
                 form = $("#formTambahSiswa")
