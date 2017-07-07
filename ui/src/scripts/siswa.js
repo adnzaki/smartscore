@@ -14,11 +14,6 @@ import { paging } from './paging.js'
 import { shared } from './shared.js'
 import global from './global.js'
 
-Vue.component('sserror', {
-    props: ['msg'],
-    template: '<p class="ss-error">{{ msg }}</p>'
-})
-
 export default {
     name: 'Siswa',
     data() {
@@ -55,6 +50,12 @@ export default {
                 alamatOrtu: '', telpOrtu: '', namaWali: '', alamatWali: '', telpWali: ''
             },
         }
+    },
+    components: {
+        sserror: {
+            props: ['msg'],
+            template: '<p class="ss-error">{{ msg }}</p>'
+        },
     },
     beforeRouteEnter(to, from, next) {
         next(vm => vm.getSiswa(paging.limit, 0, ''))
@@ -125,15 +126,14 @@ export default {
         },
         insertSiswa(event, id) {
             if(event === 'insert') {
-                form = $("#formTambahSiswa")
-                dataForm = form.serialize()
-                param = event
+                var form = $("#formTambahSiswa"),
+                    param = event
             } else {
-                form = $("#formEditSiswa")
-                dataForm = form.serialize()
-                param = `${event}/${id}`
+                var form = $("#formEditSiswa"),
+                    param = `${event}/${id}`
             }
-            var obj = this
+            var obj = this,
+                dataForm = form.serialize()
             $.ajax({
                 url: `${global.apiUrl}admin/SiswaController/setSiswa/${param}`,
                 type: 'POST',
@@ -174,7 +174,7 @@ export default {
                         // selain itu, jika event nya adalah update data siswa,
                         // maka tampilkan kembali form edit siswa dan tampilkan alert
                         } else {
-                            siswa.editSiswa(id)
+                            obj.editSiswa(id)
                             obj.updateAlert = true
                             obj.errorUpdate = false
                             obj.alertMessage = "Data siswa baru berhasil diperbarui"
@@ -209,6 +209,7 @@ export default {
             this.importDialog = false
         },
         editSiswa(id) {
+            var obj = this
             if(this.showFormAdd) {
                 this.showFormAdd = false
             }
@@ -219,19 +220,18 @@ export default {
                 type: 'GET',
                 dataType: 'json',
                 success: data => {
-                    siswa.detailSiswa = data
+                    obj.detailSiswa = data
 
                     // berikan timeout 500 mili detik untuk menjalankan fungsi
                     // radio button mana yg harus dicek
                     // karena timeout untuk membuka form adalah 400 mili detik
                     setTimeout(() => {
-                        siswa.isChecked()
-                        siswa.isSelected('agama_siswa')
-                        siswa.isSelected('job_ayah')
-                        siswa.isSelected('job_ibu')
-                        siswa.isSelected('job_wali')
+                        obj.isChecked()
+                        obj.isSelected('agama_siswa')
+                        obj.isSelected('job_ayah')
+                        obj.isSelected('job_ibu')
+                        obj.isSelected('job_wali')
                     }, 500)
-
                 }
             })
         },
@@ -267,7 +267,7 @@ export default {
             // lakukan pengecekan total baris dalam satu halaman tabel siswa
             // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
             // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
-            let diff = paging.totalRows - siswa.offset
+            let diff = paging.totalRows - paging.offset
             if(diff == 1) {
                 paging.offset -= paging.limit
             }
@@ -288,8 +288,9 @@ export default {
             }
         },
         isSelected(target) {
+            var obj = this
             $(`#${target} option`).each(function() {
-                if(siswa.detailSiswa[target] === $(this).val()) {
+                if(obj.detailSiswa[target] === $(this).val()) {
                     $(this).attr("selected", "selected")
                 }
             })
@@ -297,7 +298,7 @@ export default {
         showForm(form) {
             this.showDaftarSiswa = false
             setTimeout(() => {
-                siswa[form] = true
+                this[form] = true
                 setTimeout(() => {
                     $("#datetimepicker1").datetimepicker({
                         format: 'DD/MM/YYYY',
@@ -329,7 +330,7 @@ export default {
                 let start = paging.offset / paging.limit
                 setTimeout(() => {
                     this.getSiswa(paging.limit, start, this.cariSiswa)
-                    siswa.showDaftarSiswa = true
+                    this.showDaftarSiswa = true
                 }, 400)
             }
         },
@@ -349,5 +350,5 @@ export default {
             this.error.alamatWali = ''
             this.error.telpWali = ''
         }
-    },
+    }
 }
