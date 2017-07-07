@@ -13,6 +13,7 @@ import Vue from 'vue'
 import { paging } from './paging.js'
 import { shared } from './shared.js'
 import global from './global.js'
+import ssalert from '../template/content/alert.vue'
 
 export default {
     name: 'Siswa',
@@ -23,19 +24,20 @@ export default {
             filename: '',
             loadingText: '',
             cariSiswa: '',
+            idSiswa: '',
             showDaftarSiswa: false,
             showFormAdd: false,
             showFormEdit: false,
             selectedID: [],
             deleteConfirm: false,
-            unableToDelete: false,
             importDialog: false,
             importProgress: false,
             greetings: 'Welcome to Siswa Manager',
 
             // alert
-            insertAlert: false, updateAlert: false, deleteAlert: false,
+            insertAlert: true, updateAlert: false, deleteAlert: false,
             errorInsert: false, errorUpdate: false, alertMessage: '',
+            unableToDelete: false,
 
             // pagination data
             dataPage: {
@@ -56,6 +58,7 @@ export default {
             props: ['msg'],
             template: '<p class="ss-error">{{ msg }}</p>'
         },
+        ssalert
     },
     beforeRouteEnter(to, from, next) {
         next(vm => vm.getSiswa(paging.limit, 0, ''))
@@ -142,7 +145,6 @@ export default {
                 success: msg => {
                     if(msg.msg !== 'success') {
                         event === 'insert' ? obj.errorInsert = true : obj.errorUpdate = true
-                        obj.alertMessage = "Data siswa tidak dapat disimpan, silakan isi form dengan benar."
                         obj.error.nama = msg.nama_siswa
                         obj.error.nis = msg.nis
                         obj.error.nisn = msg.nisn
@@ -168,7 +170,6 @@ export default {
                             form.trigger("reset")
                             obj.insertAlert = true
                             obj.errorInsert = false
-                            obj.alertMessage = "Data siswa baru berhasil disimpan"
                             obj.idSiswa = msg['id'][0].id_siswa
 
                         // selain itu, jika event nya adalah update data siswa,
@@ -209,31 +210,33 @@ export default {
             this.importDialog = false
         },
         editSiswa(id) {
-            var obj = this
-            if(this.showFormAdd) {
-                this.showFormAdd = false
-            }
-            this.insertAlert = false
-            this.showForm('showFormEdit')
-            $.ajax({
-                url: `${global.apiUrl}admin/SiswaController/editSiswa/${id}`,
-                type: 'GET',
-                dataType: 'json',
-                success: data => {
-                    obj.detailSiswa = data
-
-                    // berikan timeout 500 mili detik untuk menjalankan fungsi
-                    // radio button mana yg harus dicek
-                    // karena timeout untuk membuka form adalah 400 mili detik
-                    setTimeout(() => {
-                        obj.isChecked()
-                        obj.isSelected('agama_siswa')
-                        obj.isSelected('job_ayah')
-                        obj.isSelected('job_ibu')
-                        obj.isSelected('job_wali')
-                    }, 500)
+            return id => {
+                var obj = this
+                if(this.showFormAdd) {
+                    this.showFormAdd = false
                 }
-            })
+                this.insertAlert = false
+                this.showForm('showFormEdit')
+                $.ajax({
+                    url: `${global.apiUrl}admin/SiswaController/editSiswa/${id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: data => {
+                        obj.detailSiswa = data
+
+                        // berikan timeout 500 mili detik untuk menjalankan fungsi
+                        // radio button mana yg harus dicek
+                        // karena timeout untuk membuka form adalah 400 mili detik
+                        setTimeout(() => {
+                            obj.isChecked()
+                            obj.isSelected('agama_siswa')
+                            obj.isSelected('job_ayah')
+                            obj.isSelected('job_ibu')
+                            obj.isSelected('job_wali')
+                        }, 500)
+                    }
+                })
+            }
         },
         showDeleteConfirm(id) {
             this.selectedID = []
@@ -248,7 +251,6 @@ export default {
         multipleDeleteSiswa() {
             if(this.selectedID.length < 1) {
                 this.unableToDelete = true
-                this.alertMessage = "Silakan pilih siswa yang ingin dihapus"
             } else {
                 this.unableToDelete = false
                 this.deleteConfirm = true
@@ -274,7 +276,6 @@ export default {
 
             let start = paging.offset / paging.limit
             this.deleteAlert = true
-            this.alertMessage = "Data siswa berhasil dihapus"
             this.getSiswa(paging.limit, start, this.cariSiswa)
             setTimeout(() => {
                 this.deleteAlert = false

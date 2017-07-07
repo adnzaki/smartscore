@@ -1,21 +1,12 @@
 <template lang="html">
 	<div id="dataSiswa">
 		<!-- Delete alert -->
-	    <div class="padding less-m-b">
-	    	<div class="alert alert-success alert-dismissible ss-no-b-r ss-fly-alert" role="alert" v-if="deleteAlert">
-	    		<button type="button" class="close" @click="deleteAlert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    		<strong>Sukses!</strong> {{ alertMessage }}
-	    	</div>
-	    </div>
+		<ssalert :alertClass="'alert-success'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil dihapus.'"></ssalert>
 
 	    <!-- Unable to delete -->
-	    <div class="padding less-m-b">
-	    	<div class="alert alert-danger alert-dismissible ss-no-b-r ss-fly-alert" role="alert" v-if="unableToDelete">
-	    		<button type="button" class="close" @click="unableToDelete = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	    		<strong>Error!</strong> {{ alertMessage }}
-	    	</div>
-	    </div>
+		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'"></ssalert>
 
+		<!-- TABEL DAFTAR SISWA -->
 	    <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
 	    	<div class="padding" v-if="showDaftarSiswa">
 	    		<div class="row">
@@ -115,6 +106,7 @@
 	    		</div>
 	    	</div>
 	    </transition>
+		<!-- #END TABEL DAFTAR SISWA -->
 
 	    <!-- Konfirmai hapus data -->
 	    <!-- <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -201,21 +193,13 @@
 		<!-- FORM TAMBAH SISWA -->
 		<div>
 			<!-- Success alert -->
-		    <div class="padding less-m-b">
-		    	<div class="alert alert-success alert-dismissible ss-no-b-r" role="alert" v-if="insertAlert">
-		    		<button type="button" class="close" @click="insertAlert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		    		<strong>Sukses!</strong> {{ alertMessage }}
-		    		<a href="javascript:void(0)" @click="editSiswa(idSiswa)"><b><u>Lihat detail</u></b></a>
-		    	</div>
-		    </div>
+			<ssalert
+				:alertClass="'alert-success'" :target="insertAlert" :initMsg="'Sukses!'"
+				:msg="'Data siswa baru berhasil disimpan.'" :isInsert="true" :action="editSiswa(idSiswa)">
+			</ssalert>
 
 		    <!-- Error alert -->
-		    <div class="padding less-m-b">
-		    	<div class="alert alert-danger alert-dismissible ss-no-b-r" role="alert" v-if="errorInsert">
-		    		<button type="button" class="close" @click="errorInsert = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		    		<strong>Error!</strong> {{ alertMessage }}
-		    	</div>
-		    </div>
+			<ssalert :alertClass="'alert-danger'" :target="errorInsert" :initMsg="'Error!'" :msg="'Data siswa tidak dapat disimpan, silakan isi form dengan benar.'"></ssalert>
 
 		    <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
 		    	<div class="padding" v-if="showFormAdd">
