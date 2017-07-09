@@ -23,7 +23,7 @@
 	    								<div class="dropdown inline">
 	    									<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
 	    									<div class="dropdown-menu">
-	    										<a class="dropdown-item" href="{base_url}public/docs/FormatDataSiswa.xlsx">
+	    										<a class="dropdown-item" v-bind:href="formatExcel">
 	    											<i class="material-icons">file_download</i>
 	    											Download Format Data Siswa (Excel)
 	    										</a>
@@ -131,7 +131,7 @@
 	    </transition>
 
 	    <!-- Modal dialog untuk impor data siswa -->
-	    <!-- <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 	    	<div class="modal ss-modal" data-backdrop="true" v-if="importDialog">
 	    		<div class="modal-dialog">
 	    			<div class="col-sm-8 offset-sm-2">
@@ -145,15 +145,7 @@
 	    							<form action="" name="imporSiswa" method="post" enctype="multipart/form-data">
 	    								<div class="row">
 	    									<div class="col-xs-12">
-	    										<input type="text" v-model="filename" disabled class="form-control ss-m-t-5">
-	    									</div>
-	    								</div>
-	    								<div class="row">
-	    									<div class="col-xs-4 offset-xs-8">
-	    										<label class="ss-browse">
-	    											<input type="file" name="file" id="file" v-model="filename" />
-	    											<span class="ss-browse-label">Browse</span>
-	    										</label>
+												<input type="file" name="file" id="file" @change="getFilename" class="form-control">
 	    									</div>
 	    								</div>
 	    							</form>
@@ -167,10 +159,10 @@
 	    			</div>
 	    		</div>
 	    	</div>
-	    </transition> -->
+	    </transition>
 
 	    <!-- Modal saat pemrosesan import data... -->
-	    <!-- <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 	    	<div class="modal ss-modal" data-backdrop="true" v-if="importProgress">
 	    		<div class="modal-dialog">
 	    			<div class="col-sm-8 offset-sm-2">
@@ -188,7 +180,7 @@
 	    			</div>
 	    		</div>
 	    	</div>
-	    </transition> -->
+	    </transition>
 
 		<!-- FORM TAMBAH SISWA -->
 		<div>

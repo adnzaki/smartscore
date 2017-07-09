@@ -32,6 +32,7 @@ export default {
             deleteConfirm: false,
             importDialog: false,
             importProgress: false,
+            formatExcel: `${global.apiUrl}public/docs/FormatDataSiswa.xlsx`,
 
             // alert
             insertAlert: false, updateAlert: false, deleteAlert: false,
@@ -207,6 +208,11 @@ export default {
                 }
             }
             req.send(data)
+        },
+        getFilename() {
+            var file = $("#file").val()
+            file = file.split("\\")
+            this.filename = file[file.length - 1]
         },
         closeImportDialog() {
             this.filename = ''
