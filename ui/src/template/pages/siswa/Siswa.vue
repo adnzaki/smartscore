@@ -1,7 +1,7 @@
 <template lang="html">
 	<div id="dataSiswa">
 		<!-- Delete alert -->
-		<ssalert :alertClass="'alert-success'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil dihapus.'"></ssalert>
+		<ssalert :alertClass="'alert-success ss-fly-alert'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil dihapus.'"></ssalert>
 
 	    <!-- Unable to delete -->
 		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'"></ssalert>
@@ -109,7 +109,7 @@
 		<!-- #END TABEL DAFTAR SISWA -->
 
 	    <!-- Konfirmai hapus data -->
-	    <!-- <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 	    	<div class="modal ss-modal" data-backdrop="true" v-if="deleteConfirm">
 	    		<div class="modal-dialog">
 	    			<div class="col-sm-8 offset-sm-2">
@@ -128,7 +128,7 @@
 	    			</div>
 	    		</div>
 	    	</div>
-	    </transition> -->
+	    </transition>
 
 	    <!-- Modal dialog untuk impor data siswa -->
 	    <!-- <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
