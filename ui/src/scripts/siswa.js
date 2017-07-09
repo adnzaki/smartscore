@@ -32,12 +32,10 @@ export default {
             deleteConfirm: false,
             importDialog: false,
             importProgress: false,
-            greetings: 'Welcome to Siswa Manager',
 
             // alert
-            insertAlert: true, updateAlert: false, deleteAlert: false,
-            errorInsert: false, errorUpdate: false, alertMessage: '',
-            unableToDelete: false,
+            insertAlert: false, updateAlert: false, deleteAlert: false,
+            errorInsert: false, errorUpdate: false, unableToDelete: false,
 
             // pagination data
             dataPage: {
@@ -144,7 +142,13 @@ export default {
                 data: dataForm,
                 success: msg => {
                     if(msg.msg !== 'success') {
-                        event === 'insert' ? obj.errorInsert = true : obj.errorUpdate = true
+                        if(event === 'insert') {
+                            obj.insertAlert = false
+                            obj.errorInsert = true
+                        } else {
+                            obj.updateAlert = false
+                            obj.errorUpdate = true
+                        }
                         obj.error.nama = msg.nama_siswa
                         obj.error.nis = msg.nis
                         obj.error.nisn = msg.nisn
@@ -178,7 +182,6 @@ export default {
                             obj.editSiswa(id)
                             obj.updateAlert = true
                             obj.errorUpdate = false
-                            obj.alertMessage = "Data siswa baru berhasil diperbarui"
                         }
                     }
                 }
@@ -210,33 +213,32 @@ export default {
             this.importDialog = false
         },
         editSiswa(id) {
-            return id => {
-                var obj = this
-                if(this.showFormAdd) {
-                    this.showFormAdd = false
-                }
-                this.insertAlert = false
-                this.showForm('showFormEdit')
-                $.ajax({
-                    url: `${global.apiUrl}admin/SiswaController/editSiswa/${id}`,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: data => {
-                        obj.detailSiswa = data
-
-                        // berikan timeout 500 mili detik untuk menjalankan fungsi
-                        // radio button mana yg harus dicek
-                        // karena timeout untuk membuka form adalah 400 mili detik
-                        setTimeout(() => {
-                            obj.isChecked()
-                            obj.isSelected('agama_siswa')
-                            obj.isSelected('job_ayah')
-                            obj.isSelected('job_ibu')
-                            obj.isSelected('job_wali')
-                        }, 500)
-                    }
-                })
+            var obj = this
+            if(this.showFormAdd) {
+                this.showFormAdd = false
             }
+            this.insertAlert = false
+            $.ajax({
+                url: `${global.apiUrl}admin/SiswaController/editSiswa/${id}`,
+                type: 'GET',
+                crossDomain: true,
+                dataType: 'json',
+                success: data => {
+                    obj.detailSiswa = data
+                    this.showForm('showFormEdit')
+
+                    // berikan timeout 500 mili detik untuk menjalankan fungsi
+                    // radio button mana yg harus dicek
+                    // karena timeout untuk membuka form adalah 400 mili detik
+                    setTimeout(() => {
+                        obj.isChecked()
+                        obj.isSelected('agama_siswa')
+                        obj.isSelected('job_ayah')
+                        obj.isSelected('job_ibu')
+                        obj.isSelected('job_wali')
+                    }, 500)
+                }
+            })
         },
         showDeleteConfirm(id) {
             this.selectedID = []
