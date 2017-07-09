@@ -4,14 +4,18 @@
 > Untuk bisa menjalankan Smartscore, silakan lakukan beberapa langkah di bawah ini
 
 ## Build Setup
+- Buka command prompt, lalu masuk ke direktori ```ui```
+- Contoh ``` cd xampp\htdocs\smartscore\ui ```
+- Kemudian ketikkan perintah di bawah ini
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# jalankan dari server dengan fitur hot reload
+# aplikasi akan berjalan di localhost:8080
 npm run dev
 
-# build for production with minification
+# untuk keperluan produksi dengan minifikasi kode, ketikkan
 npm run build
 ```
