@@ -244,6 +244,9 @@ export default {
         multipleDeleteSiswa() {
             if(this.selectedID.length < 1) {
                 this.unableToDelete = true
+                setTimeout(() => {
+                    this.unableToDelete = false
+                }, 3000)
             } else {
                 this.unableToDelete = false
                 this.deleteConfirm = true
