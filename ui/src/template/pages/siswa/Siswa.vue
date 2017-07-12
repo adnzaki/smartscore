@@ -4,10 +4,10 @@
 		<ssalert :alertClass="'alert-success ss-fly-alert'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil dihapus.'"></ssalert>
 
 	    <!-- Unable to delete -->
-		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'"></ssalert>
+		<ssalert :alertClass="'alert-danger ss-fly-alert'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'"></ssalert>
 
 		<!-- TABEL DAFTAR SISWA -->
-	    <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
+	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 	    	<div class="padding" v-if="showDaftarSiswa">
 	    		<div class="row">
 	    			<div class="col-sm-12">
@@ -39,6 +39,7 @@
 	    									<label for="" class="col-sm-3 form-control-label">Tampilkan</label>
 	    									<div class="col-sm-9">
 	    										<select class="form-control">
+													<option class="text-black">Pilih Baris</option>
 	    											<option @click="showPerPage(10)" class="text-black">10 baris</option>
 	    											<option @click="showPerPage(25)" class="text-black">25 baris</option>
 	    											<option @click="showPerPage(50)" class="text-black">50 baris</option>
@@ -49,7 +50,7 @@
 	    								</div>
 	    							</div>
 	    							<div class="col-sm-3 col-xs-12">
-	    								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(dataPage.limit, 0, cariSiswa)" placeholder="Cari siswa (ketik dan enter)">
+	    								<input type="text" class="form-control" v-model="cariSiswa" @keyup.enter="getSiswa(limit, 0, cariSiswa)" placeholder="Cari siswa (ketik dan enter)">
 	    							</div>
 	    						</div>
 	    					</div>
@@ -83,19 +84,19 @@
 	    						<tfoot>
 	    							<td colspan="4" class="text-center">
 	    								<div class="col-sm-8 text-left">
-	    									<p>Menampilkan baris <b>{{ dataPage.from }}</b> - <b>{{ dataPage.to }}</b> dari <b>{{ dataPage.totalRows }}</b> baris.</p>
+	    									<p>Menampilkan baris <b>{{ dataFrom() }}</b> - <b>{{ dataTo() }}</b> dari <b>{{ totalRows }}</b> baris.</p>
 	    								</div>
 	    								<div class="col-sm-4 text-center">
 	    									<ul class="pagination pagination-sm m-a-0">
-	    										<li><a href="javascript:void(0)" @click="getSiswa(dataPage.limit, dataPage.first, cariSiswa)"><i class="material-icons">skip_previous</i></a></li>
-	    										<li><a href="javascript:void(0)" @click="getSiswa(dataPage.limit, dataPage.prev, cariSiswa)"><i class="material-icons">navigate_before</i></a></li>
+	    										<li><a href="javascript:void(0)" @click="getSiswa(limit, first, cariSiswa)"><i class="material-icons">skip_previous</i></a></li>
+	    										<li><a href="javascript:void(0)" @click="getSiswa(limit, prev, cariSiswa)"><i class="material-icons">navigate_before</i></a></li>
 	    										<li>
 	    											<div class="col-xs-3">
-	    												<input type="text" class="form-control" v-model="dataPage.start" @keyup.enter="getSiswa(dataPage.limit, dataPage.start - 1, cariSiswa)">
+	    												<input type="text" class="form-control" v-model="setStart" @keyup.enter="getSiswa(limit, setStart - 1, cariSiswa)">
 	    											</div>
 	    										</li>
-	    										<li><a href="javascript:void(0)" @click="getSiswa(dataPage.limit, dataPage.next, cariSiswa)"><i class="material-icons">navigate_next</i></a></li>
-	    										<li><a href="javascript:void(0)" @click="getSiswa(dataPage.limit, dataPage.last, cariSiswa)"><i class="material-icons">skip_next</i></a></li>
+	    										<li><a href="javascript:void(0)" @click="getSiswa(limit, next, cariSiswa)"><i class="material-icons">navigate_next</i></a></li>
+	    										<li><a href="javascript:void(0)" @click="getSiswa(limit, last, cariSiswa)"><i class="material-icons">skip_next</i></a></li>
 	    									</ul>
 	    								</div>
 	    							</td>
@@ -198,7 +199,7 @@
 		    <!-- Error alert -->
 			<ssalert :alertClass="'alert-danger'" :target="errorInsert" :initMsg="'Error!'" :msg="'Data siswa tidak dapat disimpan, silakan isi form dengan benar.'"></ssalert>
 
-		    <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
+		    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 		    	<div class="padding" v-if="showFormAdd">
 		    		<div class="row">
 		    			<div class="col-sm-12">
@@ -446,7 +447,7 @@
 			<!-- Error alert -->
 			<ssalert :alertClass="'alert-danger'" :target="errorUpdate" :initMsg="'Error!'" :msg="'Gagal memperbarui data siswa, silakan isi form dengan benar'"></ssalert>
 
-			<transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
+			<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 				<div class="padding" v-if="showFormEdit">
 					<div class="row">
 						<div class="col-sm-12">

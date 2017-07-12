@@ -19,11 +19,13 @@
  */
 
 import Vue from 'vue'
-const paging = new Vue({
-    data: {
-        pageLinks: [], limit: 10, offset: 0,
-        prev: 0, next: 0, first: 0,
-        last: 0, setStart: 0, totalRows: 0
+export const paging = {
+    data() {
+        return {
+            pageLinks: [], limit: 10, offset: 0,
+            prev: 0, next: 0, first: 0,
+            last: 0, setStart: 0, totalRows: 0
+        }
     },
     methods: {
         create(num) {
@@ -74,6 +76,4 @@ const paging = new Vue({
             this.totalRows = 0
         }
     }
-})
-
-export { paging }
+}

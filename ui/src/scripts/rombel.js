@@ -9,19 +9,40 @@
  * @version     1.0.0
  */
 
-var rombel = new Vue({
-    el: '#dataRombel',
-    data: {
-        showDaftarRombel: false,
-        daftarRombel: '',
+import Vue from 'vue'
+import { paging } from './paging.js'
+import global from './global.js'
+
+export default {
+    name: 'Rombel',
+    mixins: [paging],
+    data() {
+        return {
+            showDaftarRombel: false,
+            daftarRombel: '',
+        }
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => vm.getRombel(10, 0, ''))
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.showDaftarRombel = ''
+        this.getRombel(10, 0, '')
+        next()
+    },
+    beforeRouteLeave(to, from, next) {
+        this.showDaftarRombel = false
+        next()
     },
     methods: {
         getRombel(limit, start) {
             var self = this
-            paging.offset = start * limit
+            this.limit = limit
+            this.offset = start * limit
             $.ajax({
-                url: `${baseUrl}admin/RombelController/fetchRombel/${limit}/${paging.offset}/`,
+                url: `${global.apiUrl}admin/RombelController/fetchRombel/${limit}/${this.offset}/`,
                 type: 'GET',
+                crossDomain: true,
                 dataType: 'json',
                 success: data => {
                     self.daftarRombel = data['rombel']
@@ -29,16 +50,20 @@ var rombel = new Vue({
                         self.showDaftarRombel = true
                     }, 400)
 
-                    paging.totalRows = data['baris']
-                    paging.create(data['baris'])
+                    this.totalRows = data['baris']
+                    this.create(data['baris'])
 
                     // atur nilai default untuk next page
-                    start === (paging.last -= 1) ? paging.next = start : paging.next = start + 1
+                    start === (this.last -= 1) ? this.next = start : this.next = start + 1
 
                     // atur nilai default untuk previous page
-                    start === paging.first ? paging.prev = start : paging.prev = start - 1
+                    start === this.first ? this.prev = start : this.prev = start - 1
                 }
             })
-        }
+        },
+        showPerPage(limit) {
+            this.rombelLimit = limit
+            this.getRombel(this.rombelLimit, 0)
+        },
     },
-})
+}

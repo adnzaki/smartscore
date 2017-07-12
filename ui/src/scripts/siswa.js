@@ -17,6 +17,7 @@ import ssalert from '../template/content/alert.vue'
 
 export default {
     name: 'Siswa',
+    mixins: [paging],
     data() {
         return {
             daftarSiswa: '',
@@ -60,11 +61,11 @@ export default {
         ssalert
     },
     beforeRouteEnter(to, from, next) {
-        next(vm => vm.getSiswa(paging.limit, 0, ''))
+        next(vm => vm.getSiswa(25, 0, ''))
     },
     beforeRouteUpdate(to, from, next) {
         this.daftarSiswa = ''
-        this.getSiswa(paging.limit, 0, '')
+        this.getSiswa(25, 0, '')
         next()
     },
     beforeRouteLeave(to, from, next) {
@@ -73,58 +74,42 @@ export default {
     },
     methods: {
         getSiswa(limit, start, search) {
-            if(shared.formHasValue("#formTambahSiswa")) {
-                sidebar.modal.siswaIsFilled = true
-            } else {
-                this.showFormAdd = false
-                this.showFormEdit = false
-                var obj = this
-                paging.offset = start * limit
-                $.ajax({
-                    url: `${global.apiUrl}admin/SiswaController/fetchSiswa/${limit}/${paging.offset}/${search}`,
-                    type: 'GET',
-                    crossDomain: true,
-                    dataType: 'json',
-                    success: data => {
-                        obj.daftarSiswa = data['dataSiswa']
+            this.showFormAdd = false
+            this.showFormEdit = false
+            var obj = this
+            this.limit = limit
+            this.offset = start * limit
+            $.ajax({
+                url: `${global.apiUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}/${search}`,
+                type: 'GET',
+                crossDomain: true,
+                dataType: 'json',
+                success: data => {
+                    obj.daftarSiswa = data['dataSiswa']
 
-                        // penggunaan setTimeout() baru akan terasa manfaatnya ketika
-                        // nanti tidak ada lagi blank page pada aplikasi
-                        setTimeout(() => {
-                            obj.showDaftarSiswa = true
-                        }, 400)
+                    // penggunaan setTimeout() baru akan terasa manfaatnya ketika
+                    // nanti tidak ada lagi blank page pada aplikasi
+                    setTimeout(() => {
+                        obj.showDaftarSiswa = true
+                    }, 400)
 
-                        // simpan data total baris
-                        paging.totalRows = data['totalRows']
+                    // simpan data total baris
+                    this.totalRows = data['totalRows']
 
-                        // perbarui data pagination
-                        paging.create(data['totalRows'])
+                    // perbarui data pagination
+                    this.create(data['totalRows'])
 
-                        // atur nilai default untuk next page
-                        start === (paging.last -= 1) ? paging.next = start : paging.next = start + 1
+                    // atur nilai default untuk next page
+                    start === (this.last -= 1) ? this.next = start : this.next = start + 1
 
-                        // atur nilai default untuk previous page
-                        start === paging.first ? paging.prev = start : paging.prev = start - 1
-                        this.createPageData()
-                    }
-                })
-            }
-        },
-        createPageData() {
-            this.dataPage.totalRows = paging.totalRows
-            this.dataPage.offset = paging.offset
-            this.dataPage.limit = paging.limit
-            this.dataPage.prev = paging.prev
-            this.dataPage.next = paging.next
-            this.dataPage.first = paging.first
-            this.dataPage.last = paging.last
-            this.dataPage.start = paging.setStart
-            this.dataPage.to = paging.dataTo()
-            this.dataPage.from = paging.dataFrom()
+                    // atur nilai default untuk previous page
+                    start === this.first ? this.prev = start : this.prev = start - 1
+                }
+            })
         },
         showPerPage(limit) {
-            paging.limit = limit
-            this.getSiswa(paging.limit, 0, this.cariSiswa)
+            this.limit = limit
+            this.getSiswa(this.limit, 0, this.cariSiswa)
         },
         insertSiswa(event, id) {
             if(event === 'insert') {
@@ -203,8 +188,8 @@ export default {
                     this.loadingText = "Format file yang anda masukkan tidak sesuai"
                 } else {
                     this.loadingText = `${req.response.success}, ${req.response.failed}`
-                    let start = paging.offset / paging.limit
-                    this.getSiswa(paging.limit, start, this.cariSiswa)
+                    let start = this.offset / this.limit
+                    this.getSiswa(this.limit, start, this.cariSiswa)
                 }
             }
             req.send(data)
@@ -277,14 +262,14 @@ export default {
             // lakukan pengecekan total baris dalam satu halaman tabel siswa
             // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
             // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
-            let diff = paging.totalRows - paging.offset
+            let diff = this.totalRows - this.offset
             if(diff == 1) {
-                paging.offset -= paging.limit
+                this.offset -= this.limit
             }
 
-            let start = paging.offset / paging.limit
+            let start = this.offset / this.limit
             this.deleteAlert = true
-            this.getSiswa(paging.limit, start, this.cariSiswa)
+            this.getSiswa(this.limit, start, this.cariSiswa)
             setTimeout(() => {
                 this.deleteAlert = false
             }, 5000)
@@ -336,9 +321,9 @@ export default {
                 this.updateAlert = false
                 this.errorInsert = false
                 this.errorUpdate = false
-                let start = paging.offset / paging.limit
+                let start = this.offset / this.limit
                 setTimeout(() => {
-                    this.getSiswa(paging.limit, start, this.cariSiswa)
+                    this.getSiswa(this.limit, start, this.cariSiswa)
                     this.showDaftarSiswa = true
                 }, 400)
             }
