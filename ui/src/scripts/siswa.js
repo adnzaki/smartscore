@@ -253,29 +253,38 @@ export default {
             }
         },
         deleteSiswa() {
-            for(let i = 0; i < this.selectedID.length; i++) {
-                $.ajax({
-                    url: `${global.apiUrl}admin/SiswaController/deleteSiswa/${this.selectedID[i]}`,
-                    type: 'POST',
-                })
-            }
-            this.deleteConfirm = false
-            this.selectedID = []
+            // for(let i = 0; i < this.selectedID.length; i++) {
+            //     $.ajax({
+            //         url: `${global.apiUrl}admin/SiswaController/deleteSiswa/${this.selectedID[i]}`,
+            //         type: 'POST',
+            //     })
+            // }
+            var idString = this.selectedID.join("-")
 
-            // lakukan pengecekan total baris dalam satu halaman tabel siswa
-            // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
-            // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
-            let diff = this.totalRows - this.offset
-            if(diff == 1) {
-                this.offset -= this.limit
-            }
+            $.ajax({
+                url: `${global.apiUrl}admin/SiswaController/deleteSiswa/${idString}`,
+                type: 'POST',
+                dataType: 'json',
+                success: () => {
+                    this.deleteConfirm = false
+                    this.selectedID = []
 
-            let start = this.offset / this.limit
-            this.deleteAlert = true
-            this.getSiswa(this.limit, start, this.cariSiswa)
-            setTimeout(() => {
-                this.deleteAlert = false
-            }, 5000)
+                    // lakukan pengecekan total baris dalam satu halaman tabel siswa
+                    // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
+                    // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
+                    let diff = this.totalRows - this.offset
+                    if(diff == 1) {
+                        this.offset -= this.limit
+                    }
+
+                    let start = this.offset / this.limit
+                    this.getSiswa(this.limit, start, this.cariSiswa)
+                    this.deleteAlert = true
+                    setTimeout(() => {
+                        this.deleteAlert = false
+                    }, 5000)
+                }
+            })
         },
         isChecked() {
             if(this.detailSiswa.j_kelamin_siswa === $("#j_laki").val()) {

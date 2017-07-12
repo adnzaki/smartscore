@@ -193,7 +193,12 @@ class SiswaController extends CI_Controller
 
     public function deleteSiswa($id)
     {
-        $this->SiswaModel->deleteSiswa($id);
+        $arrID = explode("-", $id);
+        for($i = 0; $i < count($arrID); $i++)
+        {
+            $this->SiswaModel->deleteSiswa($arrID[$i]);
+        }
+        echo json_encode(0);
     }
 
     public function importSiswa()
