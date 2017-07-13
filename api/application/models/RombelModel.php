@@ -17,7 +17,7 @@ class RombelModel extends CI_Model
     {
         $select = 'id_rombel, nama_rombel, tingkat, nama_guru';
         $query = $this->db->select($select)->from('rombel')->join('guru', 'rombel.id_guru = guru.id_guru')
-                ->order_by('nama_rombel', 'ASC')->limit($limit, $offset);
+                ->where('tahun_ajaran', '20161')->order_by('nama_rombel', 'ASC')->limit($limit, $offset);
         return $query->get()->result();
     }
 
