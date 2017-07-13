@@ -2,3 +2,4 @@ api/application/controllers/VueTest/VueBasic.php
 api/application/views/vue-test.php
 api/public/vue-test.zip
 api/public/vue.min.js
+*.trash
