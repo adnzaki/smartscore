@@ -11,9 +11,11 @@
 
 import Vue from 'vue'
 
-const shared = new Vue({
-    data: {
-        showLoader: false
+export const shared = {
+    data() {
+        return {
+
+        }        
     },
     methods: {
         formHasValue(form) {
@@ -32,7 +34,16 @@ const shared = new Vue({
                 return false;
             }
         },
+        getCookie(name) {
+            var allToken = document.cookie
+            allToken = allToken.split(';')
+            for(let i = 0; i < allToken.length; i++) {
+                let cookieItem = allToken[i].split('='),
+                    key = cookieItem[0].replace(/ /g, '')
+                if(key === name) {
+                    return cookieItem[1]
+                }
+            }
+        }
     }
-})
-
-export { shared }
+}

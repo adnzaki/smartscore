@@ -13,7 +13,7 @@ header('Access-Control-Allow-Origin: *');
  * @version     1.0.0
  */
 
-class RombelController extends CI_Controller
+class RombelController extends SSController
 {
     public function __construct()
     {
@@ -21,12 +21,27 @@ class RombelController extends CI_Controller
         $this->load->model('RombelModel');
     }
 
-    public function fetchRombel($limit, $offset)
+    public function fetchRombel($limit, $offset, $token = '')
     {
-        $data = [
-            'rombel' => $this->RombelModel->getRombel($limit, $offset),
-            'baris' => $this->RombelModel->getTotalRows()
-        ];
-        echo json_encode($data);
+        if(empty($token))
+        {            
+            echo json_encode('Akses tidak diizinkan');
+        }
+        else 
+        {
+            if($this->hasValidToken($token))
+            {
+                $data = [
+                    'rombel' => $this->RombelModel->getRombel($limit, $offset),
+                    'baris' => $this->RombelModel->getTotalRows()
+                ];
+                echo json_encode($data);
+            }
+            else 
+            {
+                echo json_encode('Token tidak valid');
+            }
+        }        
     }
+    
 }

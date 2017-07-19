@@ -1,14 +1,9 @@
 <template lang="html">
   <div class="">
-      <h1>Halaman Dashboard</h1>
+      <h1>{{ pesan }}</h1>
   </div>
 </template>
-
-<script>
-export default {
-    name: 'dashboard'
-}
-</script>
+<script src="../../../scripts/dashboard.js"></script>
 
 <style lang="css">
 </style>

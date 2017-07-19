@@ -11,11 +11,12 @@
 
 import Vue from 'vue'
 import { paging } from './paging.js'
-import global from './global.js'
+import { global } from './global.js'
+import { shared } from './shared.js'
 
 export default {
     name: 'Rombel',
-    mixins: [paging],
+    mixins: [paging, global, shared],
     data() {
         return {
             showDaftarRombel: false,
@@ -23,11 +24,11 @@ export default {
         }
     },
     beforeRouteEnter(to, from, next) {
-        next(vm => vm.getRombel(10, 0, ''))
+        next(vm => vm.getRombel(10, 0))
     },
     beforeRouteUpdate(to, from, next) {
         this.showDaftarRombel = ''
-        this.getRombel(10, 0, '')
+        this.getRombel(10, 0)
         next()
     },
     beforeRouteLeave(to, from, next) {
@@ -36,30 +37,35 @@ export default {
     },
     methods: {
         getRombel(limit, start) {
-            var self = this
-            this.limit = limit
-            this.offset = start * limit
-            $.ajax({
-                url: `${global.apiUrl}admin/RombelController/fetchRombel/${limit}/${this.offset}/`,
-                type: 'GET',
-                crossDomain: true,
-                dataType: 'json',
-                success: data => {
-                    self.daftarRombel = data['rombel']
-                    setTimeout(() => {
-                        self.showDaftarRombel = true
-                    }, 400)
+            var token = this.getCookie('ss_session')
+            if(token === undefined) {
+                window.location.href = this.loginUrl
+            } else {
+                var self = this
+                this.limit = limit
+                this.offset = start * limit
+                $.ajax({
+                    url: `${this.apiUrl}admin/RombelController/fetchRombel/${limit}/${this.offset}/${token}`,
+                    type: 'GET',
+                    crossDomain: true,
+                    dataType: 'json',
+                    success: data => {
+                        self.daftarRombel = data['rombel']
+                        setTimeout(() => {
+                            self.showDaftarRombel = true
+                        }, 400)
 
-                    this.totalRows = data['baris']
-                    this.create(data['baris'])
+                        this.totalRows = data['baris']
+                        this.create(data['baris'])
 
-                    // atur nilai default untuk next page
-                    start === (this.last -= 1) ? this.next = start : this.next = start + 1
+                        // atur nilai default untuk next page
+                        start === (this.last -= 1) ? this.next = start : this.next = start + 1
 
-                    // atur nilai default untuk previous page
-                    start === this.first ? this.prev = start : this.prev = start - 1
-                }
-            })
+                        // atur nilai default untuk previous page
+                        start === this.first ? this.prev = start : this.prev = start - 1
+                    }
+                })
+            }
         },
         showPerPage(limit) {
             this.rombelLimit = limit

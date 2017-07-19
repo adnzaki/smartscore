@@ -12,12 +12,13 @@
 import Vue from 'vue'
 import { paging } from './paging.js'
 import { shared } from './shared.js'
-import global from './global.js'
+import { global } from './global.js'
 import ssalert from '../template/content/alert.vue'
+import ssloader from '../template/content/loader.vue'
 
 export default {
     name: 'Siswa',
-    mixins: [paging],
+    mixins: [paging, global, shared, ssloader],
     data() {
         return {
             daftarSiswa: '',
@@ -33,17 +34,11 @@ export default {
             deleteConfirm: false,
             importDialog: false,
             importProgress: false,
-            formatExcel: `${global.apiUrl}public/docs/FormatDataSiswa.xlsx`,
+            formatExcel: `${this.apiUrl}public/docs/FormatDataSiswa.xlsx`,
 
             // alert
             insertAlert: false, updateAlert: false, deleteAlert: false,
             errorInsert: false, errorUpdate: false, unableToDelete: false,
-
-            // pagination data
-            dataPage: {
-                totalRows: 0, offset: 0, limit: 0, prev: 0,
-                next: 0, first: 0, last: 0, start: 0, to: 0, from: 0
-            },
 
             // error messages
             error: {
@@ -70,42 +65,54 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         this.showDaftarSiswa = false
-        next()
+        next()  
     },
     methods: {
         getSiswa(limit, start, search) {
-            this.showFormAdd = false
-            this.showFormEdit = false
-            var obj = this
-            this.limit = limit
-            this.offset = start * limit
-            $.ajax({
-                url: `${global.apiUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}/${search}`,
-                type: 'GET',
-                crossDomain: true,
-                dataType: 'json',
-                success: data => {
-                    obj.daftarSiswa = data['dataSiswa']
+            var token = this.getCookie('ss_session')
+            if(token === undefined) {
+                window.location.href = this.loginUrl
+            } else {
+                this.showFormAdd = false
+                this.showFormEdit = false
+                var obj = this
+                this.limit = limit
+                this.offset = start * limit
+                $.ajax({
+                    url: `${this.apiUrl}admin/SiswaController/fetchSiswa/${limit}/${this.offset}/${token}/${search}`,
+                    type: 'GET',
+                    crossDomain: true,
+                    dataType: 'json',
+                    success: data => {
+                        obj.daftarSiswa = data['dataSiswa']
 
-                    // penggunaan setTimeout() baru akan terasa manfaatnya ketika
-                    // nanti tidak ada lagi blank page pada aplikasi
-                    setTimeout(() => {
-                        obj.showDaftarSiswa = true
-                    }, 400)
+                        // penggunaan setTimeout() baru akan terasa manfaatnya ketika
+                        // nanti tidak ada lagi blank page pada aplikasi
+                        setTimeout(() => {
+                            obj.showDaftarSiswa = true
+                        }, 400)
 
-                    // simpan data total baris
-                    this.totalRows = data['totalRows']
+                        // simpan data total baris
+                        this.totalRows = data['totalRows']
 
-                    // perbarui data pagination
-                    this.create(data['totalRows'])
+                        // perbarui data pagination
+                        this.create(data['totalRows'])
 
-                    // atur nilai default untuk next page
-                    start === (this.last -= 1) ? this.next = start : this.next = start + 1
+                        // atur nilai default untuk next page
+                        start === (this.last -= 1) ? this.next = start : this.next = start + 1
 
-                    // atur nilai default untuk previous page
-                    start === this.first ? this.prev = start : this.prev = start - 1
-                }
-            })
+                        // atur nilai default untuk previous page
+                        start === this.first ? this.prev = start : this.prev = start - 1
+                    },
+                    error: data => {
+                        if(data.code === 0 || data.code === 1) {
+                            alert(data.msg)
+                        } else {
+                            alert('Gagal mengirimkan request ke server')
+                        }
+                    }
+                })
+            }            
         },
         showPerPage(limit) {
             this.limit = limit
@@ -122,7 +129,7 @@ export default {
             var obj = this,
                 dataForm = form.serialize()
             $.ajax({
-                url: `${global.apiUrl}admin/SiswaController/setSiswa/${param}`,
+                url: `${this.apiUrl}admin/SiswaController/setSiswa/${param}`,
                 type: 'POST',
                 dataType: 'json',
                 data: dataForm,
@@ -177,7 +184,7 @@ export default {
             var form = document.forms.namedItem('imporSiswa'),
                 data = new FormData(form),
                 req = new XMLHttpRequest()
-            req.open("POST", `${global.apiUrl}admin/SiswaController/importSiswa`, true)
+            req.open("POST", `${this.apiUrl}admin/SiswaController/importSiswa`, true)
             this.importDialog = false
             this.filename = ''
             this.loadingText = "Mengimpor data..."
@@ -210,7 +217,7 @@ export default {
             }
             this.insertAlert = false
             $.ajax({
-                url: `${global.apiUrl}admin/SiswaController/editSiswa/${id}`,
+                url: `${this.apiUrl}admin/SiswaController/editSiswa/${id}`,
                 type: 'GET',
                 crossDomain: true,
                 dataType: 'json',
@@ -253,16 +260,9 @@ export default {
             }
         },
         deleteSiswa() {
-            // for(let i = 0; i < this.selectedID.length; i++) {
-            //     $.ajax({
-            //         url: `${global.apiUrl}admin/SiswaController/deleteSiswa/${this.selectedID[i]}`,
-            //         type: 'POST',
-            //     })
-            // }
             var idString = this.selectedID.join("-")
-
             $.ajax({
-                url: `${global.apiUrl}admin/SiswaController/deleteSiswa/${idString}`,
+                url: `${this.apiUrl}admin/SiswaController/deleteSiswa/${idString}`,
                 type: 'POST',
                 dataType: 'json',
                 success: () => {
@@ -324,21 +324,17 @@ export default {
             }, 400)
         },
         closeForm(form) {
-            if(shared.formHasValue("#formTambahSiswa")) {
-                sidebar.modal.siswaIsFilled = true
-            } else {
-                this[form] = false
-                this.clearMessages()
-                this.insertAlert = false
-                this.updateAlert = false
-                this.errorInsert = false
-                this.errorUpdate = false
-                let start = this.offset / this.limit
-                setTimeout(() => {
-                    this.getSiswa(this.limit, start, this.cariSiswa)
-                    this.showDaftarSiswa = true
-                }, 400)
-            }
+            this[form] = false
+            this.clearMessages()
+            this.insertAlert = false
+            this.updateAlert = false
+            this.errorInsert = false
+            this.errorUpdate = false
+            let start = this.offset / this.limit
+            setTimeout(() => {
+                this.getSiswa(this.limit, start, this.cariSiswa)
+                this.showDaftarSiswa = true
+            }, 400)
         },
         clearMessages() {
             this.error.nama = ''

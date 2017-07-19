@@ -13,7 +13,7 @@ header('Access-Control-Allow-Origin: *');
  * @version     1.0.0
  */
 
-class SiswaController extends CI_Controller
+class SiswaController extends SSController
 {
     public function __construct()
     {
@@ -21,21 +21,44 @@ class SiswaController extends CI_Controller
         $this->load->model('SiswaModel');
     }
 
-    public function fetchSiswa($limit, $start, $search = '')
+    public function fetchSiswa($limit, $start, $token = '', $search = '')
     {
-        $data = $this->SiswaModel->getSiswa($limit, $start, $search);
-        $formatted = [];
-        foreach($data as $data)
+        if(empty($token))
         {
-            $data->tgl_lahir_siswa = $this->ostiumdate->format('d-Mm-y', reverse($data->tgl_lahir_siswa, '-', '-'));
-            array_push($formatted, $data);
+            $res = [
+                'code'  => 0,
+                'msg'   => 'Anda tidak memiliki akses untuk melihat halaman ini, silakan login.'
+            ];
+            echo json_encode($res);
         }
+        else 
+        {
+            if($this->hasValidToken($token))
+            {
+                $data = $this->SiswaModel->getSiswa($limit, $start, $search);
+                $formatted = [];
+                foreach($data as $data)
+                {
+                    $data->tgl_lahir_siswa = $this->ostiumdate->format('d-Mm-y', reverse($data->tgl_lahir_siswa, '-', '-'));
+                    array_push($formatted, $data);
+                }
 
-        $res = [
-            'dataSiswa' => $formatted,
-            'totalRows' => $this->SiswaModel->getTotalRows($search)
-        ];
-        echo json_encode($res);
+                $res = [
+                    'code'      => 'success',
+                    'dataSiswa' => $formatted,
+                    'totalRows' => $this->SiswaModel->getTotalRows($search)
+                ];
+                echo json_encode($res);
+            }
+            else 
+            {
+                $res = [
+                    'code'  => 1,
+                    'msg'   => 'Token anda tidak valid, silakan login kembali.'
+                ];
+                echo json_encode($res);
+            }
+        }        
     }
 
     public function setSiswa($event, $key = '')

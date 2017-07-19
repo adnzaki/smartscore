@@ -1,15 +1,28 @@
+import Vue from 'vue'
+import { shared } from './shared.js'
 
-
-var beranda = new Vue({
-    el: '#beranda',
-    data: {
-        showDashboard: true
+export default {
+    name: 'dashboard',
+    mixins: [shared],
+    data() {
+        return {
+            pesan: 'testtt',
+            urlToken: '',
+        }        
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => vm.hello())
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.hello()
+        next()
+    },
+    beforeRouteLeave(to, from, next) {
+        next()
     },
     methods: {
-        getDashboard() {
-            setTimeout(() => {
-                this.showDashboard = true
-            }, 400)
+        hello() {
+            this.pesan = 'Selamat Datang'
         }
     }
-})
+}

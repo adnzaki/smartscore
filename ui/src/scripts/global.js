@@ -1,4 +1,10 @@
-export default {
-    name: 'global',
-    apiUrl: 'http://localhost:70/smartscore/api/'
+import Vue from 'vue'
+
+export const global = {
+    data() {
+        return {
+            apiUrl: 'http://localhost:70/smartscore/api/',
+            loginUrl: 'http://localhost:8080/login.html'
+        }
+    }    
 }
