@@ -23,7 +23,7 @@
 	    								<div class="dropdown inline">
 	    									<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
 	    									<div class="dropdown-menu">
-	    										<a class="dropdown-item" v-bind:href="formatExcel">
+	    										<a class="dropdown-item" v-bind:href="apiUrl + 'public/docs/FormatDataSiswa.xlsx'">
 	    											<i class="material-icons">file_download</i>
 	    											Download Format Data Siswa (Excel)
 	    										</a>
@@ -44,7 +44,7 @@
 	    											<option @click="showPerPage(25)" class="text-black">25 baris</option>
 	    											<option @click="showPerPage(50)" class="text-black">50 baris</option>
 	    											<option @click="showPerPage(100)" class="text-black">100 baris</option>
-	    											<option @click="showPerPage(250)" class="text-black">250 baris</option>
+	    											<option @click="showPerPage(250)" class="text-black">250 baris</option> 
 	    										</select>
 	    									</div>
 	    								</div>
