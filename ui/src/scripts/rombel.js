@@ -21,6 +21,7 @@ export default {
         return {
             showDaftarRombel: false,
             daftarRombel: '',
+            jmlBaris: 0,
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -67,8 +68,8 @@ export default {
                 })
             }
         },
-        showPerPage(limit) {
-            this.rombelLimit = limit
+        showPerPage() {
+            this.rombelLimit = parseInt(this.jmlBaris)
             this.getRombel(this.rombelLimit, 0)
         },
     },

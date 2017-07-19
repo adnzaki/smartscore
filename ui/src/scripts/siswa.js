@@ -34,7 +34,7 @@ export default {
             deleteConfirm: false,
             importDialog: false,
             importProgress: false,
-            formatExcel: `${this.apiUrl}public/docs/FormatDataSiswa.xlsx`,
+            jmlBaris: 0,
 
             // alert
             insertAlert: false, updateAlert: false, deleteAlert: false,
@@ -114,8 +114,8 @@ export default {
                 })
             }            
         },
-        showPerPage(limit) {
-            this.limit = limit
+        showPerPage() {
+            this.limit = parseInt(this.jmlBaris)
             this.getSiswa(this.limit, 0, this.cariSiswa)
         },
         insertSiswa(event, id) {

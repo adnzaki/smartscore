@@ -38,13 +38,12 @@
 	    								<div class="form-group row">
 	    									<label for="" class="col-sm-3 form-control-label">Tampilkan</label>
 	    									<div class="col-sm-9">
-	    										<select class="form-control">
-													<option class="text-black">Pilih Baris</option>
-	    											<option @click="showPerPage(10)" class="text-black">10 baris</option>
-	    											<option @click="showPerPage(25)" class="text-black">25 baris</option>
-	    											<option @click="showPerPage(50)" class="text-black">50 baris</option>
-	    											<option @click="showPerPage(100)" class="text-black">100 baris</option>
-	    											<option @click="showPerPage(250)" class="text-black">250 baris</option> 
+	    										<select class="form-control" v-model="jmlBaris" v-on:change="showPerPage">
+	    											<option value="10" class="text-black">10 baris</option>
+	    											<option value="25" class="text-black">25 baris</option>
+	    											<option value="50" class="text-black">50 baris</option>
+	    											<option value="100" class="text-black">100 baris</option>
+	    											<option value="250" class="text-black">250 baris</option> 
 	    										</select>
 	    									</div>
 	    								</div>
