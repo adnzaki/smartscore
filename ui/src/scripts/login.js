@@ -27,7 +27,7 @@ new Vue({
                             document.cookie = `ss_session=${data.cookie};expires=${exp};path=/;`
                             self.msg = ''
                             self.title = data.msg
-                            window.location.href = 'http://localhost:8080/'
+                            window.location.href = 'http://localhost:8080/smartscore.html#/dashboard'
                         } else {
                             self.msg = data.msg
                         }                   

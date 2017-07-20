@@ -9,7 +9,7 @@ import Rombel from '../template/pages/rombel/Rombel.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/', component: dashboard },
+    { path: '/dashboard', component: dashboard },
     { path: '/siswa', component: Siswa },
     { path: '/rombel', component: Rombel }
 ]

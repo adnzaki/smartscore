@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Smartscore App</title>
+	<meta name="description" content="Admin, Dashboard, Bootstrap, Bootstrap 4, Angular, AngularJS" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<!-- for ios 7 style, multi-resolution icon of 152x152 -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+	<link rel="apple-touch-icon" href="../assets/images/logo.png">
+	<meta name="apple-mobile-web-app-title" content="Flatkit">
+	<!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="shortcut icon" sizes="196x196" href="../assets/images/logo.png">
+	<!-- style -->
+	<link rel="stylesheet" href="./src/styles/animate.css/animate.min.css" type="text/css" />
+	<link rel="stylesheet" href="./src/styles/glyphicons/glyphicons.css" type="text/css" />
+	<link rel="stylesheet" href="./src/styles/font-awesome/css/font-awesome.min.css" type="text/css" />
+	<link rel="stylesheet" href="./src/styles/material-design-icons/material-design-icons.css" type="text/css" />
+
+	<link rel="stylesheet" href="./src/styles/bootstrap/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="./src/styles/bootstrap/bootstrap-datetimepicker.min.css" type="text/css" />
+	<link rel="stylesheet" href="./src/styles/styles/app.css" type="text/css" />
+	<!-- endbuild -->
+	<link rel="stylesheet" href="./src/assets/fonts/roboto/font.css" type="text/css" />
+	<link rel="stylesheet" href="./src/styles/ss-main.css" type="text/css" />
+</head>
+
+<body>
+	<div id="loader"></div>
+	<div class="app" id="app">
+		<div id="aside" class="app-aside modal fade nav-dropdown">
+	      <!-- fluid app aside -->
+		  <div class="left navside dark dk" layout="column">
+		    <div class="navbar no-radius">
+		      <!-- brand -->
+		      <a class="navbar-brand">
+		          <!-- <div ui-include="'{img}logo.svg'"></div> -->
+		          <!-- <img src="{img}logo.png" alt="." class="hide"> -->
+		          <span class="hidden-folded inline">Pengguna</span>
+		      </a>
+		      <!-- / brand -->
+		    </div>
+		    <div flex class="hide-scroll">
+		        <nav class="scroll nav-light">
+
+		            <ul class="nav" ui-nav>
+		              <li class="nav-header hidden-folded">
+		                <small class="text-muted">Master</small>
+		              </li>
+
+					  <li>
+						  <router-link to="/dashboard">
+							  <span class="nav-icon">
+			                    <i class="material-icons">home</i>
+			                  </span>
+							  <span class="nav-text">Beranda</span>
+						  </router-link>
+					  </li>
+
+					  <li>
+						  <router-link to="/siswa">
+							  <span class="nav-icon">
+			                    <i class="material-icons">people</i>
+			                  </span>
+			                  <span class="nav-text">Siswa</span>
+						  </router-link>
+					  </li>
+
+		              <li @click="siswa.showDaftarSiswa = false">
+		                <a href="javascript:void(0)" >
+		                  <span class="nav-icon">
+		                    <i class="material-icons">person</i>
+		                  </span>
+		                  <span class="nav-text">Guru</span>
+		                </a>
+		              </li>
+
+					  <li>
+						  <router-link to="/rombel">
+							  <span class="nav-icon">
+			                    <i class="material-icons">airplay</i>
+			                  </span>
+							  <span class="nav-text">Rombel</span>
+						  </router-link>
+					  </li>
+
+		              <li>
+		                <a href="javascript:void(0)" >
+		                  <span class="nav-icon">
+		                    <i class="material-icons">book</i>
+		                  </span>
+		                  <span class="nav-text">Pelajaran</span>
+		                </a>
+		              </li>
+
+		              <li class="nav-header hidden-folded">
+		                <small class="text-muted">Pengolahan Nilai</small>
+		              </li>
+		              <li>
+		                <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="material-icons">assignment</i>
+		                  </span>
+		                  <span class="nav-text">Komponen</span>
+		                </a>
+		                <ul class="nav-sub nav-mega nav-mega-3">
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Spiritual</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Sosial</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Pengetahuan</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Ketarampilan</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">KKM</span>
+		                    </a>
+		                  </li>
+		                </ul>
+		              </li>
+
+		              <li>
+		                <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="material-icons">assessment</i>
+		                  </span>
+		                  <span class="nav-text">Ulangan</span>
+		                </a>
+		                <ul class="nav-sub nav-mega nav-mega-3">
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Harian</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">PTS</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">PAS</span>
+		                    </a>
+		                  </li>
+		                </ul>
+		              </li>
+
+		              <li>
+		                <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="material-icons">description</i>
+		                  </span>
+		                  <span class="nav-text">Laporan</span>
+		                </a>
+		                <ul class="nav-sub nav-mega nav-mega-3">
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Mapel</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Tugas</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Ulangan Harian</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">PTS</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">PAS</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Rapor</span>
+		                    </a>
+		                  </li>
+
+		                </ul>
+		              </li>
+
+		              <li class="nav-header hidden-folded">
+		                <small class="text-muted">Referensi</small>
+		              </li>
+		              <li>
+		                <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="material-icons">library_books</i>
+		                  </span>
+		                  <span class="nav-text">Kompetensi Inti</span>
+		                </a>
+		                <ul class="nav-sub nav-mega nav-mega-3">
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Spiritual</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Sosial</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Pengetahuan</span>
+		                    </a>
+		                  </li>
+		                  <li>
+		                    <a href="javascript:void(0)" >
+		                      <span class="nav-text">Ketarampilan</span>
+		                    </a>
+		                  </li>
+		                </ul>
+		              </li>
+
+		              <!-- Pengaturan -->
+		              <li class="nav-header hidden-folded">
+		                <small class="text-muted">Pengaturan</small>
+		              </li>
+		              <li>
+		                <a href="javascript:void(0)" >
+		                  <span class="nav-icon">
+		                    <i class="material-icons">settings_applications</i>
+		                  </span>
+		                  <span class="nav-text">Aplikasi</span>
+		                </a>
+		              </li>
+		              <li>
+		                <a href="javascript:void(0)" >
+		                  <span class="nav-icon">
+		                    <i class="material-icons">account_circle</i>
+		                  </span>
+		                  <span class="nav-text">Pengguna</span>
+		                </a>
+		              </li>
+		              <li class="ss-logout-btn">
+		                <a v-bind:href="apiUrl + 'authcontroller/logout/'">
+		                  <span class="nav-icon">
+		                    <i class="material-icons">exit_to_app</i>
+		                  </span>
+		                  <span class="nav-text ss-white-text">Keluar</span>
+		                </a>
+		              </li>
+		              <!-- #END Pengaturan -->
+
+		            </ul>
+		        </nav>
+
+		    </div>
+		  </div>
+
+	    </div>
+		<div id="content" class="app-content box-shadow-z0" role="main">
+			<div id="app-header"></div>
+			<div id="app-footer"></div>
+			<div ui-view class="app-body" id="view">
+				<router-view></router-view>
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="./src/scripts/plugins/jquery.min.js"></script>
+	<script src="/dist/build.js"></script>
+	<!-- Bootstrap -->
+	  <script src="./src/scripts/plugins/tether.min.js"></script>
+	  <script src="./src/scripts/plugins/bootstrap.min.js"></script>
+	<!-- core -->
+	  <script src="./src/scripts/plugins/underscore-min.js"></script>
+	  <script src="./src/scripts/plugins/jquery.storageapi.min.js"></script>
+	  <script src="./src/scripts/plugins/pace.min.js"></script>
+	  <script src="./src/scripts/plugins/moment.min.js"></script>
+	  <script src="./src/scripts/plugins/moment.id.js"></script>
+	  <script src="./src/scripts/plugins/bootstrap-datetimepicker.min.js"></script>
+
+	  <script src="./src/scripts/app/config.lazyload.js"></script>
+
+	  <script src="./src/scripts/app/palette.js"></script>
+	  <script src="./src/scripts/app/ui-load.js"></script>
+	  <script src="./src/scripts/app/ui-jp.js"></script>
+	  <script src="./src/scripts/app/ui-include.js"></script>
+	  <script src="./src/scripts/app/ui-device.js"></script>
+	  <script src="./src/scripts/app/ui-form.js"></script>
+	  <script src="./src/scripts/app/ui-nav.js"></script>
+	  <script src="./src/scripts/app/ui-scroll-to.js"></script>
+	  <script src="./src/scripts/app/ui-toggle-class.js"></script>
+
+	  <script src="./src/scripts/app/app.js"></script>
+	<!-- endbuild -->
+</body>
+</html>

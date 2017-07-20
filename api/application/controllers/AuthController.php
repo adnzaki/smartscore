@@ -42,7 +42,7 @@ class AuthController extends SSController
     public function logout() 
     {
         delete_cookie('ss_session');
-        header('Location: http://localhost:8080/login.html');
+        header('Location: http://localhost:8080/');
     }
 
 }

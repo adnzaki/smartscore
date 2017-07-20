@@ -4,7 +4,7 @@ export const global = {
     data() {
         return {
             apiUrl: 'http://localhost:70/smartscore/api/',
-            loginUrl: 'http://localhost:8080/login.html'
+            loginUrl: 'http://localhost:8080/'
         }
     }    
 }
