@@ -3,7 +3,7 @@ new Vue({
     data: {
         msg: '',
         title: 'Silakan login dengan menggunakan akun Smartscore anda',
-        apiUrl: 'http://localhost:70/smartscore/api/',
+        apiUrl: 'http://localhost:71/smartscore/api/',
         username: '', password: ''        
     },
     methods: {
@@ -31,6 +31,9 @@ new Vue({
                         } else {
                             self.msg = data.msg
                         }                   
+                    },
+                    error: function() {
+                        self.msg = 'Gagal terkoneksi dengan server'
                     }
                 })
             }            
