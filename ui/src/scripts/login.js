@@ -4,7 +4,19 @@ new Vue({
         msg: '',
         title: 'Silakan login dengan menggunakan akun Smartscore anda',
         apiUrl: 'http://localhost:71/smartscore/api/',
-        username: '', password: ''        
+        username: '', password: ''  ,
+        tahunAjaran: []
+    },
+    mounted: function() {
+        var self = this
+        $.ajax({
+            url: `${this.apiUrl}authcontroller/getTahunAjaran`,
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                self.tahunAjaran = data
+            }
+        })
     },
     methods: {
         login: function() {

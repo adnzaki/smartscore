@@ -50,6 +50,14 @@
         <div class="md-form-group float-label">
           <input type="password" name="password" v-model="password" @keyup.enter="login" class="md-input" required>
           <label>Password</label>
+        </div>
+        <div class="md-form-group float-label">
+          <select class="form-control c-select" name="tahun_ajaran">
+            <option disabled>Tahun Ajaran</option>
+            <option v-for="item in tahunAjaran" v-bind:value="item.tahun_ajaran">
+              {{ item.nama_tahun_ajaran }}
+            </option>
+          </select>
         </div>      
         <div class="m-b-md">        
           <label class="md-check">
@@ -74,7 +82,7 @@
 	<!-- jQuery -->
     <script src="./src/scripts/plugins/jquery.min.js"></script>
     <script src="./src/scripts/app/vue.min.js"></script>
-	<script src="./src/scripts/login.js"></script>
+	  <script src="./src/scripts/login.js"></script>
 	<!-- Bootstrap -->
 	  <script src="./src/scripts/plugins/tether.min.js"></script>
 	  <script src="./src/scripts/plugins/bootstrap.min.js"></script>

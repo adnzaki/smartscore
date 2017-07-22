@@ -17,11 +17,10 @@ class AuthController extends SSController
         if(AuthModel::isValidUser($user, $pass)) 
         {            
             $token = [
-                'username' => $user
+                'username' => $user,
+                'tahun_ajaran' => $this->input->post('tahun_ajaran', true)
             ];
             $encoded = JWT::encode($token, 'user_key');
-            set_cookie('ss_session', $encoded, 3600, '', '/', '', false, true);
-            $cookie = get_cookie('ss_session');
             $res = [
                 'code' => 1,
                 'msg' => 'Login berhasil, mengalihkan halaman...',
@@ -43,6 +42,12 @@ class AuthController extends SSController
     {
         delete_cookie('ss_session');
         header('Location: http://localhost:8080/');
+    }
+
+    public function getTahunAjaran()
+    {
+        $res = AuthModel::getTahunAjaran();
+        echo json_encode($res);
     }
 
 }

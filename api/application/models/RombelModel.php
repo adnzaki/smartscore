@@ -13,11 +13,11 @@
 
 class RombelModel extends CI_Model
 {
-    public function getRombel($limit, $offset)
+    public function getRombel($limit, $offset, $tahunAjaran)
     {
         $select = 'id_rombel, nama_rombel, tingkat, nama_guru';
         $query = $this->db->select($select)->from('rombel')->join('guru', 'rombel.id_guru = guru.id_guru')
-                ->where('tahun_ajaran', '20161')->order_by('nama_rombel', 'ASC')->limit($limit, $offset);
+                ->where('tahun_ajaran', $tahunAjaran)->order_by('nama_rombel', 'ASC')->limit($limit, $offset);
         return $query->get()->result();
     }
 

@@ -11,7 +11,6 @@ class AuthModel extends CI_Model
     }
     public static function isValidUser($user, $pass)
     {
-        //$ci =& get_instance();
         $query = self::$ci->db->get_where('pengguna', [
             'user_id' => $user,
             'password_pengguna' => $pass
@@ -25,5 +24,11 @@ class AuthModel extends CI_Model
         {
             return false;
         }
+    }
+
+    public static function getTahunAjaran()
+    {
+        $query = self::$ci->db->get('tahun_ajaran');
+        return $query->result();
     }
 }
