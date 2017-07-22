@@ -31,7 +31,6 @@ class SSController extends CI_Controller
                 $decoded = JWT::decode($token, 'user_key');
                 $msg = 'Token valid untuk ' . json_encode($decoded);
                 $res = ['code' => 1, 'msg' => $msg];
-                //echo json_encode(true);
                 if($requestType === 'php')
                 {
                     return true;
