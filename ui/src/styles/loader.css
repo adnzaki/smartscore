@@ -1,7 +1,7 @@
 .loader-wrapper {
     /*width: calc(100% - 12.5rem);*/
     width: 100%;
-    position: absolute;
+    position: fixed;
     background-color: #2e3e4e;
     /*height: calc(100vh - 3.5rem);*/
     height: 100vh;

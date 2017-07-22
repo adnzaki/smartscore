@@ -31,8 +31,17 @@
 </head>
 
 <body>
-	<div id="loader"></div>
+	 	<div class="loader-wrapper" id="loader">
+			<div class="cssload-thecube">
+					<div class="cssload-cube cssload-c1"></div>
+					<div class="cssload-cube cssload-c2"></div>
+					<div class="cssload-cube cssload-c4"></div>
+					<div class="cssload-cube cssload-c3"></div>
+			</div>
+		</div> 
+			
 	<div class="app" id="app">
+			
 		<div id="aside" class="app-aside modal fade nav-dropdown">
 	      <!-- fluid app aside -->
 		  <div class="left navside dark dk" layout="column">
@@ -325,5 +334,10 @@
 
 	  <script src="./src/scripts/app/app.js"></script>
 	<!-- endbuild -->
+	<script>
+		$(document).ready(function() {
+			$('#loader').hide()
+		})
+	</script>
 </body>
 </html>

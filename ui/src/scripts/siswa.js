@@ -14,11 +14,10 @@ import { paging } from './paging.js'
 import { shared } from './shared.js'
 import { global } from './global.js'
 import ssalert from '../template/content/alert.vue'
-import ssloader from '../template/content/loader.vue'
 
 export default {
     name: 'Siswa',
-    mixins: [paging, global, shared, ssloader],
+    mixins: [paging, global, shared],
     data() {
         return {
             daftarSiswa: '',
