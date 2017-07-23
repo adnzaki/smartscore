@@ -69,8 +69,8 @@ export default {
     methods: {
         getSiswa(limit, start, search) {
             var token = this.getCookie('ss_session')
-            if(token === undefined) {
-                window.location.href = this.loginUrl
+            if(token === 'undefined') {
+                window.location.href = `${this.apiUrl}authcontroller/logout/`
             } else {
                 this.showFormAdd = false
                 this.showFormEdit = false
@@ -103,12 +103,8 @@ export default {
                         // atur nilai default untuk previous page
                         start === this.first ? this.prev = start : this.prev = start - 1
                     },
-                    error: data => {
-                        if(data.code === 0 || data.code === 1) {
-                            alert(data.msg)
-                        } else {
-                            alert('Gagal mengirimkan request ke server')
-                        }
+                    error: () => {
+                        alert('Tidak dapat terkoneksi dengan server')
                     }
                 })
             }            

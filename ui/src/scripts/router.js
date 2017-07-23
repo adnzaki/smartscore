@@ -21,7 +21,7 @@ const router = new VueRouter({
 export const AppRouter = new Vue({
     mixins: [global, shared],
     router,
-    mounted() {
+    beforeMount() {
         let token = this.getCookie('ss_session')
         if(token === undefined) {
             window.location.href = this.loginUrl

@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import { shared } from './shared.js'
+import { global } from './global.js'
 
 export default {
     name: 'dashboard',
-    mixins: [shared],
+    mixins: [shared, global],
     data() {
         return {
             pesan: 'testtt',
@@ -22,7 +23,12 @@ export default {
     },
     methods: {
         hello() {
-            this.pesan = 'Selamat Datang'
+            let token = this.getCookie('ss_session')
+            if(token === 'undefined') {
+                window.location.href = `${this.apiUrl}authcontroller/logout/`
+            } else {
+                this.pesan = 'Selamat Datang'
+            }            
         }
     }
 }

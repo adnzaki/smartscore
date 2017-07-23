@@ -336,7 +336,9 @@
 	<!-- endbuild -->
 	<script>
 		$(document).ready(function() {
-			$('#loader').hide()
+			setTimeout(function() {
+				$('#loader').hide()
+			}, 1000);			
 		})
 	</script>
 </body>

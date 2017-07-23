@@ -39,7 +39,7 @@ export default {
     methods: {
         getRombel(limit, start) {
             var token = this.getCookie('ss_session')
-            if(token === undefined) {
+            if(token === 'undefined') {
                 window.location.href = this.loginUrl
             } else {
                 var self = this
