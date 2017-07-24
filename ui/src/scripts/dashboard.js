@@ -11,11 +11,10 @@
 
 import Vue from 'vue'
 import { shared } from './shared.js'
-import { global } from './global.js'
 
 export default {
     name: 'dashboard',
-    mixins: [shared, global],
+    mixins: [shared],
     data() {
         return {
             pesan: 'testtt',

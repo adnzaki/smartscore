@@ -12,12 +12,11 @@
 import Vue from 'vue'
 import { paging } from './paging.js'
 import { shared } from './shared.js'
-import { global } from './global.js'
 import ssalert from '../template/content/alert.vue'
 
 export default {
     name: 'Siswa',
-    mixins: [paging, global, shared],
+    mixins: [paging, shared],
     data() {
         return {
             daftarSiswa: '',

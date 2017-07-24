@@ -10,16 +10,15 @@
  */
 
 import Vue from 'vue'
-import { global } from './global.js'
 import { shared } from './shared.js'
 
-export const Login = new Vue({
+new Vue({
     el: '#loginPage',
-    mixins:[global, shared],
+    mixins:[shared],
     data: {
         msg: '',
         title: 'Silakan login dengan menggunakan akun Smartscore anda',
-        username: '', password: ''  ,
+        username: '', password: '',
         tahunAjaran: []
     },
     mounted() {

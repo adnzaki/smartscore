@@ -11,12 +11,11 @@
 
 import Vue from 'vue'
 import { paging } from './paging.js'
-import { global } from './global.js'
 import { shared } from './shared.js'
 
 export default {
     name: 'Rombel',
-    mixins: [paging, global, shared],
+    mixins: [paging, shared],
     data() {
         return {
             showDaftarRombel: false,

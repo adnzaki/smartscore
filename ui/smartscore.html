@@ -55,48 +55,44 @@
 		      <!-- / brand -->
 		    </div>
 		    <div flex class="hide-scroll">
-		        <nav class="scroll nav-light">
+		      <nav class="scroll nav-light">
+						<ul class="nav" ui-nav>
+							<li class="nav-header hidden-folded">
+								<small class="text-muted">Master</small>
+							</li>
+							<li>
+								<router-link to="/dashboard">
+									<span class="nav-icon">
+										<i class="material-icons">home</i>
+									</span>
+									<span class="nav-text">Beranda</span>
+								</router-link>
+							</li>
 
-		            <ul class="nav" ui-nav>
-		              <li class="nav-header hidden-folded">
-		                <small class="text-muted">Master</small>
-		              </li>
-
-					  <li>
-						  <router-link to="/dashboard">
-							  <span class="nav-icon">
-			                    <i class="material-icons">home</i>
-			                  </span>
-							  <span class="nav-text">Beranda</span>
-						  </router-link>
-					  </li>
-
-					  <li>
-						  <router-link to="/siswa">
-							  <span class="nav-icon">
-			                    <i class="material-icons">people</i>
-			                  </span>
-			                  <span class="nav-text">Siswa</span>
-						  </router-link>
-					  </li>
-
-		              <li @click="siswa.showDaftarSiswa = false">
-		                <a href="javascript:void(0)" >
-		                  <span class="nav-icon">
-		                    <i class="material-icons">person</i>
-		                  </span>
-		                  <span class="nav-text">Guru</span>
-		                </a>
-		              </li>
-
-					  <li>
-						  <router-link to="/rombel">
-							  <span class="nav-icon">
-			                    <i class="material-icons">airplay</i>
-			                  </span>
-							  <span class="nav-text">Rombel</span>
-						  </router-link>
-					  </li>
+							<li>
+								<router-link to="/siswa">
+									<span class="nav-icon">
+										<i class="material-icons">people</i>
+									</span>
+									<span class="nav-text">Siswa</span>
+								</router-link>
+							</li>
+							<li @click="siswa.showDaftarSiswa = false">
+								<a href="javascript:void(0)" >
+									<span class="nav-icon">
+										<i class="material-icons">person</i>
+									</span>
+									<span class="nav-text">Guru</span>
+								</a>
+							</li>
+							<li>
+								<router-link to="/rombel">
+									<span class="nav-icon">
+										<i class="material-icons">airplay</i>
+									</span>
+									<span class="nav-text">Rombel</span>
+								</router-link>
+							</li>
 
 		              <li>
 		                <a href="javascript:void(0)" >
@@ -298,8 +294,8 @@
 
 	    </div>
 		<div id="content" class="app-content box-shadow-z0" role="main">
-			<div id="app-header"></div>
-			<div id="app-footer"></div>
+			 <div id="app-header"></div> 
+			 <div id="app-footer"></div> 
 			<div ui-view class="app-body" id="view">
 				<router-view></router-view>
 			</div>
@@ -308,7 +304,7 @@
 
 	<!-- jQuery -->
 	<script src="./src/scripts/plugins/jquery.min.js"></script>
-	<script src="/dist/build.js"></script>
+	<script src="/dist/main.build.js"></script>
 	<!-- Bootstrap -->
 	  <script src="./src/scripts/plugins/tether.min.js"></script>
 	  <script src="./src/scripts/plugins/bootstrap.min.js"></script>

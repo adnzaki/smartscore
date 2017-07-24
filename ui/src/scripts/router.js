@@ -20,6 +20,7 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import {shared} from './shared.js'
 import dashboard from '../template/pages/beranda/dashboard.vue'
 import Siswa from '../template/pages/siswa/Siswa.vue'
 import Rombel from '../template/pages/rombel/Rombel.vue'
@@ -37,5 +38,6 @@ const router = new VueRouter({
 })
 
 export const AppRouter = new Vue({
+    mixins: [shared],
     router,
 }).$mount('#app')

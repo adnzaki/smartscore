@@ -6,3 +6,4 @@ api/public/vue.min.js
 .vscode/launch.json
 api/application/libraries/php-jwt-master.zip
 ui/Smartscore.bat
+ui/debug.log
