@@ -1,13 +1,28 @@
-new Vue({
-    el: '#app',
+/**
+ * Smartscore
+ * Aplikasi Pengolahan Nilai Siswa berbasis Kurikulum 2013 untuk tingkat Sekolah Dasar (SD)
+ *
+ * @copyright   Copyright (c) 2017, Adnan Zaki
+ * @license     Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License | https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
+ * @author      Adnan Zaki
+ * @link        http://wolestech.com
+ * @version     1.0.0
+ */
+
+import Vue from 'vue'
+import { global } from './global.js'
+import { shared } from './shared.js'
+
+export const Login = new Vue({
+    el: '#loginPage',
+    mixins:[global, shared],
     data: {
         msg: '',
         title: 'Silakan login dengan menggunakan akun Smartscore anda',
-        apiUrl: 'http://localhost:71/smartscore/api/',
         username: '', password: ''  ,
         tahunAjaran: []
     },
-    mounted: function() {
+    mounted() {
         var self = this
         $.ajax({
             url: `${this.apiUrl}authcontroller/getTahunAjaran`,
@@ -19,7 +34,7 @@ new Vue({
         })
     },
     methods: {
-        login: function() {
+        login() {
             var data = $("#formLogin").serialize()
             var self = this
             if(this.username === '' || this.password === '') {
@@ -30,7 +45,7 @@ new Vue({
                     type: 'POST',
                     dataType: 'json',
                     data: data,
-                    success: function(data) {                 
+                    success: data => {                 
                         if(data.code === 1) {
                             var tgl = new Date(),
                             skrg = tgl.getTime(),
@@ -44,7 +59,7 @@ new Vue({
                             self.msg = data.msg
                         }                   
                     },
-                    error: function() {
+                    error() {
                         self.msg = 'Gagal terkoneksi dengan server'
                     }
                 })
