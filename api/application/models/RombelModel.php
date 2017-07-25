@@ -21,9 +21,9 @@ class RombelModel extends CI_Model
         return $query->get()->result();
     }
 
-    public function getTotalRows()
+    public function getTotalRows($tahunAjaran)
     {
-        $query = $this->db->get('rombel');
+        $query = $this->db->get_where('rombel', ['tahun_ajaran' => $tahunAjaran]);
         return $query->num_rows();
     }
 }

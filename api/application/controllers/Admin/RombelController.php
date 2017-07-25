@@ -34,7 +34,8 @@ class RombelController extends SSController
                 $decodedToken = JWT::decode($token, 'user_key');
                 $data = [
                     'rombel' => $this->RombelModel->getRombel($limit, $offset, $decodedToken->tahun_ajaran),
-                    'baris' => $this->RombelModel->getTotalRows()
+                    'baris' => $this->RombelModel->getTotalRows($decodedToken->tahun_ajaran),
+                    'tahun_ajaran' => $decodedToken->tahun_ajaran
                 ];
                 echo json_encode($data);
             }

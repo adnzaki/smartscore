@@ -46,21 +46,29 @@ export const paging = {
         dataTo() {
             let currentPage = this.offset / this.limit,
                 range
-            if(currentPage === this.last) {
-                range = this.totalRows
+            if(this.pageLinks.length === 0) {
+                range = 0
             } else {
-                range = this.offset + this.limit
-            }
+                if(currentPage === this.last) {
+                    range = this.totalRows
+                } else {
+                    range = this.offset + this.limit
+                }
+            }            
 
             return range
         },
         dataFrom() {
             let from
-            if(this.offset === 0) {
-                from = 1
+            if(this.pageLinks.length === 0) {
+                from = 0
             } else {
-                from = this.offset + 1
-            }
+                if(this.offset === 0) {
+                    from = 1
+                } else {
+                    from = this.offset + 1
+                }
+            }            
 
             return from
         },
