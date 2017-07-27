@@ -1,5 +1,6 @@
 <template lang="html">
 	<div>
+		<!-- TABEL DAFTAR ROMBEL  -->
     	<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     		<div class="padding" v-if="showDaftarRombel">
     			<div class="row">
@@ -10,9 +11,11 @@
     						</div>
     						<div class="box-body">
     							<div class="row">
-    								<div class="col-sm-6 col-xs-12">
+    								<div class="col-sm-9 col-xs-12">
     									<button class="btn btn-fw white" @click=""><i class="fa fa-plus"></i>&nbsp; Tambah</button>
-    									<button class="btn btn-fw white" @click=""><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+										<button class="btn btn-fw white" @click=""><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+										<button class="btn btn-fw white" @click="salinConfirm = true"><i class="fa fa-copy"></i>&nbsp; Salin</button>
+										<button class="btn btn-fw white" @click="" v-if="smtGenap"><i class="fa fa-level-up"></i>&nbsp; Naik Kelas</button>
     								</div>
     								<div class="col-sm-3 col-xs-12">
     									<div class="form-group row">
@@ -27,9 +30,6 @@
 	    										</select>
     										</div>
     									</div>
-    								</div>
-    								<div class="col-sm-3 col-xs-12">
-    									<input type="text" class="form-control" placeholder="Cari siswa (ketik dan enter)">
     								</div>
     							</div>
     						</div>
@@ -87,6 +87,57 @@
     			</div>
     		</div>
     	</transition>
+		<!-- #END TABEL DAFTAR ROMBEL  -->
+
+		<!-- KONFIRMASI SALIN ROMBEL  -->
+	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	    	<div class="modal ss-modal" data-backdrop="true" v-if="salinConfirm">
+	    		<div class="modal-dialog">
+	    			<div class="col-sm-8 offset-sm-2">
+	    				<div class="modal-content black lt m-b">
+	    					<div class="modal-header">
+	    						<h5 class="modal-title">Konfirmasi</h5>
+	    					</div>
+	    					<div class="modal-body">
+	    						<p>
+									Apakah anda yakin ingin menyalin data rombel dari semester sebelumnya?<br>
+									Note:<br>
+									<small class="text-yellow">Duplikasi rombel mungkin akan terjadi jika anda telah mengisi data rombel untuk semester ini.</small>
+								</p>
+	    					</div>
+	    					<div class="modal-footer">
+	    						<button class="btn white" @click="salinConfirm = false">Cancel</button>
+	    						<button class="btn primary" @click="salinRombel">OK</button>
+	    					</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </transition>
+		<!-- #END KONFIRMASI SALIN ROMBEL  -->
+
+		<!-- PROGRESS SAAT SALIN ROMBEL  -->
+		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+	    	<div class="modal ss-modal" data-backdrop="true" v-if="salinProgress">
+	    		<div class="modal-dialog">
+	    			<div class="col-sm-8 offset-sm-2">
+	    				<div class="modal-content black lt m-b">
+	    					<div class="modal-header">
+	    						<h5 class="modal-title">Info</h5>
+	    					</div>
+	    					<div class="modal-body">
+	    						<p class="text-center ss-loading-text">{{ progressText }}</p>
+	    					</div>
+	    					<div class="modal-footer">
+	    						<button class="btn primary" @click="salinProgress = false">Tutup</button>
+	    					</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </transition>
+		<!-- #END PROGRESS SALIN ROMBEL -->
+
     </div>
 </template>
 <script src="../../../scripts/rombel.js" charset="utf-8"></script>

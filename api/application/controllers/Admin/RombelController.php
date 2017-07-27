@@ -45,5 +45,25 @@ class RombelController extends SSController
             }
         }        
     }
+
+    public function copyRombel($token)
+    {
+        $decoded = JWT::decode($token, 'user_key');
+        $tahunSblm = $decoded->tahun_ajaran - 1;
+        $tahunSkrg = $decoded->tahun_ajaran;
+        if($this->RombelModel->duplicateRombel($tahunSblm, $tahunSkrg))
+        {
+            $res = [
+                'status' => 1,
+                'jml_rombel' => $this->RombelModel->getTotalRows($tahunSkrg),
+            ];
+
+            echo json_encode($res);
+        }
+        else 
+        {
+            echo json_encode(0);
+        }
+    }
     
 }

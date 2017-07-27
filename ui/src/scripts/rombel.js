@@ -20,7 +20,9 @@ export default {
         return {
             showDaftarRombel: false,
             daftarRombel: '',
-            jmlBaris: 0,
+            jmlBaris: 0, smtGenap: false,
+            salinConfirm: false, salinProgress: false,
+            progressText: ''
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -51,6 +53,8 @@ export default {
                     dataType: 'json',
                     success: data => {
                         self.daftarRombel = data['rombel']
+                        let j = data['tahun_ajaran'].charAt(data['tahun_ajaran'].length - 1)
+                        j === '1' ? self.smtGenap = true : self.smtGenap = false
                         setTimeout(() => {
                             self.showDaftarRombel = true
                         }, 400)
@@ -71,5 +75,24 @@ export default {
             this.rombelLimit = parseInt(this.jmlBaris)
             this.getRombel(this.rombelLimit, 0)
         },
+        salinRombel() {
+            let token = this.getCookie('ss_session')
+            this.salinConfirm = false
+            this.progressText = 'Menyalin rombel...'
+            this.salinProgress = true
+            $.ajax({
+                url: `${this.apiUrl}admin/RombelController/copyrombel/${token}`,
+                type: 'POST',
+                dataType: 'json',
+                success: data => {
+                    if(data.status === 1) {
+                        this.progressText = `${data.jml_rombel} rombel berhasil disalin ke semester saat ini`
+                        this.getRombel(10, 0)
+                    } else {
+                        this.progressText = 'Terjadi kesalahan saat menyalin rombel'
+                    }
+                }
+            })
+        }
     },
 }

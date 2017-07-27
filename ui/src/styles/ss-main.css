@@ -50,6 +50,10 @@
     color: #000 !important;
 }
 
+.text-yellow {
+    color: #e6db1a;
+}
+
 @media (max-width: 991px) {
     .ss-fly-alert {
         width: calc(100% - 32px);

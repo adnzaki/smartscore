@@ -26,4 +26,27 @@ class RombelModel extends CI_Model
         $query = $this->db->get_where('rombel', ['tahun_ajaran' => $tahunAjaran]);
         return $query->num_rows();
     }
+
+    public function duplicateRombel($tahunSblm, $tahunSkrg)
+    {
+        $createTmp = 'CREATE TEMPORARY TABLE tmp_rombel SELECT * FROM rombel WHERE tahun_ajaran='.$tahunSblm;
+        $updateTmp = 'UPDATE tmp_rombel SET id_rombel=NULL, tahun_ajaran='.$tahunSkrg;
+        $copyTmp = 'INSERT INTO rombel SELECT * FROM tmp_rombel';
+        $dropTmp = 'DROP TEMPORARY TABLE IF EXISTS tmp_rombel';
+        $this->db->trans_start();
+        $this->db->query($createTmp);
+        $this->db->query($updateTmp);
+        $this->db->query($copyTmp);
+        $this->db->query($dropTmp);
+        $this->db->trans_complete();
+
+        if($this->db->trans_status() === false)
+        {
+            return false;
+        }
+        else 
+        {
+            return true;
+        }
+    }
 }
