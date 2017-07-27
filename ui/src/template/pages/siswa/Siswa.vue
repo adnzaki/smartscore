@@ -413,28 +413,6 @@
 		    		</div>
 		    	</div>
 		    </transition>
-
-		    <!-- Warning modal -->
-		    <!-- <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-		    	<div class="modal ss-modal" data-backdrop="true" v-if="sidebar.modal.siswaIsFilled">
-		    		<div class="modal-dialog">
-		    			<div class="col-sm-8 offset-sm-2">
-		    				<div class="modal-content black lt m-b">
-		    					<div class="modal-header">
-		    						<h5 class="modal-title">Peringatan</h5>
-		    					</div>
-		    					<div class="modal-body">
-		    						<p>Terdapat isian yang belum disimpan, apakah anda yakin ingin menutup halaman ini?</p>
-		    					</div>
-		    					<div class="modal-footer">
-		    						<button class="btn white" @click="sidebar.modal.siswaIsFilled = false">Cancel</button>
-		    						<button class="btn primary" @click="sidebar.forceShowDaftarSiswa">OK</button>
-		    					</div>
-		    				</div>
-		    			</div>
-		    		</div>
-		    	</div>
-		    </transition> -->
 		</div>
 		<!-- #END FORM TAMBAH SISWA -->
 
