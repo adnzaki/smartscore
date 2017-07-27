@@ -14,7 +14,7 @@
     								<div class="col-sm-9 col-xs-12">
     									<button class="btn btn-fw white" @click=""><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 										<button class="btn btn-fw white" @click=""><i class="fa fa-trash"></i>&nbsp; Hapus</button>
-										<button class="btn btn-fw white" @click="salinConfirm = true"><i class="fa fa-copy"></i>&nbsp; Salin</button>
+										<button class="btn btn-fw white" @click="salinConfirm = true" v-if="smtGenap === false"><i class="fa fa-copy"></i>&nbsp; Lanjutkan Semester</button>
 										<button class="btn btn-fw white" @click="" v-if="smtGenap"><i class="fa fa-level-up"></i>&nbsp; Naik Kelas</button>
     								</div>
     								<div class="col-sm-3 col-xs-12">
@@ -100,9 +100,7 @@
 	    					</div>
 	    					<div class="modal-body">
 	    						<p>
-									Apakah anda yakin ingin menyalin data rombel dari semester sebelumnya?<br>
-									Note:<br>
-									<small class="text-yellow">Duplikasi rombel mungkin akan terjadi jika anda telah mengisi data rombel untuk semester ini.</small>
+									Apakah anda yakin ingin melanjutkan data rombel dari semester sebelumnya?<br>
 								</p>
 	    					</div>
 	    					<div class="modal-footer">
