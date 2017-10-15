@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import AppRouter from './scripts/router.js'    
-import {shared} from './scripts/shared.js'
 import appheader from './template/elements/app-header.vue'
 import appfooter from './template/elements/app-footer.vue'
 

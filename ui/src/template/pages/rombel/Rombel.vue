@@ -14,14 +14,14 @@
     								<div class="col-sm-9 col-xs-12">
     									<button class="btn btn-fw white" @click=""><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 										<button class="btn btn-fw white" @click=""><i class="fa fa-trash"></i>&nbsp; Hapus</button>
-										<button class="btn btn-fw white" @click="salinConfirm = true" v-if="smtGenap === false"><i class="fa fa-copy"></i>&nbsp; Lanjutkan Semester</button>
-										<button class="btn btn-fw white" @click="" v-if="smtGenap"><i class="fa fa-level-up"></i>&nbsp; Naik Kelas</button>
+										<button class="btn btn-fw white" @click="$store.state.salinConfirm = true" v-if="smtGenap"><i class="fa fa-copy"></i>&nbsp; Lanjutkan Semester</button>
+										<button class="btn btn-fw white" @click="" v-if="smtGenap === false"><i class="fa fa-level-up"></i>&nbsp; Naik Kelas</button>
     								</div>
     								<div class="col-sm-3 col-xs-12">
     									<div class="form-group row">
     										<label for="" class="col-sm-3 form-control-label">Tampilkan</label>
     										<div class="col-sm-9">
-    											<select class="form-control" v-model="jmlBaris" v-on:change="showPerPage">
+    											<select class="form-control" v-model="$store.state.jmlBaris" v-on:change="showPerPage">
 	    											<option value="10" class="text-black">10 baris</option>
 	    											<option value="25" class="text-black">25 baris</option>
 	    											<option value="50" class="text-black">50 baris</option>
@@ -64,19 +64,19 @@
     							<tfoot>
     								<td colspan="4" class="text-center">
     									<div class="col-sm-8 text-left">
-    										<p>Menampilkan baris <b>{{ dataFrom() }}</b> - <b>{{ dataTo() }}</b> dari <b>{{ totalRows }}</b> baris.</p>
+    										<p> {{ $store.getters.getRowsRange }} </p>
     									</div>
     									<div class="col-sm-4 text-center">
     										<ul class="pagination pagination-sm m-a-0">
-    											<li><a href="javascript:void(0)" @click="getRombel(limit, first)"><i class="material-icons">skip_previous</i></a></li>
-    											<li><a href="javascript:void(0)" @click="getRombel(limit, prev)"><i class="material-icons">navigate_before</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getRombel(localLimit, paging('first'))"><i class="material-icons">skip_previous</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getRombel(localLimit, paging('prev'))"><i class="material-icons">navigate_before</i></a></li>
     											<li>
     												<div class="col-xs-3">
-    													<input type="text" class="form-control" v-model="setStart" @keyup.enter="getRombel(limit, setStart - 1)">
+    													<input type="text" class="form-control" v-model="$store.state.paging.setStart" @keyup.enter="getRombel(localLimit, $store.state.paging.setStart - 1)">
     												</div>
     											</li>
-    											<li><a href="javascript:void(0)" @click="getRombel(limit, next)"><i class="material-icons">navigate_next</i></a></li>
-    											<li><a href="javascript:void(0)" @click="getRombel(limit, last)"><i class="material-icons">skip_next</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getRombel(localLimit, paging('next'))"><i class="material-icons">navigate_next</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getRombel(localLimit, paging('last'))"><i class="material-icons">skip_next</i></a></li>
     										</ul>
     									</div>
     								</td>
@@ -91,7 +91,7 @@
 
 		<!-- KONFIRMASI SALIN ROMBEL  -->
 	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-	    	<div class="modal ss-modal" data-backdrop="true" v-if="salinConfirm">
+	    	<div class="modal ss-modal" data-backdrop="true" v-if="$store.state.salinConfirm">
 	    		<div class="modal-dialog">
 	    			<div class="col-sm-8 offset-sm-2">
 	    				<div class="modal-content black lt m-b">
@@ -104,7 +104,7 @@
 								</p>
 	    					</div>
 	    					<div class="modal-footer">
-	    						<button class="btn white" @click="salinConfirm = false">Cancel</button>
+	    						<button class="btn white" @click="$store.state.salinConfirm = false">Cancel</button>
 	    						<button class="btn primary" @click="salinRombel">OK</button>
 	    					</div>
 	    				</div>
@@ -127,7 +127,7 @@
 	    						<p class="text-center ss-loading-text">{{ progressText }}</p>
 	    					</div>
 	    					<div class="modal-footer">
-	    						<button class="btn primary" @click="salinProgress = false">Tutup</button>
+	    						<button class="btn primary" @click="$store.state.salinProgress = false">Tutup</button>
 	    					</div>
 	    				</div>
 	    			</div>
@@ -138,4 +138,75 @@
 
     </div>
 </template>
-<script src="../../../scripts/rombel.js" charset="utf-8"></script>
+<script>
+import Vue from 'vue'
+import Vuex from 'vuex'
+import {
+	mapState,
+	mapMutations,
+	mapGetters,
+	mapActions
+} from 'vuex'
+import { Rombel } from '../../../scripts/store/Rombel'
+import ssalert from '../../../template/content/alert.vue'
+import { sserror } from '../../../scripts/modules/Shared'
+
+Vue.use(Vuex)
+
+export default {
+	name: 'Rombel',
+	store: Rombel,
+	components: {
+		sserror,
+		ssalert,
+	},
+	beforeRouteEnter(to, from, next) {
+		next(vm => vm.getRombel(10, 0))
+	},
+	beforeRouteUpdate(to, from, next) {
+		this.resetDaftarRombel()
+		next()
+	},
+	beforeRouteLeave(to, from, next) {
+		this.hideDataRombel()
+		next()
+	},
+	data() {
+		return {
+			cookie: this.$store.state.shared.cookieName
+		}
+	},
+	methods: {
+		...mapMutations([
+			
+		]),
+		...mapActions([
+			'showPerPage', 'salinRombel'
+		]),
+		getRombel(limit, offset) {
+			this.$store.dispatch('getRombel', {
+				limit,
+				offset
+			})
+		},
+		paging(param) {
+			return this.$store.state.paging[param]
+		},
+		resetDaftarRombel() {
+			this.$store.state.daftarRombel = []
+			this.$store.dispatch('runGetRombel')
+		},
+		hideDataRombel() {
+			this.$store.state.showDaftarRombel = false
+		},
+
+	},
+	computed: {
+		...mapState([
+			'showDaftarRombel', 'daftarRombel',
+			'smtGenap', 'salinConfirm', 'salinProgress', 
+			'progressText', 'localLimit',
+		]),
+	}
+}
+</script>

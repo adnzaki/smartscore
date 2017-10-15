@@ -10,11 +10,10 @@
  */
 
 import Vue from 'vue'
-import { shared } from './shared.js'
+import { ssconfig } from '../../app.config'
 
 new Vue({
     el: '#loginPage',
-    mixins:[shared],
     data: {
         msg: '',
         title: 'Silakan login dengan menggunakan akun Smartscore anda',
@@ -22,13 +21,12 @@ new Vue({
         tahunAjaran: []
     },
     mounted() {
-        var self = this
         $.ajax({
-            url: `${this.apiUrl}authcontroller/getTahunAjaran`,
+            url: `${ssconfig.apiUrl}AuthController/getTahunAjaran`,
             type: 'get',
             dataType: 'json',
-            success: function(data) {
-                self.tahunAjaran = data
+            success: data => {
+                this.tahunAjaran = data
             }
         })
     },
@@ -40,7 +38,7 @@ new Vue({
                 this.msg = 'Silakan masukkan username dan password anda'
             } else {
                 $.ajax({
-                    url: `${this.apiUrl}authcontroller/validate/`,
+                    url: `${ssconfig.apiUrl}AuthController/validate/`,
                     type: 'POST',
                     dataType: 'json',
                     data: data,
@@ -48,12 +46,12 @@ new Vue({
                         if(data.code === 1) {
                             var tgl = new Date(),
                             skrg = tgl.getTime(),
-                            expMs = skrg + 3600000,
+                            expMs = skrg + (ssconfig.cookieExp * 60 * 1000),
                             exp = new Date(expMs)
-                            document.cookie = `ss_session=${data.cookie};expires=${exp};path=/;`
+                            document.cookie = `${ssconfig.cookieName}=${data.cookie};expires=${exp.toUTCString()};path=/;`
                             self.msg = ''
                             self.title = data.msg
-                            window.location.href = 'http://localhost:8080/smartscore.html#/dashboard'
+                            window.location.href = `${ssconfig.loginUrl}smartscore.html#/${ssconfig.mainPage}`
                         } else {
                             self.msg = data.msg
                         }                   

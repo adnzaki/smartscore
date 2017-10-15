@@ -31,83 +31,85 @@
 </head>
 
 <body>
-	 	<div class="loader-wrapper" id="loader">
-			<div class="cssload-thecube">
-					<div class="cssload-cube cssload-c1"></div>
-					<div class="cssload-cube cssload-c2"></div>
-					<div class="cssload-cube cssload-c4"></div>
-					<div class="cssload-cube cssload-c3"></div>
-			</div>
-		</div> 
-			
+	<div class="loader-wrapper" id="loader">
+		<div class="cssload-thecube">
+			<div class="cssload-cube cssload-c1"></div>
+			<div class="cssload-cube cssload-c2"></div>
+			<div class="cssload-cube cssload-c4"></div>
+			<div class="cssload-cube cssload-c3"></div>
+		</div>
+	</div>
+
 	<div class="app" id="app">
-			
+
 		<div id="aside" class="app-aside modal fade nav-dropdown">
-	      <!-- fluid app aside -->
-		  <div class="left navside dark dk" layout="column">
-		    <div class="navbar no-radius">
-		      <!-- brand -->
-		      <a class="navbar-brand">
-		          <!-- <div ui-include="'{img}logo.svg'"></div> -->
-		          <!-- <img src="{img}logo.png" alt="." class="hide"> -->
-		          <span class="hidden-folded inline">Pengguna</span>
-		      </a>
-		      <!-- / brand -->
-		    </div>
-		    <div flex class="hide-scroll">
-		      <nav class="scroll nav-light">
+			<!-- fluid app aside -->
+			<div class="left navside dark dk" layout="column">
+				<div class="navbar no-radius">
+					<!-- brand -->
+					<a class="navbar-brand">
+						<!-- <div ui-include="'{img}logo.svg'"></div> -->
+						<!-- <img src="{img}logo.png" alt="." class="hide"> -->
+						<span class="hidden-folded inline">Pengguna</span>
+					</a>
+					<!-- / brand -->
+				</div>
+				<div flex class="hide-scroll">
+					<nav class="scroll nav-light">
 						<ul class="nav" ui-nav>
 							<li class="nav-header hidden-folded">
 								<small class="text-muted">Master</small>
 							</li>
-							<li>
-								<router-link to="/dashboard">
+
+							<router-link to="/dashboard" tag="li">
+								<a href="javascript:void(0)">
 									<span class="nav-icon">
 										<i class="material-icons">home</i>
 									</span>
 									<span class="nav-text">Beranda</span>
-								</router-link>
-							</li>
+								</a>
+							</router-link>
 
-							<li>
-								<router-link to="/siswa">
+							<router-link to="/siswa" tag="li">
+								<a href="javascript:void(0)">
 									<span class="nav-icon">
 										<i class="material-icons">people</i>
 									</span>
 									<span class="nav-text">Siswa</span>
-								</router-link>
-							</li>
+								</a>
+							</router-link>
+
 							<li @click="siswa.showDaftarSiswa = false">
-								<a href="javascript:void(0)" >
+								<a href="javascript:void(0)">
 									<span class="nav-icon">
 										<i class="material-icons">person</i>
 									</span>
 									<span class="nav-text">Guru</span>
 								</a>
 							</li>
-							<li>
-								<router-link to="/rombel">
+							<router-link to="/rombel" tag="li">
+								<a href="javascript:void(0)">
 									<span class="nav-icon">
 										<i class="material-icons">airplay</i>
 									</span>
 									<span class="nav-text">Rombel</span>
-								</router-link>
-							</li>
+								</a>
+							</router-link>
 
-		              <li>
-		                <a href="javascript:void(0)" >
+							<li>
+								<a href="javascript:void(0)">
 		                  <span class="nav-icon">
 		                    <i class="material-icons">book</i>
 		                  </span>
 		                  <span class="nav-text">Pelajaran</span>
 		                </a>
-		              </li>
+							</li>
 
-		              <li class="nav-header hidden-folded">
-		                <small class="text-muted">Pengolahan Nilai</small>
-		              </li>
-		              <li>
-		                <a>
+							<li class="nav-header hidden-folded">
+								<small class="text-muted">Pengolahan Nilai</small>
+							</li>
+							<li>
+								<a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
@@ -116,37 +118,37 @@
 		                  </span>
 		                  <span class="nav-text">Komponen</span>
 		                </a>
-		                <ul class="nav-sub nav-mega nav-mega-3">
-		                  <li>
-		                    <a href="javascript:void(0)" >
+								<ul class="nav-sub nav-mega nav-mega-3">
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Spiritual</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Sosial</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Pengetahuan</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Ketarampilan</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">KKM</span>
 		                    </a>
-		                  </li>
-		                </ul>
-		              </li>
+									</li>
+								</ul>
+							</li>
 
-		              <li>
-		                <a>
+							<li>
+								<a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
@@ -155,27 +157,27 @@
 		                  </span>
 		                  <span class="nav-text">Ulangan</span>
 		                </a>
-		                <ul class="nav-sub nav-mega nav-mega-3">
-		                  <li>
-		                    <a href="javascript:void(0)" >
+								<ul class="nav-sub nav-mega nav-mega-3">
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Harian</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">PTS</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">PAS</span>
 		                    </a>
-		                  </li>
-		                </ul>
-		              </li>
+									</li>
+								</ul>
+							</li>
 
-		              <li>
-		                <a>
+							<li>
+								<a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
@@ -184,46 +186,46 @@
 		                  </span>
 		                  <span class="nav-text">Laporan</span>
 		                </a>
-		                <ul class="nav-sub nav-mega nav-mega-3">
-		                  <li>
-		                    <a href="javascript:void(0)" >
+								<ul class="nav-sub nav-mega nav-mega-3">
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Mapel</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Tugas</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Ulangan Harian</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">PTS</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">PAS</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Rapor</span>
 		                    </a>
-		                  </li>
+									</li>
 
-		                </ul>
-		              </li>
+								</ul>
+							</li>
 
-		              <li class="nav-header hidden-folded">
-		                <small class="text-muted">Referensi</small>
-		              </li>
-		              <li>
-		                <a>
+							<li class="nav-header hidden-folded">
+								<small class="text-muted">Referensi</small>
+							</li>
+							<li>
+								<a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
@@ -232,70 +234,70 @@
 		                  </span>
 		                  <span class="nav-text">Kompetensi Inti</span>
 		                </a>
-		                <ul class="nav-sub nav-mega nav-mega-3">
-		                  <li>
-		                    <a href="javascript:void(0)" >
+								<ul class="nav-sub nav-mega nav-mega-3">
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Spiritual</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Sosial</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Pengetahuan</span>
 		                    </a>
-		                  </li>
-		                  <li>
-		                    <a href="javascript:void(0)" >
+									</li>
+									<li>
+										<a href="javascript:void(0)">
 		                      <span class="nav-text">Ketarampilan</span>
 		                    </a>
-		                  </li>
-		                </ul>
-		              </li>
+									</li>
+								</ul>
+							</li>
 
-		              <!-- Pengaturan -->
-		              <li class="nav-header hidden-folded">
-		                <small class="text-muted">Pengaturan</small>
-		              </li>
-		              <li>
-		                <a href="javascript:void(0)" >
+							<!-- Pengaturan -->
+							<li class="nav-header hidden-folded">
+								<small class="text-muted">Pengaturan</small>
+							</li>
+							<li>
+								<a href="javascript:void(0)">
 		                  <span class="nav-icon">
 		                    <i class="material-icons">settings_applications</i>
 		                  </span>
 		                  <span class="nav-text">Aplikasi</span>
 		                </a>
-		              </li>
-		              <li>
-		                <a href="javascript:void(0)" >
+							</li>
+							<li>
+								<a href="javascript:void(0)">
 		                  <span class="nav-icon">
 		                    <i class="material-icons">account_circle</i>
 		                  </span>
 		                  <span class="nav-text">Pengguna</span>
 		                </a>
-		              </li>
-		              <li class="ss-logout-btn">
-		                <a v-bind:href="apiUrl + 'authcontroller/logout/'">
+							</li>
+							<li class="ss-logout-btn">
+								<a v-bind:href="config.apiUrl + 'AuthController/logout/'">
 		                  <span class="nav-icon">
 		                    <i class="material-icons">exit_to_app</i>
 		                  </span>
 		                  <span class="nav-text ss-white-text">Keluar</span>
 		                </a>
-		              </li>
-		              <!-- #END Pengaturan -->
+							</li>
+							<!-- #END Pengaturan -->
 
-		            </ul>
-		        </nav>
+						</ul>
+					</nav>
 
-		    </div>
-		  </div>
+				</div>
+			</div>
 
-	    </div>
+		</div>
 		<div id="content" class="app-content box-shadow-z0" role="main">
-			 <div id="app-header"></div> 
-			 <div id="app-footer"></div> 
+			<div id="app-header"></div>
+			<div id="app-footer"></div>
 			<div ui-view class="app-body" id="view">
 				<router-view></router-view>
 			</div>
@@ -306,36 +308,37 @@
 	<script src="./src/scripts/plugins/jquery.min.js"></script>
 	<script src="/dist/main.build.js"></script>
 	<!-- Bootstrap -->
-	  <script src="./src/scripts/plugins/tether.min.js"></script>
-	  <script src="./src/scripts/plugins/bootstrap.min.js"></script>
+	<script src="./src/scripts/plugins/tether.min.js"></script>
+	<script src="./src/scripts/plugins/bootstrap.min.js"></script>
 	<!-- core -->
-	  <script src="./src/scripts/plugins/underscore-min.js"></script>
-	  <script src="./src/scripts/plugins/jquery.storageapi.min.js"></script>
-	  <script src="./src/scripts/plugins/pace.min.js"></script>
-	  <script src="./src/scripts/plugins/moment.min.js"></script>
-	  <script src="./src/scripts/plugins/moment.id.js"></script>
-	  <script src="./src/scripts/plugins/bootstrap-datetimepicker.min.js"></script>
+	<script src="./src/scripts/plugins/underscore-min.js"></script>
+	<script src="./src/scripts/plugins/jquery.storageapi.min.js"></script>
+	<script src="./src/scripts/plugins/pace.min.js"></script>
+	<script src="./src/scripts/plugins/moment.min.js"></script>
+	<script src="./src/scripts/plugins/moment.id.js"></script>
+	<script src="./src/scripts/plugins/bootstrap-datetimepicker.min.js"></script>
 
-	  <script src="./src/scripts/app/config.lazyload.js"></script>
+	<script src="./src/scripts/app/config.lazyload.js"></script>
 
-	  <script src="./src/scripts/app/palette.js"></script>
-	  <script src="./src/scripts/app/ui-load.js"></script>
-	  <script src="./src/scripts/app/ui-jp.js"></script>
-	  <script src="./src/scripts/app/ui-include.js"></script>
-	  <script src="./src/scripts/app/ui-device.js"></script>
-	  <script src="./src/scripts/app/ui-form.js"></script>
-	  <script src="./src/scripts/app/ui-nav.js"></script>
-	  <script src="./src/scripts/app/ui-scroll-to.js"></script>
-	  <script src="./src/scripts/app/ui-toggle-class.js"></script>
+	<script src="./src/scripts/app/palette.js"></script>
+	<script src="./src/scripts/app/ui-load.js"></script>
+	<script src="./src/scripts/app/ui-jp.js"></script>
+	<script src="./src/scripts/app/ui-include.js"></script>
+	<script src="./src/scripts/app/ui-device.js"></script>
+	<script src="./src/scripts/app/ui-form.js"></script>
+	<script src="./src/scripts/app/ui-nav.js"></script>
+	<script src="./src/scripts/app/ui-scroll-to.js"></script>
+	<script src="./src/scripts/app/ui-toggle-class.js"></script>
 
-	  <script src="./src/scripts/app/app.js"></script>
+	<script src="./src/scripts/app/app.js"></script>
 	<!-- endbuild -->
 	<script>
-		$(document).ready(function() {
-			setTimeout(function() {
+		$(document).ready(function () {
+			setTimeout(function () {
 				$('#loader').hide()
-			}, 1000);			
+			}, 1000);
 		})
 	</script>
 </body>
+
 </html>

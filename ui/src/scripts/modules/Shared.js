@@ -10,41 +10,38 @@
  */
 
 import Vue from 'vue'
+import Vuex from 'vuex'
+import { ssconfig } from '../../../app.config'
 
-export const shared = {
-    data() {
-        return {
-            apiUrl: 'http://localhost:71/smartscore/api/',
-            loginUrl: 'http://localhost:8080/'
-        }        
+Vue.use(Vuex)
+
+const sserror = {
+    props: ['msg'],
+    template: '<p class="ss-error">{{ msg }}</p>'
+}
+
+const shared = {
+    state: {
+        apiUrl: ssconfig.apiUrl,
+        loginUrl: ssconfig.loginUrl,
+        cookieName: '',
     },
-    methods: {
-        formHasValue(form) {
-            var fields = [];
-            $(`${form} :input[type='text']`).each(function() {
-                fields.push($(this).val());
-            });
-
-            var notBlankFields = fields.filter(fields => {
-                return fields.length > 0;
-            })
-
-            if(notBlankFields.length > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-        getCookie(name) {
+    mutations: {
+        getCookie(state, name) {
             var allToken = document.cookie
             allToken = allToken.split(';')
             for(let i = 0; i < allToken.length; i++) {
                 let cookieItem = allToken[i].split('='),
                     key = cookieItem[0].replace(/ /g, '')
                 if(key === name) {
-                    return cookieItem[1]
+                    state.cookieName = cookieItem[1]
                 }
             }
-        }
-    }
+        },
+    },
+    actions: {
+        
+    },
 }
+
+export { sserror, shared }

@@ -20,24 +20,29 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {shared} from './shared.js'
-import dashboard from '../template/pages/beranda/dashboard.vue'
+import { ssconfig } from '../../app.config'
+import Dashboard from '../template/pages/beranda/Dashboard.vue'
 import Siswa from '../template/pages/siswa/Siswa.vue'
 import Rombel from '../template/pages/rombel/Rombel.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/dashboard', component: dashboard },
+    { path: '/dashboard', component: Dashboard },
     { path: '/siswa', component: Siswa },
     { path: '/rombel', component: Rombel }
 ]
 
 const router = new VueRouter({
-    routes
+    routes,
+    linkActiveClass: 'active',
 })
 
 export const AppRouter = new Vue({
-    mixins: [shared],
     router,
+    data() {
+        return {
+            config: ssconfig
+        }
+    }
 }).$mount('#app')
