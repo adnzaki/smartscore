@@ -6,7 +6,7 @@
               <i class="material-icons">&#xe5d2;</i>
             </a>
             <!-- / -->
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <h4 class="m-b-0 m-t-xs _300">{{ welcomeMsg }}</h4>
                 <small class="text-muted">{{ description }}</small>
             </div>
@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             welcomeMsg: 'Selamat Datang di Smartscore',
-            description: 'Aplikasi Pengolahan Nilai Siswa Berbasis Kurikulum 2013 untuk tingkat Sekolah Dasar'
+            description: 'Sistem Pendukung Keputusan Pemilihan Siswa Berprestasi SDN Pengasinan VII'
         }
     }
 }
