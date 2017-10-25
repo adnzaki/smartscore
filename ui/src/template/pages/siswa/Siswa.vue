@@ -82,11 +82,11 @@
 									</tr>
 								</tbody>
 								<tfoot>
-									<td colspan="4" class="text-center">
-										<div class="col-sm-8 text-left">
+									<td colspan="7" class="text-center">
+										<div class="col-sm-6 text-left">
 											<p> {{ $store.getters.getRowsRange }} </p>
 										</div>
-										<div class="col-sm-4 text-center" v-if="$store.state.paging.showPaging">
+										<div class="col-sm-6 text-center" v-if="$store.state.paging.showPaging">
 											<ul class="pagination pagination-sm m-a-0">
 												<li><a href="javascript:void(0)" @click="getSiswa(localLimit, paging('first'), cariSiswa)"><i class="material-icons">skip_previous</i></a></li>
 												<li><a href="javascript:void(0)" @click="getSiswa(localLimit, paging('prev'), cariSiswa)"><i class="material-icons">navigate_before</i></a></li>
