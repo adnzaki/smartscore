@@ -13,6 +13,13 @@
 
 class SiswaModel extends CI_Model
 {
+    /**
+     * Deklarasi nama tabel di database
+     * 
+     * @var $table
+     */
+    private $table = 'siswa';
+
     public function getSiswa($limit, $start, $search)
     {
         if(! empty($search))
@@ -20,20 +27,20 @@ class SiswaModel extends CI_Model
             $this->db->like('nama_siswa', $search);
         }
         $select = 'id_siswa, nis, nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
-        $query = $this->db->select($select)->from('siswa')->where('status', 'aktif')->order_by('nama_siswa', 'ASC')->limit($limit, $start);
+        $query = $this->db->select($select)->from($this->table)->where('status', 'aktif')->order_by('nama_siswa', 'ASC')->limit($limit, $start);
         $result = $query->get()->result();
         return $result;
     }
 
     public function getDetailSiswa($id)
     {
-        $query = $this->db->get_where('siswa', ['id_siswa' => $id]);
+        $query = $this->db->get_where($this->table, ['id_siswa' => $id]);
         return $query->result();
     }
 
     public function getIdSiswa()
     {
-        $query = $this->db->select('id_siswa')->from('siswa')
+        $query = $this->db->select('id_siswa')->from($this->table)
             ->where('nis', $this->input->post('nis'));
         return $query->get()->result();
     }
@@ -44,25 +51,25 @@ class SiswaModel extends CI_Model
         {
             $this->db->like('nama_siswa', $search);
         }
-        $query = $this->db->get_where('siswa', ['status' => 'aktif']);
+        $query = $this->db->get_where($this->table, ['status' => 'aktif']);
         return $query->num_rows();
     }
 
     public function insertSiswa()
     {
         $data = $this->tableSiswaValue();
-        $this->db->insert('siswa', $data);
+        $this->db->insert($this->table, $data);
     }
 
     public function updateSiswa($id)
     {
         $data = $this->tableSiswaValue();
-        $this->db->update('siswa', $data, ['id_siswa' => $id]);
+        $this->db->update($this->table, $data, ['id_siswa' => $id]);
     }
 
     public function deleteSiswa($id)
     {
-        $this->db->delete('siswa', ['id_siswa' => $id]);
+        $this->db->delete($this->table, ['id_siswa' => $id]);
     }
 
     protected function tableSiswaValue()
