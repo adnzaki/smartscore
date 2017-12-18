@@ -59,6 +59,7 @@
 								<thead>
 									<tr>
 										<th width="30">#</th>
+										<th>Nomor Induk</th>
 										<th>Nama Siswa</th>
 										<th>Jenis Kelamin</th>
 										<th>Tempat Lahir</th>
@@ -73,6 +74,7 @@
 												<i class="primary"></i>
 											</label>
 										</td>
+										<td>{{ list.nis }}</td>
 										<td>{{ list.nama_siswa }}</td>
 										<td>{{ list.j_kelamin_siswa }}</td>
 										<td>{{ list.tempat_lahir_siswa }}</td>
@@ -97,6 +99,7 @@
 												</li>
 												<li><a href="javascript:void(0)" @click="getSiswa(localLimit, paging('next'), cariSiswa)"><i class="material-icons">navigate_next</i></a></li>
 												<li><a href="javascript:void(0)" @click="getSiswa(localLimit, paging('last'), cariSiswa)"><i class="material-icons">skip_next</i></a></li>
+												<li><a href="javascript:void(0)" @click="getSiswa(localLimit, ($store.getters.activePage - 1), cariSiswa)"><i class="material-icons">refresh</i></a></li>
 											</ul>
 										</div>
 									</td>
