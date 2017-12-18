@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="box-header">
-                                        <h2>Edit Data Siswa</h2>
+                                        <h2>Edit Data Siswa: {{ detailSiswa.nama_siswa }}</h2>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 text-right">
