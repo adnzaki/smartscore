@@ -8,3 +8,5 @@ api/application/libraries/php-jwt-master.zip
 ui/Smartscore.bat
 ui/debug.log
 ui/src/assets/docs/ref/
+*.log
+ui/stats.json
