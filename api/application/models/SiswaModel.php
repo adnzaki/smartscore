@@ -19,8 +19,8 @@ class SiswaModel extends CI_Model
         {
             $this->db->like('nama_siswa', $search);
         }
-        $select = 'id_siswa, nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
-        $query = $this->db->select($select)->from('siswa')->order_by('nama_siswa', 'ASC')->limit($limit, $start);
+        $select = 'id_siswa, nis, nama_siswa, j_kelamin_siswa, tempat_lahir_siswa, tgl_lahir_siswa';
+        $query = $this->db->select($select)->from('siswa')->where('status', 'aktif')->order_by('nama_siswa', 'ASC')->limit($limit, $start);
         $result = $query->get()->result();
         return $result;
     }
@@ -44,7 +44,7 @@ class SiswaModel extends CI_Model
         {
             $this->db->like('nama_siswa', $search);
         }
-        $query = $this->db->get('siswa');
+        $query = $this->db->get_where('siswa', ['status' => 'aktif']);
         return $query->num_rows();
     }
 
