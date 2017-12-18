@@ -24,12 +24,76 @@ export const Rombel = new Vuex.Store({
     state: {
         showDaftarRombel: false,
         daftarRombel: '',
+        idRombel: '', showFormAdd: false,
+        daftarGuru: [], selectedRombel: [],
+        detailRombel: '',
+        showFormEdit: false, selectedID: [],
+        deleteConfirm: false,
         jmlBaris: 10, smtGenap: false,
         salinConfirm: false, salinProgress: false,
-        progressText: '', localLimit: 10
+        progressText: '', localLimit: 10,
+        deleteConfirm: false, allSelected: false,
+
+        // alert
+        alert: {
+            insert: false, update: false, delete: false,
+            errorInsert: false, errorUpdate: false, unableToDelete: false,
+        },        
+
+        // error messages
+        error: {
+            namaRombel: '', tingkat: '', guru: '',
+        },
     },
     mutations: {
-
+        showDeleteConfirm(state, id) {
+            state.selectedRombel = []
+            state.alert.unableToDelete = false
+            state.selectedRombel.push(id)
+            state.deleteConfirm = true
+        },
+        closeDeleteConfirm(state) {
+            state.selectedRombel = []
+            state.deleteConfirm = false
+        },  
+        selectAll(state) {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/RombelController/getAllRombelID`,
+                type: 'get',
+                dataType: 'json',
+                success: data => {
+                    state.selectedRombel = []
+                    if (state.allSelected) {
+                        state.selectedRombel = data
+                    }
+                }
+            })
+        },
+        showForm(state, form) {
+            state.showDaftarRombel = false
+            setTimeout(() => {
+                state[form] = true
+                $.ajax({
+                    url: `${state.shared.apiUrl}admin/RombelController/getGuru`,
+                    type: 'get',
+                    dataType: 'json',
+                    success: data => {
+                        state.daftarGuru = data
+                    }
+                })
+            }, 400)
+        },
+        showAlert(state, type) {
+            state.alert[type] = true
+            setTimeout(() => {
+                state.alert[type] = false
+            }, 3500)
+        },
+        clearMessages(state) {
+            state.error.namaRombel = ''
+            state.error.tingkat = ''
+            state.error.guru = ''
+        },
     },
     actions: {
         /**
@@ -76,6 +140,98 @@ export const Rombel = new Vuex.Store({
                 })
             }
         },
+        save({ state, commit, dispatch }, payload) {
+            if (payload.event === 'insert') {
+                var form = $("#formTambahRombel"),
+                    param = payload.event
+            } else {
+                var form = $("#formEditRombel"),
+                    param = `${payload.event}/${payload.id}`
+            }            
+            var dataForm = form.serialize()
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/RombelController/save/${param}`,
+                type: 'POST',
+                dataType: 'json',
+                data: dataForm,
+                success: msg => {
+                    if (msg !== 'success') {
+                        if (payload.event === 'insert') {
+                            state.alert.insert = false
+                            commit('showAlert', 'errorInsert')
+                        } else {
+                            state.alert.update = false
+                            commit('showAlert', 'errorUpdate')
+                        }
+                        state.error.namaRombel = msg.nama_rombel
+                        state.error.tingkat = msg.tingkat
+                        state.error.guru = msg.wali_kelas                  
+                    } else {
+                        // jika event nya adalah insert data rombel
+                        // maka bersihkan form, lalu tampilkan alert dan ambil id_siswa
+                        if (payload.event === 'insert') {
+                            form.trigger("reset")
+                            state.alert.errorInsert = false
+                            if(payload.closeForm) {
+                                dispatch('closeForm', 'showFormAdd')
+                            }
+                            commit('showAlert', 'insert')
+
+                            // selain itu, jika event nya adalah update data siswa,
+                            // maka tampilkan kembali form edit siswa dan tampilkan alert
+                        } else {
+                            if (payload.closeForm) {
+                                dispatch('closeForm', 'showFormEdit')
+                            }
+                            commit('showAlert', 'update')
+                            state.alert.errorUpdate = false
+                        }
+                    }
+                }
+            })
+        },
+        editRombel({ state, commit }, id) {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/RombelController/getDetailRombel/${id}`,
+                type: 'GET',
+                crossDomain: true,
+                dataType: 'json',
+                success: data => {
+                    state.detailRombel = data[0]
+                    commit('showForm', 'showFormEdit')
+                }
+            })
+        },
+        deleteRombel({ state, commit, dispatch }) {
+            var idString = state.selectedRombel.join("-")
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/RombelController/deleteRombel/${idString}`,
+                type: 'POST',
+                success: () => {
+                    state.deleteConfirm = false
+                    state.selectedRombel = []
+
+                    // lakukan pengecekan total baris dalam satu halaman tabel siswa
+                    // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
+                    // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
+                    let diff = state.paging.totalRows - state.paging.offset
+                    if (diff === 1) {
+                        state.paging.offset -= state.paging.limit
+                    }
+
+                    dispatch('runGetRombel')
+                    commit('showAlert', 'delete')
+                }
+            })
+        },
+        multipleDeleteRombel({ state, commit }) {
+            if (state.selectedRombel.length < 1) {
+                commit('showAlert', 'unableToDelete')
+            } else {
+                state.alert.unableToDelete = false
+                state.deleteConfirm = true
+            }
+        },
         showPerPage({ state, commit, dispatch }) {
             state.localLimit = parseInt(state.jmlBaris)
             dispatch('getRombel', {
@@ -102,6 +258,18 @@ export const Rombel = new Vuex.Store({
                     }
                 }
             })
+        },
+        closeForm({ state, commit, dispatch }, form) {
+            state[form] = false
+            commit('clearMessages')
+            state.alert.insert = false
+            state.alert.update = false
+            state.alert.errorInsert = false
+            state.alert.errorUpdate = false
+            setTimeout(() => {
+                dispatch('runGetRombel')
+                state.showDaftarRombel = true
+            }, 400)
         },
         runGetRombel({ state, dispatch }) {
             let start = state.paging.offset / state.localLimit

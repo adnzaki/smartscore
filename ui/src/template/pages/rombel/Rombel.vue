@@ -1,5 +1,17 @@
 <template lang="html">
 	<div>
+		<!-- Delete alert -->
+		<ssalert :alertClass="'alert-success'" :target="alert.delete" :initMsg="'Sukses!'" :msg="'Data Rombel berhasil dihapus.'" />
+
+		<!-- Unable to delete -->
+		<ssalert :alertClass="'alert-danger'" :target="alert.unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih rombel yang ingin dihapus.'" />
+
+		<!-- insert success alert -->
+        <ssalert :alertClass="'alert-success'" :target="alert.insert" :initMsg="'Sukses!'" :msg="'Data rombel berhasil ditambahkan'"></ssalert>
+
+		<!-- update success alert -->
+        <ssalert :alertClass="'alert-success'" :target="alert.update" :initMsg="'Sukses!'" :msg="'Data rombel berhasil diperbarui'"></ssalert>
+
 		<!-- TABEL DAFTAR ROMBEL  -->
     	<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     		<div class="padding" v-if="showDaftarRombel">
@@ -12,9 +24,9 @@
     						<div class="box-body">
     							<div class="row">
     								<div class="col-sm-9 col-xs-12">
-    									<button class="btn btn-fw white" @click=""><i class="fa fa-plus"></i>&nbsp; Tambah</button>
-										<button class="btn btn-fw white" @click=""><i class="fa fa-trash"></i>&nbsp; Hapus</button>
-										<button class="btn btn-fw white" @click="$store.state.salinConfirm = true" v-if="smtGenap"><i class="fa fa-copy"></i>&nbsp; Lanjutkan Semester</button>
+    									<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
+										<button class="btn btn-fw white" @click="multipleDeleteRombel"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+										<!-- <button class="btn btn-fw white" @click="$store.state.salinConfirm = true" v-if="smtGenap"><i class="fa fa-copy"></i>&nbsp; Lanjutkan Semester</button> -->
 										<button class="btn btn-fw white" @click="" v-if="smtGenap === false"><i class="fa fa-level-up"></i>&nbsp; Naik Kelas</button>
     								</div>
     								<div class="col-sm-3 col-xs-12">
@@ -37,28 +49,30 @@
     						<table class="table table-striped b-t">
     							<thead>
     								<tr>
-    									<th width="30">#</th>
+    									<th class="text-center">
+											<label class="md-check"><input type="checkbox" v-model="$store.state.allSelected" @click="selectAll">
+												<i class="primary"></i>
+											</label>
+    									</th>
     									<th>Nama Rombel</th>
     									<th>Tingkat Kelas</th>
     									<th>Wali Kelas</th>
-    									<th class="text-center">Jumlah Siswa</th>
     									<th colspan="3" width="80" class="text-center">Aksi</th>
     								</tr>
     							</thead>
     							<tbody>
     								<tr v-for="list in daftarRombel">
     									<td class="text-center">
-											<label class="md-check"><input type="checkbox">
+											<label class="md-check"><input type="checkbox" v-model="$store.state.selectedRombel" :value="list.id_rombel">
 												<i class="primary"></i>
 											</label>
     									</td>
     									<td>{{ list.nama_rombel }}</td>
     									<td>{{ list.tingkat }}</td>
     									<td>{{ list.nama_guru }}</td>
-    									<td class="text-center">38</td>
-    									<td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">edit</i></td>
-    	                                <td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">group</i></td>
-    									<td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">delete</i></td>
+    									<td class="text-center ss-cursor-pointer" @click="editRombel(list.id_rombel)"><i class="material-icons">edit</i></td>
+    	                                <!-- <td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">group</i></td> -->
+    									<td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_rombel)"><i class="material-icons">delete</i></td>
     								</tr>
     							</tbody>
     							<tfoot>
@@ -77,6 +91,7 @@
     											</li>
     											<li><a href="javascript:void(0)" @click="getRombel(localLimit, paging('next'))"><i class="material-icons">navigate_next</i></a></li>
     											<li><a href="javascript:void(0)" @click="getRombel(localLimit, paging('last'))"><i class="material-icons">skip_next</i></a></li>
+												<li><a href="javascript:void(0)" @click="getRombel(localLimit, ($store.getters.activePage - 1))"><i class="material-icons">refresh</i></a></li>
     										</ul>
     									</div>
     								</td>
@@ -88,6 +103,28 @@
     		</div>
     	</transition>
 		<!-- #END TABEL DAFTAR ROMBEL  -->
+
+		<!-- Konfirmai hapus data -->
+		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+			<div class="modal ss-modal" data-backdrop="true" v-if="deleteConfirm">
+				<div class="modal-dialog">
+					<div class="col-sm-8 offset-sm-2">
+						<div class="modal-content black lt m-b">
+							<div class="modal-header">
+								<h5 class="modal-title">Konfirmasi</h5>
+							</div>
+							<div class="modal-body">
+								<p>Apakah anda yakin ingin menghapus rombel terpilih?</p>
+							</div>
+							<div class="modal-footer">
+								<button class="btn white" @click="closeDeleteConfirm">Cancel</button>
+								<button class="btn primary" @click="deleteRombel">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</transition>
 
 		<!-- KONFIRMASI SALIN ROMBEL  -->
 	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -136,6 +173,12 @@
 	    </transition>
 		<!-- #END PROGRESS SALIN ROMBEL -->
 
+		<!-- FORM TAMBAH ROMBEL -->
+		<TambahRombel />
+
+		<!-- FORM EDIT ROMBEL -->
+		<EditRombel />
+
     </div>
 </template>
 <script>
@@ -148,6 +191,8 @@ import {
 	mapActions
 } from 'vuex'
 import { Rombel } from '../../../scripts/store/Rombel'
+import TambahRombel from './TambahRombel.vue'
+import EditRombel from './EditRombel.vue'
 import ssalert from '../../../template/content/alert.vue'
 import { sserror } from '../../../scripts/modules/Shared'
 
@@ -159,6 +204,8 @@ export default {
 	components: {
 		sserror,
 		ssalert,
+		TambahRombel,
+		EditRombel
 	},
 	beforeRouteEnter(to, from, next) {
 		next(vm => vm.getRombel(10, 0))
@@ -178,10 +225,12 @@ export default {
 	},
 	methods: {
 		...mapMutations([
-			
+			'showForm', 'showDeleteConfirm', 'closeDeleteConfirm',
+			'selectAll',
 		]),
 		...mapActions([
-			'showPerPage', 'salinRombel'
+			'showPerPage', 'salinRombel', 'editRombel',
+			'deleteRombel', 'multipleDeleteRombel'
 		]),
 		getRombel(limit, offset) {
 			this.$store.dispatch('getRombel', {
@@ -205,7 +254,8 @@ export default {
 		...mapState([
 			'showDaftarRombel', 'daftarRombel',
 			'smtGenap', 'salinConfirm', 'salinProgress', 
-			'progressText', 'localLimit',
+			'progressText', 'localLimit', 'alert', 'deleteConfirm',
+			'allSelected',
 		]),
 	}
 }

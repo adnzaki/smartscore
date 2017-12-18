@@ -8,23 +8,71 @@
  * @license     Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License | https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
  * @author      Adnan Zaki
  * @link        http://wolestech.com
- * @version     1.0.0
+ * @version     1.0.01
  */
 
 class RombelModel extends CI_Model
 {
-    public function getRombel($limit, $offset, $tahunAjaran)
+    /**
+     * Deklarasi nama tabel di database
+     * 
+     * @var $table
+     */
+    private $table = 'rombel';
+
+    public function getRombel($limit, $offset)
     {
         $select = 'id_rombel, nama_rombel, tingkat, nama_guru';
-        $query = $this->db->select($select)->from('rombel')->join('guru', 'rombel.id_guru = guru.id_guru')
-                ->where('tahun_ajaran', $tahunAjaran)->order_by('nama_rombel', 'ASC')->limit($limit, $offset);
+        $query = $this->db->select($select)->from($this->table)->join('guru', 'rombel.id_guru = guru.id_guru')
+                ->order_by('nama_rombel', 'ASC')->limit($limit, $offset);
         return $query->get()->result();
     }
 
-    public function getTotalRows($tahunAjaran)
+    public function getTotalRows()
     {
-        $query = $this->db->get_where('rombel', ['tahun_ajaran' => $tahunAjaran]);
+        $query = $this->db->get($this->table);
         return $query->num_rows();
+    }
+
+    public function getGuru()
+    {
+        return $this->db->get('guru')->result();
+    }
+
+    public function insertRombel()
+    {
+        $data = $this->tableRombelValue();
+        $this->db->insert($this->table, $data);
+    }
+
+    public function updateRombel($id)
+    {
+        $data = $this->tableRombelValue();
+        $this->db->update($this->table, $data, ['id_rombel' => $id]);
+    }
+
+    public function getDetailRombel($id)
+    {
+        return $this->db->get_where($this->table, ['id_rombel' => $id])->result();
+    }
+
+    public function deleteRombel($id)
+    {
+        $this->db->delete($this->table, ['id_rombel' => $id]);
+    }
+
+    public function getAllRombelID()
+    {
+        return $this->db->select('id_rombel')->from($this->table)->get()->result();
+    }
+
+    private function tableRombelValue()
+    {
+        return [
+            'nama_rombel'   => $this->input->post('nama_rombel', true),
+            'tingkat'       => $this->input->post('tingkat', true),
+            'id_guru'       => $this->input->post('wali_kelas', true)
+        ];
     }
 
     public function duplicateRombel($tahunSblm, $tahunSkrg)

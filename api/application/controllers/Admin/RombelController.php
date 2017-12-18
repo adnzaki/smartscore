@@ -33,8 +33,8 @@ class RombelController extends SSController
             {
                 $decodedToken = JWT::decode($token, 'user_key');
                 $data = [
-                    'rombel' => $this->RombelModel->getRombel($limit, $offset, $decodedToken->tahun_ajaran),
-                    'baris' => $this->RombelModel->getTotalRows($decodedToken->tahun_ajaran),
+                    'rombel' => $this->RombelModel->getRombel($limit, $offset),
+                    'baris' => $this->RombelModel->getTotalRows(),
                     'tahun_ajaran' => $decodedToken->tahun_ajaran
                 ];
                 echo json_encode($data);
@@ -44,6 +44,88 @@ class RombelController extends SSController
                 echo json_encode('Token tidak valid');
             }
         }        
+    }
+
+    public function getGuru()
+    {
+        echo json_encode($this->RombelModel->getGuru());
+    }
+
+    public function save($event, $id = '')
+    {
+        $rules = [
+            [
+                'field' => 'nama_rombel',
+                'label' => 'nama rombel',
+                'rules' => 'required|max_length[50]'
+            ],
+            [
+                'field' => 'tingkat',
+                'label' => 'tingkat kelas',
+                'rules' => 'required|exact_length[1]|numeric'
+            ],
+            [
+                'field' => 'tingkat',
+                'label' => 'tingkat kelas',
+                'rules' => 'required|max_length[50]|numeric'
+            ],
+        ];
+
+        $this->form_validation->set_rules($rules);
+        $this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
+        $this->form_validation->set_message('max_length', 'Panjang kolom %s tidak boleh lebih dari %s karakter');
+        $this->form_validation->set_message('exact_length', 'Panjang kolom %s harus %s karakter');
+        $this->form_validation->set_message('numeric', 'Kolom {field} hanya boleh diisi angka');
+        $this->form_validation->set_error_delimiters('', '');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            $errors = [
+                'nama_rombel'   => form_error('nama_rombel'),
+                'tingkat'       => form_error('tingkat'),
+                'wali_kelas'    => form_error('wali_kelas'),
+            ];
+            echo json_encode($errors);
+        }
+        else 
+        {
+            if($event === 'insert')
+            {
+                $this->RombelModel->insertRombel();
+            }
+            elseif($event === 'update') 
+            {
+                $this->RombelModel->updateRombel($id);
+            }
+            echo json_encode('success');
+        }
+    }
+
+    public function getDetailRombel($id)
+    {
+        $data = $this->RombelModel->getDetailRombel($id);
+        echo json_encode($data);
+    }
+
+    public function deleteRombel($id)
+    {
+        $arrID = explode("-", $id);
+        for($i = 0; $i < count($arrID); $i++)
+        {
+            $this->RombelModel->deleteRombel($arrID[$i]);
+        }
+        echo 'success';
+    }
+
+    public function getAllRombelID()
+    {
+        $data = $this->RombelModel->getAllRombelID();
+        $formatted = [];
+        foreach($data as $res)
+        {
+            $formatted[] = $res->id_rombel;
+        }
+        echo json_encode($formatted);
     }
 
     public function copyRombel($token)
