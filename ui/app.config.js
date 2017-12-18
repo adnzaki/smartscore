@@ -25,7 +25,7 @@ export const ssconfig = {
     // untuk mengisi nilai ini, anda harus mengetahui alamat
     // web server anda
     apiUrl: 'http://localhost:71/smartscore/api/',
-    
+
     // URL halaman login
     loginUrl: 'http://localhost:8080/',
 
