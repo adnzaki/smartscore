@@ -26,7 +26,7 @@ export const Dashboard = new Vuex.Store({
         hello({state, commit}) {
             commit('getCookie', 'ss_session')
             let token = state.shared.cookieName
-            if (token === undefined) {
+            if (token === '') {
                 window.location.href = `${state.shared.apiUrl}AuthController/logout/`
             } else {
                 state.pesan = 'Selamat Datang'
