@@ -4,8 +4,7 @@
 		<ssalert :alertClass="'alert-success'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil dihapus.'" />
 
 		<!-- Unable to delete -->
-		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'"
-		/>
+		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'" />
 
 		<!-- TABEL DAFTAR SISWA -->
 		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -79,7 +78,7 @@
 										<td>{{ list.j_kelamin_siswa }}</td>
 										<td>{{ list.tempat_lahir_siswa }}</td>
 										<td>{{ list.tgl_lahir_siswa }}</td>
-										<td class="text-center ss-cursor-pointer" @click="editSiswa(list.id_siswa)"><i class="material-icons">edit</i></td>
+										<td class="text-center ss-cursor-pointer"><router-link :to="'/siswa/edit/' + list.id_siswa"><i class="material-icons">edit</i></router-link></td>
 										<td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_siswa)"><i class="material-icons">delete</i></td>
 									</tr>
 								</tbody>

@@ -23,6 +23,7 @@ import VueRouter from 'vue-router'
 import { ssconfig } from '../../app.config'
 import Dashboard from '../template/pages/beranda/Dashboard.vue'
 import Siswa from '../template/pages/siswa/Siswa.vue'
+import EditSiswa from '../template/pages/siswa/EditSiswa.vue'
 import Rombel from '../template/pages/rombel/Rombel.vue'
 
 Vue.use(VueRouter)
@@ -30,6 +31,7 @@ Vue.use(VueRouter)
 const routes = [
     { path: '/dashboard', component: Dashboard },
     { path: '/siswa', component: Siswa },
+    { path: '/siswa/edit/:id', component: EditSiswa },
     { path: '/rombel', component: Rombel }
 ]
 
@@ -44,5 +46,5 @@ export const AppRouter = new Vue({
         return {
             config: ssconfig
         }
-    }
+    },
 }).$mount('#app')
