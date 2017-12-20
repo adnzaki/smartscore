@@ -28,6 +28,7 @@ export const Siswa = new Vuex.Store({
         showFormEdit: false, selectedID: [],
         deleteConfirm: false, importDialog: false,
         importProgress: false, jmlBaris: 10, localLimit: 10,
+        allSelected: false, rombel: [],
 
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false,
@@ -36,11 +37,24 @@ export const Siswa = new Vuex.Store({
         // error messages
         error: {
             nama: '', nis: '', nisn: '', jKelaminSiswa: '', tmptLahir: '', tglLahir: '',
-            pendSblm: '', alamatSiswa: '', namaAyah: '', namaIbu: '',
-            alamatOrtu: '', telpOrtu: '', namaWali: '', alamatWali: '', telpWali: ''
+            pendSblm: '', alamatSiswa: '', namaAyah: '', namaIbu: '', alamatOrtu: '', 
+            telpOrtu: '', namaWali: '', alamatWali: '', telpWali: '', rombel: '',
         },
     },
-    mutations: {              
+    mutations: { 
+        selectAll(state) {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/SiswaController/getAllSiswaID`,
+                type: 'get',
+                dataType: 'json',
+                success: data => {
+                    state.selectedID = []
+                    if (state.allSelected) {
+                        state.selectedID = data
+                    }
+                }
+            })
+        },             
         getFilename(state) {
             var file = $("#file").val()
             file = file.split("\\")
@@ -95,6 +109,17 @@ export const Siswa = new Vuex.Store({
                         }
                     })
                 }, 100)
+
+                // ambil daftar rombel
+                $.ajax({
+                    url: `${state.shared.apiUrl}admin/SiswaController/getRombel`,
+                    type: 'GET',
+                    crossDomain: true,
+                    dataType: 'json',
+                    success: data => {
+                        state.rombel = data
+                    }
+                })
             }, 400)            
         },
         showAlert(state, alert) {
@@ -159,9 +184,6 @@ export const Siswa = new Vuex.Store({
                             linkClass: 'waves-effect'
                         })
                     },
-                    error: () => {
-                        alert('Tidak dapat terkoneksi dengan server')
-                    }
                 })
             }
         },  
@@ -211,6 +233,7 @@ export const Siswa = new Vuex.Store({
                         obj.error.namaWali = msg.nama_wali
                         obj.error.alamatWali = msg.alamat_wali
                         obj.error.telpWali = msg.telp_wali
+                        obj.error.rombel = msg.id_rombel
                     } else {
                         commit('clearMessages')
 

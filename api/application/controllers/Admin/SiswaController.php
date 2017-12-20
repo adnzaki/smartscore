@@ -134,7 +134,7 @@ class SiswaController extends SSController
             [
                 'field' => 'telp_ortu',
                 'label' => 'nomor telepon orang tua',
-                'rules' => 'required|min_length[11]|max_length[15]|numeric'
+                'rules' => 'required|min_length[11]|max_length[13]|numeric'
             ],
             [
                 'field' => 'nama_wali',
@@ -150,6 +150,11 @@ class SiswaController extends SSController
                 'field' => 'telp_wali',
                 'label' => 'nomor telepon wali',
                 'rules' => 'min_length[11]|max_length[15]|numeric'
+            ],
+            [
+                'field' => 'id_rombel',
+                'label' => 'rombel',
+                'rules' => 'min_length[1]|max_length[3]|numeric'
             ],
         ];
 
@@ -180,6 +185,7 @@ class SiswaController extends SSController
                 'nama_wali'     => form_error('nama_wali'),
                 'alamat_wali'   => form_error('alamat_wali'),
                 'telp_wali'     => form_error('telp_wali'),
+                'id_rombel'     => form_error('id_rombel'),
             ];
             echo json_encode($errors);
         }
@@ -200,6 +206,11 @@ class SiswaController extends SSController
             ];
             echo json_encode($data);
         }
+    }
+
+    public function getRombel()
+    {
+        echo json_encode($this->SiswaModel->getRombel());
     }
 
     public function editSiswa($id)
@@ -257,6 +268,7 @@ class SiswaController extends SSController
             for($i = 2; $i < ($numRows + 1); $i++)
             {
                 $data = [
+                    'id_rombel'             => $worksheet[$i]['B'],
                     'nis'                   => $worksheet[$i]['C'],
                     'nisn'                  => $worksheet[$i]['D'],
                     'nama_siswa'            => $worksheet[$i]['E'],
@@ -295,6 +307,7 @@ class SiswaController extends SSController
                 ];
 
                 if(
+                    preg_match('/[^0-9]/', $data['id_rombel']) OR 
                     preg_match('/[^0-9]/', $data['nis']) === 1 OR preg_match('/[^0-9]/', $data['nisn']) === 1
                     OR (strlen($data['nis']) !== 9) OR (strlen($data['nisn']) !== 10)
                     OR isUnique($data['nis'], 'nis', 'siswa') OR isUnique($data['nisn'], 'nisn', 'siswa')
@@ -304,7 +317,7 @@ class SiswaController extends SSController
                     OR empty($data['alamat_siswa']) OR empty($data['nama_ayah']) OR empty($data['nama_ibu'])
                     OR empty($data['job_ayah']) OR empty($data['job_ibu']) OR !in_array($data['job_ayah'], $jobAyah) OR !in_array($data['job_ibu'], $jobIbu)
                     OR empty($data['alamat_ortu']) OR empty($data['telp_ortu']) OR preg_match('/[^0-9]/', $data['telp_ortu']) === 1
-                    OR (strlen($data['telp_ortu']) < 11) OR (strlen($data['telp_ortu']) > 15)
+                    OR (strlen($data['telp_ortu']) < 11) OR (strlen($data['telp_ortu']) > 13)
                 )
                 {
                     array_push($importFailed, $i);
@@ -323,6 +336,17 @@ class SiswaController extends SSController
             delete_files($fileData['file_path']);
             echo json_encode($status);
         }
+    }
+
+    public function getAllSiswaID()
+    {
+        $data = $this->SiswaModel->getAllSiswaID();
+        $formatted = [];
+        foreach($data as $res)
+        {
+            $formatted[] = $res->id_siswa;
+        }
+        echo json_encode($formatted);
     }
 
 }

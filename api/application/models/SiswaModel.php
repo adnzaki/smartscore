@@ -72,6 +72,16 @@ class SiswaModel extends CI_Model
         $this->db->delete($this->table, ['id_siswa' => $id]);
     }
 
+    public function getAllSiswaID()
+    {
+        return $this->db->select('id_siswa')->from($this->table)->get()->result();
+    }
+
+    public function getRombel()
+    {
+        return $this->db->select('id_rombel, nama_rombel')->from('rombel')->get()->result();
+    }
+
     protected function tableSiswaValue()
     {
         $tgl_lahir = $this->input->post('tgl_lahir_siswa', true);
@@ -95,6 +105,7 @@ class SiswaModel extends CI_Model
             'alamat_wali'           => $this->input->post('alamat_wali', true),
             'job_wali'              => $this->input->post('job_wali', true),
             'telp_wali'             => $this->input->post('telp_wali', true),
+            'id_rombel'             => $this->input->post('id_rombel', true),
         ];
 
         return $data;

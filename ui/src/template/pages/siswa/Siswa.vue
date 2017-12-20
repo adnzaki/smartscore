@@ -58,7 +58,11 @@
 							<table class="table table-striped b-t">
 								<thead>
 									<tr>
-										<th width="30">#</th>
+										<th class="text-center">
+											<label class="md-check"><input type="checkbox" v-model="$store.state.allSelected" @click="selectAll">
+												<i class="primary"></i>
+											</label>
+    									</th>
 										<th>Nomor Induk</th>
 										<th>Nama Siswa</th>
 										<th>Jenis Kelamin</th>
@@ -247,7 +251,8 @@
 				'closeDeleteConfirm',				
 				'showForm',
 				'closeImportDialog',
-				'getFilename'
+				'getFilename',
+				'selectAll'
 			]),
 			...mapActions([
 				'multipleDeleteSiswa',
@@ -283,7 +288,7 @@
 				'deleteAlert', 'unableToDelete', 'showDaftarSiswa',
 				'deleteConfirm', 'importDialog', 'importProgress',
 				'jmlBaris', 'cariSiswa', 'daftarSiswa', 'selectedID',
-				'localLimit', 'loadingText'
+				'localLimit', 'loadingText',
 			]),
 		}
 	}

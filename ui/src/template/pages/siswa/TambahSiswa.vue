@@ -96,11 +96,11 @@
                                         <div class="col-sm-10">
                                             <div class="form-group">
                                                 <select class="form-control c-select" name="agama_siswa">
-                                                    <option value="Islam">Islam</option>
-                                                    <option value="Katholik">Katholik</option>
-                                                    <option value="Protestan">Kristen Protestan</option>
-                                                    <option value="Hindu">Hindu</option>
-                                                    <option value="Buddha">Buddha</option>
+                                                    <option class="text-black" value="Islam">Islam</option>
+                                                    <option class="text-black" value="Katholik">Katholik</option>
+                                                    <option class="text-black" value="Protestan">Kristen Protestan</option>
+                                                    <option class="text-black" value="Hindu">Hindu</option>
+                                                    <option class="text-black" value="Buddha">Buddha</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -138,12 +138,12 @@
                                         <div class="col-sm-10">
                                             <div class="form-group">
                                                 <select class="form-control c-select" name="job_ayah">
-                                                    <option value="PNS">PNS</option>
-                                                    <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                                    <option value="Wiraswasta">Wiraswasta</option>
-                                                    <option value="Buruh">Buruh</option>
-                                                    <option value="Tidak Bekerja">Tidak Bekerja</option>
-                                                    <option value="Lain-lain">Lain-lain</option>
+                                                    <option class="text-black" value="PNS">PNS</option>
+                                                    <option class="text-black" value="Karyawan Swasta">Karyawan Swasta</option>
+                                                    <option class="text-black" value="Wiraswasta">Wiraswasta</option>
+                                                    <option class="text-black" value="Buruh">Buruh</option>
+                                                    <option class="text-black" value="Tidak Bekerja">Tidak Bekerja</option>
+                                                    <option class="text-black" value="Lain-lain">Lain-lain</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -153,12 +153,12 @@
                                         <div class="col-sm-10">
                                             <div class="form-group">
                                                 <select class="form-control c-select" name="job_ibu">
-                                                    <option value="PNS">PNS</option>
-                                                    <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                                    <option value="Wiraswasta">Wiraswasta</option>
-                                                    <option value="Buruh">Buruh</option>
-                                                    <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
-                                                    <option value="Lain-lain">Lain-lain</option>
+                                                    <option class="text-black" value="PNS">PNS</option>
+                                                    <option class="text-black" value="Karyawan Swasta">Karyawan Swasta</option>
+                                                    <option class="text-black" value="Wiraswasta">Wiraswasta</option>
+                                                    <option class="text-black" value="Buruh">Buruh</option>
+                                                    <option class="text-black" value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+                                                    <option class="text-black" value="Lain-lain">Lain-lain</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -173,7 +173,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">No. Telp. Orang tua</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="telp_ortu" placeholder="No. Telepon" minlength="12" maxlength="15">
+                                            <input type="text" class="form-control" name="telp_ortu" placeholder="No. Telepon" minlength="11" maxlength="13">
                                             <sserror :msg="error.telpOrtu"></sserror>
                                         </div>
                                     </div>
@@ -196,12 +196,12 @@
                                         <div class="col-sm-10">
                                             <div class="form-group">
                                                 <select class="form-control c-select" name="job_wali">
-                                                    <option value="PNS">PNS</option>
-                                                    <option value="Karyawan Swasta">Karyawan Swasta</option>
-                                                    <option value="Wiraswasta">Wiraswasta</option>
-                                                    <option value="Buruh">Buruh</option>
-                                                    <option value="Tidak Bekerja">Tidak Bekerja</option>
-                                                    <option value="Lain-lain">Lain-lain</option>
+                                                    <option class="text-black" value="PNS">PNS</option>
+                                                    <option class="text-black" value="Karyawan Swasta">Karyawan Swasta</option>
+                                                    <option class="text-black" value="Wiraswasta">Wiraswasta</option>
+                                                    <option class="text-black" value="Buruh">Buruh</option>
+                                                    <option class="text-black" value="Tidak Bekerja">Tidak Bekerja</option>
+                                                    <option class="text-black" value="Lain-lain">Lain-lain</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -211,6 +211,17 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="telp_wali" placeholder="No. Telepon Wali (Kosongkan jika tidak ada)" minlength="12" maxlength="15">
                                             <sserror :msg="error.telpWali"></sserror>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 form-control-label">Rombel</label>
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <select class="form-control c-select" name="id_rombel">
+                                                    <option class="text-black" v-for="item in rombel" :value="item.id_rombel">{{ item.nama_rombel }}</option>
+                                                </select>
+                                                <sserror :msg="error.rombel"></sserror>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -265,7 +276,7 @@ export default {
     },
     computed: mapState([
         'insertAlert', 'errorInsert', 'showFormAdd',
-        'error', 'idSiswa'
+        'error', 'idSiswa', 'rombel'
     ])
 }
 </script>
