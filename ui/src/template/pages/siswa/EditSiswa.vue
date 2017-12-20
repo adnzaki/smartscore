@@ -19,9 +19,9 @@
                                 </div>
                                 <div class="col-sm-4 text-right">
                                     <div class="box-header">
-                                        <router-link to="/siswa"><button class="btn btn-icon danger">
+                                        <button class="btn btn-icon danger" @click="closeForm('showFormEdit')">
                                             <i class="fa fa-remove"></i>
-                                        </button></router-link>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@
                                             <a ui-scroll-to="content">
                                                 <button type="button" class="btn btn-fw success" @click="save">Simpan</button>
                                             </a>
-                                            <router-link to="/siswa"><button type="button" class="btn btn-fw info">Tutup</button></router-link>
+                                            <button type="button" class="btn btn-fw info" @click="closeForm('showFormEdit')">Tutup</button>
                                         </div>
                                     </div>
                                 </form>
@@ -243,9 +243,6 @@ export default {
         ssalert,
         sserror
     },
-    beforeRouteEnter(to, from, next) {
-        next(vm => vm.loadDetailSiswa())
-    },
     data() {
         return {
             
@@ -260,9 +257,6 @@ export default {
                 event: 'update',
                 id: this.detailSiswa.id_siswa
             })
-        },
-        loadDetailSiswa() {
-            this.$store.dispatch('editSiswa', this.$route.params.id)
         }
     },
     computed: mapState([
