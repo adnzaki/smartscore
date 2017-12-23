@@ -304,11 +304,7 @@ export const Siswa = new Vuex.Store({
                 } else {
                     state.loadingText = `${req.response.success}, ${req.response.failed}`
                     let start = state.paging.offset / state.paging.limit
-                    dispatch('getSiswa', {
-                        limit: state.paging.limit,
-                        offset: start,
-                        search: state.cariSiswa
-                    })
+                    dispatch('runGetSiswa')
                 }
             }
             req.send(data)
