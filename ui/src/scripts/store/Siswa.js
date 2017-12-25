@@ -303,7 +303,6 @@ export const Siswa = new Vuex.Store({
                     state.loadingText = "Format file yang anda masukkan tidak sesuai"
                 } else {
                     state.loadingText = `${req.response.success}, ${req.response.failed}`
-                    let start = state.paging.offset / state.paging.limit
                     dispatch('runGetSiswa')
                 }
             }
@@ -323,15 +322,16 @@ export const Siswa = new Vuex.Store({
                     // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
                     // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
                     let diff = state.paging.totalRows - state.paging.offset
-                    if (diff == 1) {
+                    if (diff === 1 && state.paging.offset > 0) {
                         state.paging.offset -= state.paging.limit
                     }
 
                     dispatch('runGetSiswa')
-                    state.deleteAlert = true
-                    setTimeout(() => {
-                        state.deleteAlert = false
-                    }, 5000)
+                    commit('showAlert', 'deleteAlert')                    
+
+                    if(state.allSelected) {
+                        state.allSelected = false
+                    }
                 }
             })
         },
@@ -350,16 +350,6 @@ export const Siswa = new Vuex.Store({
                 offset: start,
                 search: state.cariSiswa
             })
-            setTimeout(() => {
-                if (state.daftarSiswa.length === 0) {
-                    start -= 1
-                    dispatch('getSiswa', {
-                        limit: state.paging.limit,
-                        offset: start,
-                        search: state.cariSiswa
-                    })
-                }
-            }, 500)
         },   
         closeForm({ state, commit, dispatch }, form) {
             state[form] = false
@@ -377,7 +367,7 @@ export const Siswa = new Vuex.Store({
             if (state.selectedID.length < 1) {
                 commit('showAlert', 'unableToDelete')
             } else {
-                state.unableToDelete = false
+                state.unableToDelete = false                
                 state.deleteConfirm = true
             }
         },

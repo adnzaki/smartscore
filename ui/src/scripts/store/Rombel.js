@@ -30,7 +30,7 @@ export const Rombel = new Vuex.Store({
         showFormEdit: false, selectedID: [],
         deleteConfirm: false,
         jmlBaris: 10, smtGenap: false,
-        salinConfirm: false, salinProgress: false,
+        naikTingkatConfirm: false, naikTingkatProgress: false,
         progressText: '', localLimit: 10,
         deleteConfirm: false, allSelected: false,
 
@@ -38,11 +38,16 @@ export const Rombel = new Vuex.Store({
         alert: {
             insert: false, update: false, delete: false,
             errorInsert: false, errorUpdate: false, unableToDelete: false,
-        },        
+        },       
+        
+        // buat nama rombel
+        namaRombel: {
+            tingkat: '1', paralel: 'A'
+        },
 
         // error messages
         error: {
-            namaRombel: '', tingkat: '', guru: '',
+            namaRombel: '', tingkat: '', paralel: '', guru: '',
         },
     },
     mutations: {
@@ -92,6 +97,7 @@ export const Rombel = new Vuex.Store({
         clearMessages(state) {
             state.error.namaRombel = ''
             state.error.tingkat = ''
+            state.error.paralel = ''
             state.error.guru = ''
         },
     },
@@ -134,21 +140,19 @@ export const Rombel = new Vuex.Store({
                             linkClass: 'waves-effect'
                         })
                     },
-                    error: () => {
-                        alert('Tidak dapat terkoneksi dengan server')
-                    }
                 })
             }
         },
         save({ state, commit, dispatch }, payload) {
             if (payload.event === 'insert') {
                 var form = $("#formTambahRombel"),
-                    param = payload.event
+                param = payload.event
             } else {
                 var form = $("#formEditRombel"),
-                    param = `${payload.event}/${payload.id}`
+                param = `${payload.event}/${payload.id}`
             }            
             var dataForm = form.serialize()
+            // alert(dataForm)
             $.ajax({
                 url: `${state.shared.apiUrl}admin/RombelController/save/${param}`,
                 type: 'POST',
@@ -165,6 +169,7 @@ export const Rombel = new Vuex.Store({
                         }
                         state.error.namaRombel = msg.nama_rombel
                         state.error.tingkat = msg.tingkat
+                        state.error.paralel = msg.paralel
                         state.error.guru = msg.wali_kelas                  
                     } else {
                         // jika event nya adalah insert data rombel
@@ -186,6 +191,9 @@ export const Rombel = new Vuex.Store({
                             commit('showAlert', 'update')
                             state.alert.errorUpdate = false
                         }
+                        // reset v-model untuk tingkat dan paralel 
+                        state.namaRombel.tingkat = '1'
+                        state.namaRombel.paralel = 'A'
                     }
                 }
             })
@@ -215,12 +223,16 @@ export const Rombel = new Vuex.Store({
                     // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
                     // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
                     let diff = state.paging.totalRows - state.paging.offset
-                    if (diff === 1) {
+                    if (diff === 1 && state.paging.offset > 0) {
                         state.paging.offset -= state.paging.limit
                     }
 
                     dispatch('runGetRombel')
                     commit('showAlert', 'delete')
+
+                    if (state.allSelected) {
+                        state.allSelected = false
+                    }
                 }
             })
         },
@@ -239,22 +251,22 @@ export const Rombel = new Vuex.Store({
                 offset: 0,
             })
         },  
-        salinRombel({ state, commit, dispatch }) {
+        naikTingkat({ state, commit, dispatch }) {
             commit('getCookie', 'ss_session')
             let token = state.shared.cookieName
-            state.salinConfirm = false
-            state.progressText = 'Menyalin rombel...'
-            state.salinProgress = true
+            state.naikTingkatConfirm = false
+            state.progressText = 'Menaikkan tingkat kelas siswa, harap tunggu...'
+            state.naikTingkatProgress = true
             $.ajax({
-                url: `${state.shared.apiUrl}admin/RombelController/copyRombel/${token}`,
+                url: `${state.shared.apiUrl}admin/RombelController/naikTingkat/${token}`,
                 type: 'POST',
                 dataType: 'json',
                 success: data => {
-                    if (data.status === 1) {
-                        state.progressText = `${data.jml_rombel} rombel berhasil disalin ke semester saat ini`
+                    if (data.status === 'ok') {
+                        state.progressText = `${data.total} siswa telah diproses (siswa tingkat 6 diluluskan).`
                         dispatch('runGetRombel')
                     } else {
-                        state.progressText = 'Terjadi kesalahan saat menyalin rombel'
+                        state.progressText = 'Terjadi kesalahan saat menaikkan tingkat kelas siswa'
                     }
                 }
             })
@@ -277,15 +289,6 @@ export const Rombel = new Vuex.Store({
                 limit: state.localLimit,
                 offset: start,
             })
-            setTimeout(() => {
-                if (state.daftarRombel.length === 0) {
-                    start -= 1
-                    dispatch('getRombel', {
-                        limit: state.paging.limit,
-                        offset: start,
-                    })
-                }
-            }, 500)
         },   
     }
 })

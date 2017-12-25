@@ -221,7 +221,7 @@
                                     <!-- ################### END OF FORM ######################## -->
                                     <div class="form-group row m-t-md">
                                         <div class="offset-sm-8 col-sm-4 text-right">
-                                            <a ui-scroll-to="content">
+                                            <a>
                                                 <button type="button" class="btn btn-fw success" @click="save">Simpan</button>
                                             </a>
                                             <button type="button" class="btn btn-fw info" @click="closeForm('showFormEdit')">Tutup</button>

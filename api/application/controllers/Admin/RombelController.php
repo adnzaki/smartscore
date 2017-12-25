@@ -65,9 +65,14 @@ class RombelController extends SSController
                 'rules' => 'required|exact_length[1]|numeric'
             ],
             [
-                'field' => 'tingkat',
-                'label' => 'tingkat kelas',
-                'rules' => 'required|max_length[50]|numeric'
+                'field' => 'paralel',
+                'label' => 'kelas paralel',
+                'rules' => 'required|exact_length[1]'
+            ],
+            [
+                'field' => 'wali_kelas',
+                'label' => 'wali kelas',
+                'rules' => 'required|max_length[3]|numeric'
             ],
         ];
 
@@ -83,6 +88,7 @@ class RombelController extends SSController
             $errors = [
                 'nama_rombel'   => form_error('nama_rombel'),
                 'tingkat'       => form_error('tingkat'),
+                'paralel'       => form_error('paralel'),
                 'wali_kelas'    => form_error('wali_kelas'),
             ];
             echo json_encode($errors);
@@ -126,6 +132,56 @@ class RombelController extends SSController
             $formatted[] = $res->id_rombel;
         }
         echo json_encode($formatted);
+    }
+
+    public function naikTingkat($token = '')
+    {
+        if(empty($token))
+        {
+            echo 'You do not have access to this page.';
+        }
+        else 
+        {
+            if($this->hasValidToken($token))
+            {
+                $getRombelSiswa = $this->RombelModel->getRombelSiswa();
+                // loop data rombel siswa 
+                $formatted = [];
+                foreach($getRombelSiswa as $res)
+                {
+                    $nextGrade = $res->tingkat + 1;
+        
+                    // jika rombel berikutnya tidak ada di database dan tingkat berikutnya kurang dari 6,
+                    // buat rombel baru untuk tingkat berikutnya
+                    if(! $this->RombelModel->rombelExists($nextGrade, $res->paralel) && $nextGrade < 6)
+                    {
+                        $this->RombelModel->createRombel($nextGrade, $res->paralel, $res->id_guru);
+                        $this->RombelModel->naikTingkat($res->id_siswa, $nextGrade, $res->paralel);
+                    }
+                    // jika tingkat berikutnya lebih dari 6, luluskan siswa dengan mengganti statusnya
+                    // menjadi lulus di tabel siswa
+                    elseif($nextGrade > 6)
+                    {
+                        $this->RombelModel->siswaLulus($res->id_siswa);
+                    }
+                    else 
+                    {
+                        $this->RombelModel->naikTingkat($res->id_siswa, $nextGrade, $res->paralel);
+                    }
+        
+                    $formatted[] = [
+                        'siswa' => $res->id_siswa,
+                        'tingkatSblm' => $res->tingkat,
+                        'tingkatSkrg' => $nextGrade
+                    ];
+                }     
+                $res = [
+                    'status' => 'ok',
+                    'total' => count($formatted),
+                ];
+                echo json_encode($res);
+            }
+        }        
     }
 
     public function copyRombel($token)

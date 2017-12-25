@@ -27,7 +27,7 @@
     									<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 										<button class="btn btn-fw white" @click="multipleDeleteRombel"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
 										<!-- <button class="btn btn-fw white" @click="$store.state.salinConfirm = true" v-if="smtGenap"><i class="fa fa-copy"></i>&nbsp; Lanjutkan Semester</button> -->
-										<button class="btn btn-fw white" @click="" v-if="smtGenap === false"><i class="fa fa-level-up"></i>&nbsp; Naik Kelas</button>
+										<button class="btn btn-fw white" @click="$store.state.naikTingkatConfirm = true" v-if="smtGenap === false"><i class="fa fa-level-up"></i>&nbsp; Naik Kelas</button>
     								</div>
     								<div class="col-sm-3 col-xs-12">
     									<div class="form-group row">
@@ -54,6 +54,7 @@
 												<i class="primary"></i>
 											</label>
     									</th>
+										<th>ID</th>
     									<th>Nama Rombel</th>
     									<th>Tingkat Kelas</th>
     									<th>Wali Kelas</th>
@@ -67,6 +68,7 @@
 												<i class="primary"></i>
 											</label>
     									</td>
+										<td>{{ list.id_rombel }}</td>
     									<td>{{ list.nama_rombel }}</td>
     									<td>{{ list.tingkat }}</td>
     									<td>{{ list.nama_guru }}</td>
@@ -126,9 +128,9 @@
 			</div>
 		</transition>
 
-		<!-- KONFIRMASI SALIN ROMBEL  -->
+		<!-- KONFIRMASI NAIK TINGKAT ROMBEL  -->
 	    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-	    	<div class="modal ss-modal" data-backdrop="true" v-if="$store.state.salinConfirm">
+	    	<div class="modal ss-modal" data-backdrop="true" v-if="$store.state.naikTingkatConfirm">
 	    		<div class="modal-dialog">
 	    			<div class="col-sm-8 offset-sm-2">
 	    				<div class="modal-content black lt m-b">
@@ -137,23 +139,23 @@
 	    					</div>
 	    					<div class="modal-body">
 	    						<p>
-									Apakah anda yakin ingin melanjutkan data rombel dari semester sebelumnya?<br>
+									Apakah anda yakin ingin menaikkan tingkat kelas semua peserta didik?<br>
 								</p>
 	    					</div>
 	    					<div class="modal-footer">
-	    						<button class="btn white" @click="$store.state.salinConfirm = false">Cancel</button>
-	    						<button class="btn primary" @click="salinRombel">OK</button>
+	    						<button class="btn white" @click="$store.state.naikTingkatConfirm = false">Cancel</button>
+	    						<button class="btn primary" @click="naikTingkat">OK</button>
 	    					</div>
 	    				</div>
 	    			</div>
 	    		</div>
 	    	</div>
 	    </transition>
-		<!-- #END KONFIRMASI SALIN ROMBEL  -->
+		<!-- #END KONFIRMASI NAIK TINGKAT ROMBEL  -->
 
-		<!-- PROGRESS SAAT SALIN ROMBEL  -->
+		<!-- PROGRESS SAAT NAIK TINGKAT ROMBEL  -->
 		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-	    	<div class="modal ss-modal" data-backdrop="true" v-if="salinProgress">
+	    	<div class="modal ss-modal" data-backdrop="true" v-if="naikTingkatProgress">
 	    		<div class="modal-dialog">
 	    			<div class="col-sm-8 offset-sm-2">
 	    				<div class="modal-content black lt m-b">
@@ -164,14 +166,14 @@
 	    						<p class="text-center ss-loading-text">{{ progressText }}</p>
 	    					</div>
 	    					<div class="modal-footer">
-	    						<button class="btn primary" @click="$store.state.salinProgress = false">Tutup</button>
+	    						<button class="btn primary" @click="$store.state.naikTingkatProgress = false">Tutup</button>
 	    					</div>
 	    				</div>
 	    			</div>
 	    		</div>
 	    	</div>
 	    </transition>
-		<!-- #END PROGRESS SALIN ROMBEL -->
+		<!-- #END PROGRESS NAIK TINGKAT ROMBEL -->
 
 		<!-- FORM TAMBAH ROMBEL -->
 		<TambahRombel />
@@ -229,7 +231,7 @@ export default {
 			'selectAll',
 		]),
 		...mapActions([
-			'showPerPage', 'salinRombel', 'editRombel',
+			'showPerPage', 'naikTingkat', 'editRombel',
 			'deleteRombel', 'multipleDeleteRombel'
 		]),
 		getRombel(limit, offset) {
@@ -253,7 +255,7 @@ export default {
 	computed: {
 		...mapState([
 			'showDaftarRombel', 'daftarRombel',
-			'smtGenap', 'salinConfirm', 'salinProgress', 
+			'smtGenap', 'naikTingkatConfirm', 'naikTingkatProgress', 
 			'progressText', 'localLimit', 'alert', 'deleteConfirm',
 			'allSelected',
 		]),

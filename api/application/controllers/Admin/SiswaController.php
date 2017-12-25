@@ -339,7 +339,7 @@ class SiswaController extends SSController
     }
 
     public function getAllSiswaID()
-    {
+    {        
         $data = $this->SiswaModel->getAllSiswaID();
         $formatted = [];
         foreach($data as $res)

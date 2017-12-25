@@ -66,35 +66,69 @@ class RombelModel extends CI_Model
         return $this->db->select('id_rombel')->from($this->table)->get()->result();
     }
 
+    public function naikTingkat($idSiswa, $tingkat, $paralel)
+    {
+        $getRombel = $this->db->select('id_rombel, tingkat, paralel')->from($this->table)
+                    ->where(['tingkat' => $tingkat, 'paralel' => $paralel])
+                    ->get()->result();
+        
+        $this->db->update('siswa', ['id_rombel' => $getRombel[0]->id_rombel], ['id_siswa' => $idSiswa]);
+    }
+    
+    public function createRombel($tingkat, $paralel, $guru)
+    {
+        $data = [
+            'nama_rombel' => 'Kelas '.$tingkat.$paralel,
+            'tingkat' => $tingkat,
+            'paralel' => $paralel,
+            'id_guru' => $guru,
+        ];
+
+        $this->db->insert($this->table, $data);
+    }
+
+    public function siswaLulus($id)
+    {
+        $this->db->update('siswa', [
+            'status' => 'lulus',
+            'id_rombel' => NULL,
+        ], ['id_siswa' => $id]);
+    }
+
+    public function rombelExists($tingkat, $paralel)
+    {
+        $query = $this->db->get_where($this->table, [
+            'tingkat' => $tingkat,
+            'paralel' => $paralel,
+        ]);
+
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    public function getRombelSiswa()
+    {
+        $query = $this->db->select('id_siswa, siswa.id_rombel, tingkat, paralel, id_guru')
+                ->from('siswa')->join($this->table, 'siswa.id_rombel=rombel.id_rombel')
+                ->get()->result();
+        
+        return $query;
+    }
+
     private function tableRombelValue()
     {
         return [
             'nama_rombel'   => $this->input->post('nama_rombel', true),
             'tingkat'       => $this->input->post('tingkat', true),
+            'paralel'       => $this->input->post('paralel', true),
             'id_guru'       => $this->input->post('wali_kelas', true)
         ];
     }
 
-    public function duplicateRombel($tahunSblm, $tahunSkrg)
-    {
-        $createTmp = 'CREATE TEMPORARY TABLE tmp_rombel SELECT * FROM rombel WHERE tahun_ajaran='.$tahunSblm;
-        $updateTmp = 'UPDATE tmp_rombel SET id_rombel=NULL, tahun_ajaran='.$tahunSkrg;
-        $copyTmp = 'INSERT INTO rombel SELECT * FROM tmp_rombel';
-        $dropTmp = 'DROP TEMPORARY TABLE IF EXISTS tmp_rombel';
-        $this->db->trans_start();
-        $this->db->query($createTmp);
-        $this->db->query($updateTmp);
-        $this->db->query($copyTmp);
-        $this->db->query($dropTmp);
-        $this->db->trans_complete();
-
-        if($this->db->trans_status() === false)
-        {
-            return false;
-        }
-        else 
-        {
-            return true;
-        }
-    }
 }

@@ -28,7 +28,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Nama Rombel</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" v-model="detailRombel.nama_rombel" name="nama_rombel" placeholder="Nama Rombel">
+                                            <input type="text" class="form-control" disabled placeholder="Nama Rombel" :value="'Kelas ' + detailRombel.tingkat + detailRombel.paralel">
+                                            <input type="hidden" name="nama_rombel" :value="'Kelas ' + detailRombel.tingkat + detailRombel.paralel" />
                                             <sserror :msg="error.namaRombel"></sserror>
                                         </div>
                                     </div>                                    
@@ -45,6 +46,22 @@
                                                     <option value="6" class="text-black">6</option>
                                                 </select>
                                                 <sserror :msg="error.tingkat"></sserror>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 form-control-label">Paralel</label>
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <select class="form-control c-select" v-model="detailRombel.paralel" name="paralel">
+                                                    <option value="A" class="text-black">A</option>
+                                                    <option value="B" class="text-black">B</option>
+                                                    <option value="C" class="text-black">C</option>
+                                                    <option value="D" class="text-black">D</option>
+                                                    <option value="E" class="text-black">E</option>
+                                                    <option value="F" class="text-black">F</option>
+                                                </select>
+                                                <sserror :msg="error.paralel"></sserror>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +123,7 @@ export default {
     },
     computed: mapState([
         'alert', 'showFormEdit', 'error',
-        'daftarGuru', 'detailRombel',
+        'daftarGuru', 'detailRombel', 'namaRombel',
     ])
 }
 </script>
