@@ -79,10 +79,10 @@
                                     <div class="form-group row m-t-md">
                                         <div class="offset-sm-4 col-sm-8 text-right">
                                             <a ui-scroll-to="content">
-                                                <button type="button" class="btn btn-fw success" @click="save({ event: 'insert', closeForm: false })">Simpan</button>
+                                                <button type="button" class="btn btn-fw success" @click="save({ event: 'insert', id: 'null', closeForm: false })">Simpan</button>
                                             </a>
                                             <a ui-scroll-to="content">
-                                                <button type="button" class="btn btn-fw success" @click="save({ event: 'insert', closeForm: true })">Simpan dan Tutup</button>
+                                                <button type="button" class="btn btn-fw success" @click="save({ event: 'insert', id: 'null', closeForm: true })">Simpan dan Tutup</button>
                                             </a>
                                             <button type="button" class="btn btn-fw info" @click="closeForm('showFormAdd')">Tutup</button>
                                         </div>

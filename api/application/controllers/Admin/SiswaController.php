@@ -23,330 +23,385 @@ class SiswaController extends SSController
 
     public function fetchSiswa($limit, $start, $token = '', $search = '')
     {
-        if(empty($token))
+        if($this->hasValidToken($token))
         {
+            $data = $this->SiswaModel->getSiswa($limit, $start, $search);
+            $formatted = [];
+            foreach($data as $data)
+            {
+                $data->tgl_lahir_siswa = $this->ostiumdate->format('d-Mm-y', reverse($data->tgl_lahir_siswa, '-', '-'));
+                array_push($formatted, $data);
+            }
+
             $res = [
-                'code'  => 0,
-                'msg'   => 'Anda tidak memiliki akses untuk melihat halaman ini, silakan login.'
+                'code'      => 'success',
+                'dataSiswa' => $formatted,
+                'totalRows' => $this->SiswaModel->getTotalRows($search)
             ];
             echo json_encode($res);
         }
         else 
         {
-            if($this->hasValidToken($token))
-            {
-                $data = $this->SiswaModel->getSiswa($limit, $start, $search);
-                $formatted = [];
-                foreach($data as $data)
-                {
-                    $data->tgl_lahir_siswa = $this->ostiumdate->format('d-Mm-y', reverse($data->tgl_lahir_siswa, '-', '-'));
-                    array_push($formatted, $data);
-                }
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }             
+    }
 
-                $res = [
-                    'code'      => 'success',
-                    'dataSiswa' => $formatted,
-                    'totalRows' => $this->SiswaModel->getTotalRows($search)
-                ];
-                echo json_encode($res);
-            }
-            else 
+    public function setSiswa($event, $key, $token = '')
+    {       
+        if($this->hasValidToken($token))
+        {
+            if($event === 'insert' && $key === 'null')
             {
-                $res = [
-                    'code'  => 1,
-                    'msg'   => 'Token anda tidak valid, silakan login kembali.'
+                $is_unique = [
+                    '|is_unique[siswa.nis]',
+                    '|is_unique[siswa.nisn]',
                 ];
-                echo json_encode($res);
             }
+            else
+            {
+                $is_unique = ['', ''];
+            }
+    
+            $rules = [
+                [
+                    'field' => 'nama_siswa',
+                    'label' => 'nama siswa',
+                    'rules' => 'required|max_length[100]'
+                ],
+                [
+                    'field' => 'nis',
+                    'label' => 'Nomor Induk Sekolah',
+                    'rules' => 'required'.$is_unique[0].'|exact_length[9]|numeric'
+                ],
+                [
+                    'field' => 'nisn',
+                    'label' => 'NISN',
+                    'rules' => 'required'.$is_unique[1].'|exact_length[10]|numeric'
+                ],
+                [
+                    'field' => 'j_kelamin_siswa',
+                    'label' => 'jenis kelamin',
+                    'rules' => 'required'
+                ],
+                [
+                    'field' => 'tempat_lahir_siswa',
+                    'label' => 'tempat lahir',
+                    'rules' => 'required|max_length[100]'
+                ],
+                [
+                    'field' => 'tgl_lahir_siswa',
+                    'label' => 'tanggal lahir',
+                    'rules' => 'required|exact_length[10]'
+                ],
+                [
+                    'field' => 'pend_sblm',
+                    'label' => 'pendidikan sebelumnya',
+                    'rules' => 'max_length[100]'
+                ],
+                [
+                    'field' => 'alamat_siswa',
+                    'label' => 'alamat siswa',
+                    'rules' => 'required|max_length[250]'
+                ],
+                [
+                    'field' => 'nama_ayah',
+                    'label' => 'nama ayah',
+                    'rules' => 'required|max_length[100]'
+                ],
+                [
+                    'field' => 'nama_ibu',
+                    'label' => 'nama ibu',
+                    'rules' => 'required|max_length[100]'
+                ],
+                [
+                    'field' => 'alamat_ortu',
+                    'label' => 'alamat orang tua',
+                    'rules' => 'required|max_length[255]'
+                ],
+                [
+                    'field' => 'telp_ortu',
+                    'label' => 'nomor telepon orang tua',
+                    'rules' => 'required|min_length[11]|max_length[13]|numeric'
+                ],
+                [
+                    'field' => 'nama_wali',
+                    'label' => 'nama wali',
+                    'rules' => 'max_length[50]'
+                ],
+                [
+                    'field' => 'alamat_wali',
+                    'label' => 'alamat wali',
+                    'rules' => 'max_length[255]'
+                ],
+                [
+                    'field' => 'telp_wali',
+                    'label' => 'nomor telepon wali',
+                    'rules' => 'min_length[11]|max_length[15]|numeric'
+                ],
+                [
+                    'field' => 'id_rombel',
+                    'label' => 'rombel',
+                    'rules' => 'min_length[1]|max_length[3]|numeric'
+                ],
+            ];
+    
+            $this->form_validation->set_rules($rules);
+            $this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
+            $this->form_validation->set_message('max_length', 'Panjang kolom %s tidak boleh lebih dari %s karakter');
+            $this->form_validation->set_message('min_length', 'Panjang kolom %s minimal %s karakter');
+            $this->form_validation->set_message('exact_length', 'Panjang kolom %s harus %s karakter');
+            $this->form_validation->set_message('numeric', 'Kolom {field} hanya boleh diisi angka');
+            $this->form_validation->set_message('is_unique', 'Data %s sudah ada');
+            $this->form_validation->set_error_delimiters('', '');
+    
+            if($this->form_validation->run() == FALSE)
+            {
+                $errors = [
+                    'nama_siswa'    => form_error('nama_siswa'),
+                    'nis'           => form_error('nis'),
+                    'nisn'          => form_error('nisn'),
+                    'j_kelamin_siswa' => form_error('j_kelamin_siswa'),
+                    'tempat_lahir_siswa' => form_error('tempat_lahir_siswa'),
+                    'tgl_lahir_siswa' => form_error('tgl_lahir_siswa'),
+                    'pend_sblm'     => form_error('pend_sblm'),
+                    'alamat_siswa'  => form_error('alamat_siswa'),
+                    'nama_ayah'     => form_error('nama_ayah'),
+                    'nama_ibu'      => form_error('nama_ibu'),
+                    'alamat_ortu'   => form_error('alamat_ortu'),
+                    'telp_ortu'     => form_error('telp_ortu'),
+                    'nama_wali'     => form_error('nama_wali'),
+                    'alamat_wali'   => form_error('alamat_wali'),
+                    'telp_wali'     => form_error('telp_wali'),
+                    'id_rombel'     => form_error('id_rombel'),
+                ];
+                echo json_encode($errors);
+            }
+            else
+            {
+                if($event === 'insert')
+                {
+                    $this->SiswaModel->insertSiswa();
+                }
+                elseif($event === 'update')
+                {
+                    $this->SiswaModel->updateSiswa($key);
+                }
+    
+                $data = [
+                    'msg'   => 'success',
+                    'id'    => $this->SiswaModel->getIdSiswa()
+                ];
+                echo json_encode($data);
+            }            
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
         }        
     }
 
-    public function setSiswa($event, $key = '')
+    public function getRombel($token = '')
     {
-        if($event === 'insert')
+        if($this->hasValidToken($token))
         {
-            $is_unique = [
-                '|is_unique[siswa.nis]',
-                '|is_unique[siswa.nisn]',
+            echo json_encode($this->SiswaModel->getRombel());
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('unableToGetData')
             ];
+            echo json_encode($res);
         }
-        else
-        {
-            $is_unique = ['', ''];
-        }
+    }
 
-        $rules = [
-            [
-                'field' => 'nama_siswa',
-                'label' => 'nama siswa',
-                'rules' => 'required|max_length[100]'
-            ],
-            [
-                'field' => 'nis',
-                'label' => 'Nomor Induk Sekolah',
-                'rules' => 'required'.$is_unique[0].'|exact_length[9]|numeric'
-            ],
-            [
-                'field' => 'nisn',
-                'label' => 'NISN',
-                'rules' => 'required'.$is_unique[1].'|exact_length[10]|numeric'
-            ],
-            [
-                'field' => 'j_kelamin_siswa',
-                'label' => 'jenis kelamin',
-                'rules' => 'required'
-            ],
-            [
-                'field' => 'tempat_lahir_siswa',
-                'label' => 'tempat lahir',
-                'rules' => 'required|max_length[100]'
-            ],
-            [
-                'field' => 'tgl_lahir_siswa',
-                'label' => 'tanggal lahir',
-                'rules' => 'required|exact_length[10]'
-            ],
-            [
-                'field' => 'pend_sblm',
-                'label' => 'pendidikan sebelumnya',
-                'rules' => 'max_length[100]'
-            ],
-            [
-                'field' => 'alamat_siswa',
-                'label' => 'alamat siswa',
-                'rules' => 'required|max_length[250]'
-            ],
-            [
-                'field' => 'nama_ayah',
-                'label' => 'nama ayah',
-                'rules' => 'required|max_length[100]'
-            ],
-            [
-                'field' => 'nama_ibu',
-                'label' => 'nama ibu',
-                'rules' => 'required|max_length[100]'
-            ],
-            [
-                'field' => 'alamat_ortu',
-                'label' => 'alamat orang tua',
-                'rules' => 'required|max_length[255]'
-            ],
-            [
-                'field' => 'telp_ortu',
-                'label' => 'nomor telepon orang tua',
-                'rules' => 'required|min_length[11]|max_length[13]|numeric'
-            ],
-            [
-                'field' => 'nama_wali',
-                'label' => 'nama wali',
-                'rules' => 'max_length[50]'
-            ],
-            [
-                'field' => 'alamat_wali',
-                'label' => 'alamat wali',
-                'rules' => 'max_length[255]'
-            ],
-            [
-                'field' => 'telp_wali',
-                'label' => 'nomor telepon wali',
-                'rules' => 'min_length[11]|max_length[15]|numeric'
-            ],
-            [
-                'field' => 'id_rombel',
-                'label' => 'rombel',
-                'rules' => 'min_length[1]|max_length[3]|numeric'
-            ],
-        ];
-
-        $this->form_validation->set_rules($rules);
-        $this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
-        $this->form_validation->set_message('max_length', 'Panjang kolom %s tidak boleh lebih dari %s karakter');
-        $this->form_validation->set_message('min_length', 'Panjang kolom %s minimal %s karakter');
-        $this->form_validation->set_message('exact_length', 'Panjang kolom %s harus %s karakter');
-        $this->form_validation->set_message('numeric', 'Kolom {field} hanya boleh diisi angka');
-        $this->form_validation->set_message('is_unique', 'Data %s sudah ada');
-        $this->form_validation->set_error_delimiters('', '');
-
-        if($this->form_validation->run() == FALSE)
+    public function editSiswa($id, $token = '')
+    {
+        if($this->hasValidToken($token))
         {
-            $errors = [
-                'nama_siswa'    => form_error('nama_siswa'),
-                'nis'           => form_error('nis'),
-                'nisn'          => form_error('nisn'),
-                'j_kelamin_siswa' => form_error('j_kelamin_siswa'),
-                'tempat_lahir_siswa' => form_error('tempat_lahir_siswa'),
-                'tgl_lahir_siswa' => form_error('tgl_lahir_siswa'),
-                'pend_sblm'     => form_error('pend_sblm'),
-                'alamat_siswa'  => form_error('alamat_siswa'),
-                'nama_ayah'     => form_error('nama_ayah'),
-                'nama_ibu'      => form_error('nama_ibu'),
-                'alamat_ortu'   => form_error('alamat_ortu'),
-                'telp_ortu'     => form_error('telp_ortu'),
-                'nama_wali'     => form_error('nama_wali'),
-                'alamat_wali'   => form_error('alamat_wali'),
-                'telp_wali'     => form_error('telp_wali'),
-                'id_rombel'     => form_error('id_rombel'),
-            ];
-            echo json_encode($errors);
-        }
-        else
-        {
-            if($event === 'insert')
+            $data = $this->SiswaModel->getDetailSiswa($id);
+            $formatted = [];
+            foreach($data as $data)
             {
-                $this->SiswaModel->insertSiswa();
+                $data->tgl_lahir_siswa = reverse($data->tgl_lahir_siswa, '-', "/");
+                array_push($formatted, $data);
             }
-            elseif($event === 'update')
-            {
-                $this->SiswaModel->updateSiswa($key);
-            }
-
-            $data = [
-                'msg'   => 'success',
-                'id'    => $this->SiswaModel->getIdSiswa()
-            ];
             echo json_encode($data);
         }
-    }
-
-    public function getRombel()
-    {
-        echo json_encode($this->SiswaModel->getRombel());
-    }
-
-    public function editSiswa($id)
-    {
-        $data = $this->SiswaModel->getDetailSiswa($id);
-        $formatted = [];
-        foreach($data as $data)
+        else 
         {
-            $data->tgl_lahir_siswa = reverse($data->tgl_lahir_siswa, '-', "/");
-            array_push($formatted, $data);
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('unableToGetData')
+            ];
+            echo json_encode($res);
         }
-        echo json_encode($data);
     }
 
-    public function deleteSiswa($id)
+    public function deleteSiswa($id, $token = '')
     {
-        $arrID = explode("-", $id);
-        for($i = 0; $i < count($arrID); $i++)
+        if($this->hasValidToken($token))
         {
-            $this->SiswaModel->deleteSiswa($arrID[$i]);
-        }
-        echo json_encode(0);
-    }
-
-    public function importSiswa()
-    {
-        $config['upload_path']      = "./public/upload/";
-        $config['allowed_types']    = 'xls|xlsx|csv';
-        $config['max_size']         = 10000;
-        $this->upload->initialize($config);
-        if(! $this->upload->do_upload('file'))
-        {
+            $arrID = explode("-", $id);
+            for($i = 0; $i < count($arrID); $i++)
+            {
+                $this->SiswaModel->deleteSiswa($arrID[$i]);
+            }
             echo json_encode(0);
         }
-        else
+        else 
         {
-            $this->load->library('PHPExcel');
-            $fileData = $this->upload->data();
-            $fileInput = "./public/upload/".$fileData['file_name'];
-            try
-            {
-                $objPHPExcel = PHPExcel_IOFactory::load($fileInput);
-            }
-            catch(Exception $e)
-            {
-                die($e->getMessage());
-            }
-
-            $worksheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
-            $numRows = count($worksheet);
-
-            $importFailed = [];
-            $importSuccess = [];
-
-            for($i = 2; $i < ($numRows + 1); $i++)
-            {
-                $data = [
-                    'id_rombel'             => $worksheet[$i]['B'],
-                    'nis'                   => $worksheet[$i]['C'],
-                    'nisn'                  => $worksheet[$i]['D'],
-                    'nama_siswa'            => $worksheet[$i]['E'],
-                    'j_kelamin_siswa'       => $worksheet[$i]['F'],
-                    'tempat_lahir_siswa'    => $worksheet[$i]['G'],
-                    'tgl_lahir_siswa'       => $worksheet[$i]['H'],
-                    'agama_siswa'           => $worksheet[$i]['I'],
-                    'pend_sblm'             => $worksheet[$i]['J'],
-                    'alamat_siswa'          => $worksheet[$i]['K'],
-                    'nama_ayah'             => $worksheet[$i]['L'],
-                    'nama_ibu'              => $worksheet[$i]['M'],
-                    'job_ayah'              => $worksheet[$i]['N'],
-                    'job_ibu'               => $worksheet[$i]['O'],
-                    'alamat_ortu'           => $worksheet[$i]['P'],
-                    'telp_ortu'             => $worksheet[$i]['Q'],
-                    'nama_wali'             => $worksheet[$i]['R'],
-                    'alamat_wali'           => $worksheet[$i]['S'],
-                    'job_wali'              => $worksheet[$i]['T'],
-                    'telp_wali'             => $worksheet[$i]['U'],
-                ];
-
-                $agama = [
-                    'Islam', 'Katholik',
-                    'Kristen Protestan',
-                    'Hindu', 'Buddha'
-                ];
-
-                $jobAyah = [
-                    'PNS', 'Karyawan Swasta', 'Wiraswasta',
-                    'Buruh', 'Tidak Bekerja', 'Lain-lain'
-                ];
-
-                $jobIbu = [
-                    'PNS', 'Karyawan Swasta', 'Wiraswasta',
-                    'Buruh', 'Ibu Rumah Tangga', 'Lain-lain'
-                ];
-
-                if(
-                    preg_match('/[^0-9]/', $data['id_rombel']) OR 
-                    preg_match('/[^0-9]/', $data['nis']) === 1 OR preg_match('/[^0-9]/', $data['nisn']) === 1
-                    OR (strlen($data['nis']) !== 9) OR (strlen($data['nisn']) !== 10)
-                    OR isUnique($data['nis'], 'nis', 'siswa') OR isUnique($data['nisn'], 'nisn', 'siswa')
-                    OR empty($data['nis']) OR empty($data['nisn']) OR empty($data['nama_siswa']) OR empty($data['j_kelamin_siswa'])
-                    OR (strlen($data['j_kelamin_siswa']) !== 1) OR empty($data['tempat_lahir_siswa']) OR empty($data['tgl_lahir_siswa'])
-                    OR !isValidDate($data['tgl_lahir_siswa']) OR empty($data['agama_siswa']) OR !in_array($data['agama_siswa'], $agama)
-                    OR empty($data['alamat_siswa']) OR empty($data['nama_ayah']) OR empty($data['nama_ibu'])
-                    OR empty($data['job_ayah']) OR empty($data['job_ibu']) OR !in_array($data['job_ayah'], $jobAyah) OR !in_array($data['job_ibu'], $jobIbu)
-                    OR empty($data['alamat_ortu']) OR empty($data['telp_ortu']) OR preg_match('/[^0-9]/', $data['telp_ortu']) === 1
-                    OR (strlen($data['telp_ortu']) < 11) OR (strlen($data['telp_ortu']) > 13)
-                )
-                {
-                    array_push($importFailed, $i);
-                }
-                else
-                {
-                    $this->db->insert('siswa', $data);
-                    array_push($importSuccess, $i);
-                }
-            }
-
-            $status = [
-                'failed'    => count($importFailed) . " data gagal diimpor",
-                'success'   => count($importSuccess) . " data berhasil diimpor",
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
             ];
-            delete_files($fileData['file_path']);
-            echo json_encode($status);
+            echo json_encode($res);
         }
     }
 
-    public function getAllSiswaID()
-    {        
-        $data = $this->SiswaModel->getAllSiswaID();
-        $formatted = [];
-        foreach($data as $res)
+    public function importSiswa($token = '')
+    {
+        if($this->hasValidToken($token))
         {
-            $formatted[] = $res->id_siswa;
+            $config['upload_path']      = "./public/upload/";
+            $config['allowed_types']    = 'xls|xlsx|csv';
+            $config['max_size']         = 10000;
+            $this->upload->initialize($config);
+            if(! $this->upload->do_upload('file'))
+            {
+                echo json_encode(0);
+            }
+            else
+            {
+                $this->load->library('PHPExcel');
+                $fileData = $this->upload->data();
+                $fileInput = "./public/upload/".$fileData['file_name'];
+                try
+                {
+                    $objPHPExcel = PHPExcel_IOFactory::load($fileInput);
+                }
+                catch(Exception $e)
+                {
+                    die($e->getMessage());
+                }
+    
+                $worksheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+                $numRows = count($worksheet);
+    
+                $importFailed = [];
+                $importSuccess = [];
+    
+                for($i = 2; $i < ($numRows + 1); $i++)
+                {
+                    $data = [
+                        'id_rombel'             => $worksheet[$i]['B'],
+                        'nis'                   => $worksheet[$i]['C'],
+                        'nisn'                  => $worksheet[$i]['D'],
+                        'nama_siswa'            => $worksheet[$i]['E'],
+                        'j_kelamin_siswa'       => $worksheet[$i]['F'],
+                        'tempat_lahir_siswa'    => $worksheet[$i]['G'],
+                        'tgl_lahir_siswa'       => $worksheet[$i]['H'],
+                        'agama_siswa'           => $worksheet[$i]['I'],
+                        'pend_sblm'             => $worksheet[$i]['J'],
+                        'alamat_siswa'          => $worksheet[$i]['K'],
+                        'nama_ayah'             => $worksheet[$i]['L'],
+                        'nama_ibu'              => $worksheet[$i]['M'],
+                        'job_ayah'              => $worksheet[$i]['N'],
+                        'job_ibu'               => $worksheet[$i]['O'],
+                        'alamat_ortu'           => $worksheet[$i]['P'],
+                        'telp_ortu'             => $worksheet[$i]['Q'],
+                        'nama_wali'             => $worksheet[$i]['R'],
+                        'alamat_wali'           => $worksheet[$i]['S'],
+                        'job_wali'              => $worksheet[$i]['T'],
+                        'telp_wali'             => $worksheet[$i]['U'],
+                    ];
+    
+                    $agama = [
+                        'Islam', 'Katholik',
+                        'Kristen Protestan',
+                        'Hindu', 'Buddha'
+                    ];
+    
+                    $jobAyah = [
+                        'PNS', 'Karyawan Swasta', 'Wiraswasta',
+                        'Buruh', 'Tidak Bekerja', 'Lain-lain'
+                    ];
+    
+                    $jobIbu = [
+                        'PNS', 'Karyawan Swasta', 'Wiraswasta',
+                        'Buruh', 'Ibu Rumah Tangga', 'Lain-lain'
+                    ];
+    
+                    if(
+                        preg_match('/[^0-9]/', $data['id_rombel']) OR 
+                        preg_match('/[^0-9]/', $data['nis']) === 1 OR preg_match('/[^0-9]/', $data['nisn']) === 1
+                        OR (strlen($data['nis']) !== 9) OR (strlen($data['nisn']) !== 10)
+                        OR isUnique($data['nis'], 'nis', 'siswa') OR isUnique($data['nisn'], 'nisn', 'siswa')
+                        OR empty($data['nis']) OR empty($data['nisn']) OR empty($data['nama_siswa']) OR empty($data['j_kelamin_siswa'])
+                        OR (strlen($data['j_kelamin_siswa']) !== 1) OR empty($data['tempat_lahir_siswa']) OR empty($data['tgl_lahir_siswa'])
+                        OR !isValidDate($data['tgl_lahir_siswa']) OR empty($data['agama_siswa']) OR !in_array($data['agama_siswa'], $agama)
+                        OR empty($data['alamat_siswa']) OR empty($data['nama_ayah']) OR empty($data['nama_ibu'])
+                        OR empty($data['job_ayah']) OR empty($data['job_ibu']) OR !in_array($data['job_ayah'], $jobAyah) OR !in_array($data['job_ibu'], $jobIbu)
+                        OR empty($data['alamat_ortu']) OR empty($data['telp_ortu']) OR preg_match('/[^0-9]/', $data['telp_ortu']) === 1
+                        OR (strlen($data['telp_ortu']) < 11) OR (strlen($data['telp_ortu']) > 13)
+                    )
+                    {
+                        array_push($importFailed, $i);
+                    }
+                    else
+                    {
+                        $this->db->insert('siswa', $data);
+                        array_push($importSuccess, $i);
+                    }
+                }
+    
+                $status = [
+                    'failed'    => count($importFailed) . " data gagal diimpor",
+                    'success'   => count($importSuccess) . " data berhasil diimpor",
+                ];
+                delete_files($fileData['file_path']);
+                echo json_encode($status);
+            }
         }
-        echo json_encode($formatted);
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
+    }
+
+    public function getAllSiswaID($token = '')
+    {      
+        if($this->hasValidToken($token))
+        {
+            $data = $this->SiswaModel->getAllSiswaID();
+            $formatted = [];
+            foreach($data as $res)
+            {
+                $formatted[] = $res->id_siswa;
+            }
+            echo json_encode($formatted);
+        }  
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
     }
 
 }

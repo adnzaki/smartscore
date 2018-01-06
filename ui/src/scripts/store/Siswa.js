@@ -29,6 +29,7 @@ export const Siswa = new Vuex.Store({
         deleteConfirm: false, importDialog: false,
         importProgress: false, jmlBaris: 10, localLimit: 10,
         allSelected: false, rombel: [],
+        token: '',
 
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false,
@@ -44,7 +45,7 @@ export const Siswa = new Vuex.Store({
     mutations: { 
         selectAll(state) {
             $.ajax({
-                url: `${state.shared.apiUrl}admin/SiswaController/getAllSiswaID`,
+                url: `${state.shared.apiUrl}admin/SiswaController/getAllSiswaID/${state.token}`,
                 type: 'get',
                 dataType: 'json',
                 success: data => {
@@ -112,7 +113,7 @@ export const Siswa = new Vuex.Store({
 
                 // ambil daftar rombel
                 $.ajax({
-                    url: `${state.shared.apiUrl}admin/SiswaController/getRombel`,
+                    url: `${state.shared.apiUrl}admin/SiswaController/getRombel/${state.token}`,
                     type: 'GET',
                     crossDomain: true,
                     dataType: 'json',
@@ -155,8 +156,8 @@ export const Siswa = new Vuex.Store({
          */
         getSiswa({ state, commit, dispatch }, payload) {
             commit('getCookie', 'ss_session')
-            let token = state.shared.cookieName
-            if (token === '') {
+            state.token = state.shared.cookieName
+            if (state.token === '') {
                 window.location.href = `${state.shared.apiUrl}AuthController/logout/`
             } else {
                 state.showFormAdd = false
@@ -164,7 +165,7 @@ export const Siswa = new Vuex.Store({
                 var obj = state
                 state.paging.limit = payload.limit
                 state.paging.offset = payload.offset * payload.limit
-                let param = `${payload.limit}/${state.paging.offset}/${token}/${payload.search}`
+                let param = `${payload.limit}/${state.paging.offset}/${state.token}/${payload.search}`
                 $.ajax({
                     url: `${state.shared.apiUrl}admin/SiswaController/fetchSiswa/${param}`,
                     type: 'GET',
@@ -194,13 +195,13 @@ export const Siswa = new Vuex.Store({
          * @param {*} payload 
          */
         insertSiswa({ state, commit, dispatch }, payload) {
+            let form
             if (payload.event === 'insert') {
-                var form = $("#formTambahSiswa"),
-                    param = payload.event
+                form = $("#formTambahSiswa")
             } else {
-                var form = $("#formEditSiswa"),
-                    param = `${payload.event}/${payload.id}`
+                form = $("#formEditSiswa")
             }
+            var param = `${payload.event}/${payload.id}/${state.token}`
             var obj = state,
                 dataForm = form.serialize()
             $.ajax({
@@ -262,7 +263,7 @@ export const Siswa = new Vuex.Store({
             }
             state.insertAlert = false
             $.ajax({
-                url: `${state.shared.apiUrl}admin/SiswaController/editSiswa/${id}`,
+                url: `${state.shared.apiUrl}admin/SiswaController/editSiswa/${id}/${state.token}`,
                 type: 'GET',
                 crossDomain: true,
                 dataType: 'json',
@@ -292,7 +293,7 @@ export const Siswa = new Vuex.Store({
             var form = document.forms.namedItem('imporSiswa'),
                 data = new FormData(form),
                 req = new XMLHttpRequest()
-            req.open("POST", `${state.shared.apiUrl}admin/SiswaController/importSiswa`, true)
+            req.open("POST", `${state.shared.apiUrl}admin/SiswaController/importSiswa/${state.token}`, true)
             state.importDialog = false
             state.filename = ''
             state.loadingText = "Mengimpor data..."
@@ -311,7 +312,7 @@ export const Siswa = new Vuex.Store({
         deleteSiswa({ state, commit, dispatch }) {
             var idString = state.selectedID.join("-")
             $.ajax({
-                url: `${state.shared.apiUrl}admin/SiswaController/deleteSiswa/${idString}`,
+                url: `${state.shared.apiUrl}admin/SiswaController/deleteSiswa/${idString}/${state.token}`,
                 type: 'POST',
                 dataType: 'json',
                 success: () => {

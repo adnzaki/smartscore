@@ -270,7 +270,7 @@ export default {
         save() {
             this.$store.dispatch('insertSiswa', {
                 event: 'insert',
-                id: null
+                id: 'null'
             })
         }
     },

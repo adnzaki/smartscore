@@ -79,7 +79,7 @@ class SiswaModel extends CI_Model
 
     public function getRombel()
     {
-        return $this->db->select('id_rombel, nama_rombel')->from('rombel')->get()->result();
+        return $this->db->select('id_rombel, nama_rombel')->from('rombel')->order_by('nama_rombel', 'ASC')->get()->result();
     }
 
     protected function tableSiswaValue()

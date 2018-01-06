@@ -33,6 +33,7 @@ export const Rombel = new Vuex.Store({
         naikTingkatConfirm: false, naikTingkatProgress: false,
         progressText: '', localLimit: 10,
         deleteConfirm: false, allSelected: false,
+        token: '',
 
         // alert
         alert: {
@@ -63,7 +64,7 @@ export const Rombel = new Vuex.Store({
         },  
         selectAll(state) {
             $.ajax({
-                url: `${state.shared.apiUrl}admin/RombelController/getAllRombelID`,
+                url: `${state.shared.apiUrl}admin/RombelController/getAllRombelID/${state.token}`,
                 type: 'get',
                 dataType: 'json',
                 success: data => {
@@ -79,7 +80,7 @@ export const Rombel = new Vuex.Store({
             setTimeout(() => {
                 state[form] = true
                 $.ajax({
-                    url: `${state.shared.apiUrl}admin/RombelController/getGuru`,
+                    url: `${state.shared.apiUrl}admin/RombelController/getGuru/${state.token}`,
                     type: 'get',
                     dataType: 'json',
                     success: data => {
@@ -111,14 +112,14 @@ export const Rombel = new Vuex.Store({
          */
         getRombel({ state, commit, dispatch }, payload) {
             commit('getCookie', 'ss_session')
-            let token = state.shared.cookieName
-            if (token === '') {
+            state.token = state.shared.cookieName
+            if (state.token === '') {
                 window.location.href = `${state.shared.apiUrl}AuthController/logout/`
             } else {
                 var self = state
                 state.paging.limit = payload.limit
                 state.paging.offset = payload.offset * payload.limit
-                let param = `${payload.limit}/${state.paging.offset}/${token}`
+                let param = `${payload.limit}/${state.paging.offset}/${state.token}`
                 $.ajax({
                     url: `${state.shared.apiUrl}admin/RombelController/fetchRombel/${param}`,
                     type: 'GET',
@@ -143,14 +144,15 @@ export const Rombel = new Vuex.Store({
                 })
             }
         },
-        save({ state, commit, dispatch }, payload) {
+        save({ state, commit, dispatch }, payload) {            
+            let form
             if (payload.event === 'insert') {
-                var form = $("#formTambahRombel"),
-                param = payload.event
+                form = $("#formTambahRombel")
+                
             } else {
-                var form = $("#formEditRombel"),
-                param = `${payload.event}/${payload.id}`
+                form = $("#formEditRombel")
             }            
+            let param = `${payload.event}/${payload.id}/${state.token}`
             var dataForm = form.serialize()
             // alert(dataForm)
             $.ajax({
@@ -200,7 +202,7 @@ export const Rombel = new Vuex.Store({
         },
         editRombel({ state, commit }, id) {
             $.ajax({
-                url: `${state.shared.apiUrl}admin/RombelController/getDetailRombel/${id}`,
+                url: `${state.shared.apiUrl}admin/RombelController/getDetailRombel/${id}/${state.token}`,
                 type: 'GET',
                 crossDomain: true,
                 dataType: 'json',
@@ -213,7 +215,7 @@ export const Rombel = new Vuex.Store({
         deleteRombel({ state, commit, dispatch }) {
             var idString = state.selectedRombel.join("-")
             $.ajax({
-                url: `${state.shared.apiUrl}admin/RombelController/deleteRombel/${idString}`,
+                url: `${state.shared.apiUrl}admin/RombelController/deleteRombel/${idString}/${state.token}`,
                 type: 'POST',
                 success: () => {
                     state.deleteConfirm = false
@@ -252,13 +254,11 @@ export const Rombel = new Vuex.Store({
             })
         },  
         naikTingkat({ state, commit, dispatch }) {
-            commit('getCookie', 'ss_session')
-            let token = state.shared.cookieName
             state.naikTingkatConfirm = false
             state.progressText = 'Menaikkan tingkat kelas siswa, harap tunggu...'
             state.naikTingkatProgress = true
             $.ajax({
-                url: `${state.shared.apiUrl}admin/RombelController/naikTingkat/${token}`,
+                url: `${state.shared.apiUrl}admin/RombelController/naikTingkat/${state.token}`,
                 type: 'POST',
                 dataType: 'json',
                 success: data => {
