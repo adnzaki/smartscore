@@ -233,11 +233,9 @@
 			next(vm => vm.getSiswa(10, 0, ''))
 		},
 		beforeRouteUpdate(to, from, next) {
-			this.resetDaftarSiswa()
 			next()
 		},
 		beforeRouteLeave(to, from, next) {
-			this.hideDataSiswa()
 			next()
 		},
 		data() {
@@ -268,20 +266,9 @@
 					search
 				})
 			},
-			test() {
-				alert(this.cariSiswa)
-			},
 			paging(param) {
 				return this.$store.state.paging[param]
 			},
-			resetDaftarSiswa() {
-				this.$store.state.daftarSiswa = []
-				this.$store.dispatch('runGetSiswa')
-			},
-			hideDataSiswa() {
-				this.$store.state.showDaftarSiswa = false
-			},
-
 		},
 		computed: {
 			...mapState([

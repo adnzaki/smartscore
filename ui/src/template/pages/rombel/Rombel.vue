@@ -213,11 +213,9 @@ export default {
 		next(vm => vm.getRombel(10, 0))
 	},
 	beforeRouteUpdate(to, from, next) {
-		this.resetDaftarRombel()
 		next()
 	},
 	beforeRouteLeave(to, from, next) {
-		this.hideDataRombel()
 		next()
 	},
 	data() {
@@ -243,14 +241,6 @@ export default {
 		paging(param) {
 			return this.$store.state.paging[param]
 		},
-		resetDaftarRombel() {
-			this.$store.state.daftarRombel = []
-			this.$store.dispatch('runGetRombel')
-		},
-		hideDataRombel() {
-			this.$store.state.showDaftarRombel = false
-		},
-
 	},
 	computed: {
 		...mapState([
