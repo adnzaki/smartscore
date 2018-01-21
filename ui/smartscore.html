@@ -77,16 +77,15 @@
 									</span>
 									<span class="nav-text">Siswa</span>
 								</a>
-							</router-link>
-
-							<li @click="siswa.showDaftarSiswa = false">
+							</router-link>							
+							<router-link to="/guru" tag="li">
 								<a href="javascript:void(0)">
 									<span class="nav-icon">
 										<i class="material-icons">person</i>
 									</span>
 									<span class="nav-text">Guru</span>
 								</a>
-							</li>
+							</router-link>
 							<router-link to="/rombel" tag="li">
 								<a href="javascript:void(0)">
 									<span class="nav-icon">
@@ -99,14 +98,14 @@
 							<li class="nav-header hidden-folded">
 								<small class="text-muted">SPK</small>
 							</li>
-							<li>
+							<router-link to="/kriteria" tag="li">
 								<a href="javascript:void(0)">
 									<span class="nav-icon">
 										<i class="material-icons">assignment</i>
 									</span>
 									<span class="nav-text">Kriteria</span>
 								</a>
-							</li>
+							</router-link>
 							<li>
 								<a href="javascript:void(0)">
 									<span class="nav-icon">

@@ -24,13 +24,17 @@ import { ssconfig } from '../../app.config'
 import Dashboard from '../template/pages/beranda/Dashboard.vue'
 import Siswa from '../template/pages/siswa/Siswa.vue'
 import Rombel from '../template/pages/rombel/Rombel.vue'
+import Guru from '../template/pages/guru/Guru.vue'
+import Kriteria from '../template/pages/kriteria/Kriteria.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
     { path: '/dashboard', component: Dashboard },
     { path: '/siswa', component: Siswa },
-    { path: '/rombel', component: Rombel }
+    { path: '/rombel', component: Rombel },
+    { path: '/guru', component: Guru },
+    { path: '/kriteria', component: Kriteria },
 ]
 
 const router = new VueRouter({
