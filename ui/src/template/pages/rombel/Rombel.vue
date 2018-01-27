@@ -216,6 +216,8 @@ export default {
 		next()
 	},
 	beforeRouteLeave(to, from, next) {
+		this.$store.state.jmlBaris = 10
+		this.$store.state.localLimit = 10
 		next()
 	},
 	data() {

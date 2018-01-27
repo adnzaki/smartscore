@@ -88,7 +88,7 @@
 									</tr>
 								</tbody>
 								<tfoot>
-									<td colspan="7" class="text-center">
+									<td colspan="8" class="text-center">
 										<div class="col-sm-6 text-left">
 											<p> {{ $store.getters.getRowsRange }} </p>
 										</div>
@@ -236,6 +236,8 @@
 			next()
 		},
 		beforeRouteLeave(to, from, next) {
+			this.$store.state.jmlBaris = 10
+			this.$store.state.localLimit = 10
 			next()
 		},
 		data() {
