@@ -1,7 +1,7 @@
 <template>
   <div>
       <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-			<div class="padding">
+			<div class="padding" v-if="showDaftarKriteria">
 				<div class="row">
                     <div class="col-sm-12">
 						<div class="box">
@@ -41,9 +41,9 @@
 												<i class="primary"></i>
 											</label>
     									</th>
+										<th>ID Kriteria</th>
 										<th>Nama Kriteria</th>
-                                        <th v-for="(value, key, index) in kriteria" v-bind:key="key">K{{ index + 1}}</th>
-										<th colspan="2" class="text-center">Aksi</th>
+										<th colspan="3" class="text-center">Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -53,12 +53,34 @@
 												<i class="primary"></i>
 											</label>
 										</td>
-										<td>{{ key }} (K{{ index + 1 }})</td>
-                                        <td v-for="value in kriteria[key]">{{ value.nilai_perbandingan }}</td>
+										<td>{{ value[0].id_kriteria }}</td>      
+										<td class="nama-kriteria">{{ key }}</td>                                        
 										<td class="text-center ss-cursor-pointer"><i class="material-icons">edit</i></td>
 										<td class="text-center ss-cursor-pointer"><i class="material-icons">delete</i></td>
+										<td class="text-center ss-cursor-pointer"><i class="fa fa-th-large"></i></td>
 									</tr>
 								</tbody>
+								<tfoot>
+    								<td colspan="7" class="text-center">
+    									<div class="col-sm-6 text-left">
+    										<p> {{ $store.getters.getRowsRange }} </p>
+    									</div>
+    									<div class="col-sm-6 text-center">
+    										<ul class="pagination pagination-sm m-a-0">
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('first'))"><i class="material-icons">skip_previous</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('prev'))"><i class="material-icons">navigate_before</i></a></li>
+    											<li>
+    												<div class="col-xs-3">
+    													<input type="text" class="form-control" v-model="$store.state.paging.setStart" @keyup.enter="getKriteria(localLimit, $store.state.paging.setStart - 1)">
+    												</div>
+    											</li>
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('next'))"><i class="material-icons">navigate_next</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('last'))"><i class="material-icons">skip_next</i></a></li>
+												<li><a href="javascript:void(0)" @click="getKriteria(localLimit, ($store.getters.activePage - 1))"><i class="material-icons">refresh</i></a></li>
+    										</ul>
+    									</div>
+    								</td>
+    							</tfoot>
 							</table>
 						</div>
                     </div>
@@ -96,6 +118,8 @@ export default {
 		next()
 	},
 	beforeRouteLeave(to, from, next) {
+		this.$store.state.jmlBaris = 10
+		this.$store.state.localLimit = 10
 		next()
 	},
     data() {
@@ -107,13 +131,20 @@ export default {
                 limit, offset, search
             })
         },
+		paging(param) {
+			return this.$store.state.paging[param]
+		},
         ...mapActions([
             'showPerPage'
-        ])
+		]),
+		...mapMutations([
+			
+		])
     },
     computed: {
         ...mapState([
-            'kriteria', 'localLimit', 'selectedID'
+            'kriteria', 'localLimit', 'selectedID',
+			'showDaftarKriteria'
         ])
     }
 }

@@ -12,10 +12,9 @@ export const Kriteria = new Vuex.Store({
     state: {
         kriteria: [], jmlBaris: 10,
         cariKriteria: '', localLimit: 10,
-        selectedID: [],
+        selectedID: [], showDaftarKriteria: false,
     },
     mutations: {
-
     },
     actions: {
         getKriteria({ state, commit, dispatch }, payload) {
@@ -34,9 +33,35 @@ export const Kriteria = new Vuex.Store({
                     dataType: 'json',
                     success: data => {
                         state.kriteria = data['kriteria']
+                        setTimeout(() => {
+                            state.showDaftarKriteria = true
+                        }, 400)
+                        dispatch('create', {
+                            rows: data['rows'],
+                            start: payload.offset,
+                            linkNum: 4,
+                            activeClass: 'az-active',
+                            linkClass: 'waves-effect'
+                        })
                     }
                 })
             }
-        }
+        },
+        showPerPage({ state, commit, dispatch }) {
+            state.localLimit = parseInt(state.jmlBaris)
+            dispatch('getKriteria', {
+                limit: state.localLimit,
+                offset: 0,
+                search: state.cariKriteria
+            })
+        },  
+        runGetKriteria({ state, dispatch }) {
+            let start = state.paging.offset / state.localLimit
+            dispatch('getKriteria', {
+                limit: state.localLimit,
+                offset: start,
+                search: state.cariKriteria
+            })
+        },   
     }
 })
