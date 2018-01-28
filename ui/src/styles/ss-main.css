@@ -54,6 +54,14 @@
     color: #e6db1a;
 }
 
+.text-bold {
+    font-weight: bold;
+}
+
+.nama-kriteria {
+    min-width: 180px;
+}
+
 @media (max-width: 991px) {
     .ss-fly-alert {
         width: calc(100% - 32px);
