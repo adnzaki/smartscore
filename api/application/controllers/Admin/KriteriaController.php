@@ -10,36 +10,70 @@ class KriteriaController extends SSController
         $this->load->model('KriteriaModel');
     }
 
-    public function getKriteria()
-    {
-        echo json_encode($this->KriteriaModel->getKriteria());
-    }
-
-    public function getPerbandingan($limit, $offset, $token)
+    public function getKriteria($limit, $offset, $token)
     {
         if($this->hasValidToken($token))
         {
-            $kriteria = $this->KriteriaModel->getKriteria($limit, $offset);
-            $data = [];
-            foreach($kriteria as $res)
-            {
-                $data[$res->nama_kriteria] = $this->KriteriaModel->getPerbandingan($res->id_kriteria);
-            }
-
-            $res = [
-                'kriteria' => $data,
+            echo json_encode([
+                'kriteria' => $this->KriteriaModel->getKriteria($limit, $offset),
                 'rows' => $this->KriteriaModel->getKriteriaRows()
-            ];
-    
-            echo json_encode($res);
+            ]);
         }
-        else
+        else 
         {
             $res = [
                 'code'  => 0,
                 'msg'   => lang('unableToGetData')
             ];
+        }
+    }
+
+    public function save($event, $id, $token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            $rules = [
+                [
+                    'field' => 'nama_kriteria',
+                    'label' => 'nama kriteria',
+                    'rules' => 'required|max_length[50]'
+                ],
+            ];
+    
+            $this->form_validation->set_rules($rules);
+            $this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
+            $this->form_validation->set_message('max_length', 'Panjang kolom %s tidak boleh lebih dari %s karakter');
+            $this->form_validation->set_error_delimiters('', '');
+
+            if($this->form_validation->run() == FALSE)
+            {
+                echo json_encode(['nama_kriteria' => form_error('nama_kriteria')]);
+            }
+            else 
+            {
+                if($event === 'insert' && $id === 'null')
+                {
+                    $this->KriteriaModel->insertKriteria();
+                }
+                echo json_encode('success');
+            }            
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
             echo json_encode($res);
+        }
+    }
+
+    public function getLastID($token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            $result = $this->KriteriaModel->getLastID();
+            echo $result[0]->id_kriteria;
         }
     }
 }

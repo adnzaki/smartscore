@@ -1,6 +1,11 @@
 <template>
   <div>
-      <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+  		<!-- insert success alert -->
+        <ssalert :alertClass="'alert-success'" :target="alert.insert" :initMsg="'Sukses!'" :msg="'Kriteria baru berhasil ditambahkan'"></ssalert>
+
+		<!-- update success alert -->
+        <ssalert :alertClass="'alert-success'" :target="alert.update" :initMsg="'Sukses!'" :msg="'Data kriteria berhasil diperbarui'"></ssalert>
+      	<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 			<div class="padding" v-if="showDaftarKriteria">
 				<div class="row">
                     <div class="col-sm-12">
@@ -11,7 +16,7 @@
                             <div class="box-body">
 								<div class="row">
 									<div class="col-sm-6 col-xs-12">
-                                        <button class="btn btn-fw white"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
+                                        <button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 										<button class="btn btn-fw white"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
 									</div>
                                     <div class="col-sm-3 col-xs-12">
@@ -43,18 +48,20 @@
     									</th>
 										<th>ID Kriteria</th>
 										<th>Nama Kriteria</th>
+										<th>Nilai Eigen</th>
 										<th colspan="3" class="text-center">Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(value, key, index) in kriteria" v-bind:key="key">
+									<tr v-for="value in kriteria">
 										<td class="text-center">
-											<label class="md-check"><input type="checkbox" v-model="$store.state.selectedID" :value="value[0].id_kriteria">
+											<label class="md-check"><input type="checkbox" v-model="$store.state.selectedID" :value="value.id_kriteria">
 												<i class="primary"></i>
 											</label>
 										</td>
-										<td>{{ value[0].id_kriteria }}</td>      
-										<td class="nama-kriteria">{{ key }}</td>                                        
+										<td>{{ value.id_kriteria }}</td>      
+										<td class="nama-kriteria">{{ value.nama_kriteria }}</td>   
+										<td>{{ value.eigen_value }}</td>                                     
 										<td class="text-center ss-cursor-pointer"><i class="material-icons">edit</i></td>
 										<td class="text-center ss-cursor-pointer"><i class="material-icons">delete</i></td>
 										<td class="text-center ss-cursor-pointer"><i class="fa fa-th-large"></i></td>
@@ -86,8 +93,9 @@
                     </div>
 				</div>
 			</div>
-      </transition>
-  </div>
+      	</transition>
+	  	<TambahKriteria/>
+  	</div>
 </template>
 
 <script>
@@ -101,6 +109,7 @@ import {
 } from 'vuex'
 
 import { Kriteria } from '../../../scripts/store/Kriteria'
+import TambahKriteria from './TambahKriteria.vue'
 import ssalert from '../../../template/content/alert.vue'
 import { sserror } from '../../../scripts/modules/Shared'
 
@@ -108,6 +117,7 @@ export default {
     name: 'Kriteria',
     store: Kriteria,
     components: {
+		TambahKriteria,
 		sserror,
 		ssalert,
     },
@@ -138,13 +148,13 @@ export default {
             'showPerPage'
 		]),
 		...mapMutations([
-			
+			'showForm'
 		])
     },
     computed: {
         ...mapState([
             'kriteria', 'localLimit', 'selectedID',
-			'showDaftarKriteria'
+			'showDaftarKriteria', 'alert', 'showFormAdd'
         ])
     }
 }
