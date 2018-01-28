@@ -62,7 +62,7 @@
 										<td>{{ value.id_kriteria }}</td>      
 										<td class="nama-kriteria">{{ value.nama_kriteria }}</td>   
 										<td>{{ value.eigen_value }}</td>                                     
-										<td class="text-center ss-cursor-pointer"><i class="material-icons">edit</i></td>
+										<td class="text-center ss-cursor-pointer" @click="editKriteria(value.id_kriteria)"><i class="material-icons">edit</i></td>
 										<td class="text-center ss-cursor-pointer"><i class="material-icons">delete</i></td>
 										<td class="text-center ss-cursor-pointer"><i class="fa fa-th-large"></i></td>
 									</tr>
@@ -95,6 +95,7 @@
 			</div>
       	</transition>
 	  	<TambahKriteria/>
+		<EditKriteria/>
   	</div>
 </template>
 
@@ -110,6 +111,7 @@ import {
 
 import { Kriteria } from '../../../scripts/store/Kriteria'
 import TambahKriteria from './TambahKriteria.vue'
+import EditKriteria from './EditKriteria.vue'
 import ssalert from '../../../template/content/alert.vue'
 import { sserror } from '../../../scripts/modules/Shared'
 
@@ -118,6 +120,7 @@ export default {
     store: Kriteria,
     components: {
 		TambahKriteria,
+		EditKriteria,
 		sserror,
 		ssalert,
     },
@@ -145,7 +148,7 @@ export default {
 			return this.$store.state.paging[param]
 		},
         ...mapActions([
-            'showPerPage'
+            'showPerPage', 'editKriteria'
 		]),
 		...mapMutations([
 			'showForm'

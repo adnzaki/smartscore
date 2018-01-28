@@ -32,6 +32,19 @@ class KriteriaModel extends CI_Model
         ]);
     }
 
+    public function updateKriteria($id)
+    {
+        $this->db->update($this->table, [
+            'nama_kriteria' => $this->input->post('nama_kriteria', true)
+        ], ['id_kriteria' => $id]);
+    }
+
+    public function getDetailKriteria($id)
+    {
+        $query = $this->db->get_where($this->table, ['id_kriteria' => $id])->result();
+        return $query[0];
+    }
+
     public function getPerbandingan($id)
     {
         return $this->db->get_where($this->table['perbandingan'], [

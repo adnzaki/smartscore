@@ -13,7 +13,7 @@ export const Kriteria = new Vuex.Store({
         kriteria: [], jmlBaris: 10,
         cariKriteria: '', localLimit: 10,
         selectedID: [], showDaftarKriteria: false,
-        token: '', newID: '',
+        token: '', newID: '', detailKriteria: null,
         // alert
         alert: {
             insert: false, update: false, delete: false,
@@ -22,7 +22,7 @@ export const Kriteria = new Vuex.Store({
         error: {
             namaKriteria: '',
         },
-        showFormAdd: false,
+        showFormAdd: false, showFormEdit: false,
     },
     mutations: {
         showForm(state, form) {
@@ -116,13 +116,23 @@ export const Kriteria = new Vuex.Store({
                             // selain itu, jika event nya adalah update data siswa,
                             // maka tampilkan kembali form edit siswa dan tampilkan alert
                         } else {
-                            if (payload.closeForm) {
-                                dispatch('closeForm', 'showFormEdit')
-                            }
+                            dispatch('closeForm', 'showFormEdit')
                             commit('showAlert', 'update')
                             state.alert.errorUpdate = false
                         }
                     }
+                }
+            })
+        },
+        editKriteria({ state, commit }, id) {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/KriteriaController/editKriteria/${id}/${state.token}`,
+                type: 'GET',
+                crossDomain: true,
+                dataType: 'json',
+                success: data => {
+                    state.detailKriteria = data
+                    commit('showForm', 'showFormEdit')
                 }
             })
         },

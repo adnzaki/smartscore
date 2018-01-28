@@ -55,8 +55,28 @@ class KriteriaController extends SSController
                 {
                     $this->KriteriaModel->insertKriteria();
                 }
+                elseif($event === 'update')
+                {
+                    $this->KriteriaModel->updateKriteria($id);
+                }
                 echo json_encode('success');
             }            
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
+    }
+
+    public function editKriteria($id, $token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            echo json_encode($this->KriteriaModel->getDetailKriteria($id));
         }
         else 
         {
