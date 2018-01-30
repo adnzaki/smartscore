@@ -4,11 +4,11 @@ class KriteriaModel extends CI_Model
 {
     private $table = 'kriteria';
 
-    public function getKriteria($limit, $offset, $search = '')
+    public function getKriteria($limit, $offset, $search)
     {
         if(! empty($search))
         {
-            $this->db->like($search);
+            $this->db->like('nama_kriteria', $search);
         }
         return $this->db->limit($limit, $offset)->get($this->table)->result();
     }
@@ -43,6 +43,11 @@ class KriteriaModel extends CI_Model
     {
         $query = $this->db->get_where($this->table, ['id_kriteria' => $id])->result();
         return $query[0];
+    }
+
+    public function deleteKriteria($id)
+    {
+        $this->db->delete($this->table, ['id_kriteria' => $id]);
     }
 
     public function getPerbandingan($id)

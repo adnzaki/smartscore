@@ -5,6 +5,10 @@
 
 		<!-- update success alert -->
         <ssalert :alertClass="'alert-success'" :target="alert.update" :initMsg="'Sukses!'" :msg="'Data kriteria berhasil diperbarui'"></ssalert>
+
+		<!-- Unable to delete -->
+		<ssalert :alertClass="'alert-danger'" :target="alert.unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih kriteria yang ingin dihapus.'" />
+
       	<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 			<div class="padding" v-if="showDaftarKriteria">
 				<div class="row">
@@ -17,7 +21,7 @@
 								<div class="row">
 									<div class="col-sm-6 col-xs-12">
                                         <button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
-										<button class="btn btn-fw white"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+										<button class="btn btn-fw white" @click="multipleDeleteKriteria"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
 									</div>
                                     <div class="col-sm-3 col-xs-12">
 										<div class="form-group row">
@@ -63,7 +67,7 @@
 										<td class="nama-kriteria">{{ value.nama_kriteria }}</td>   
 										<td>{{ value.eigen_value }}</td>                                     
 										<td class="text-center ss-cursor-pointer" @click="editKriteria(value.id_kriteria)"><i class="material-icons">edit</i></td>
-										<td class="text-center ss-cursor-pointer"><i class="material-icons">delete</i></td>
+										<td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(value.id_kriteria)"><i class="material-icons">delete</i></td>
 										<td class="text-center ss-cursor-pointer"><i class="fa fa-th-large"></i></td>
 									</tr>
 								</tbody>
@@ -74,16 +78,16 @@
     									</div>
     									<div class="col-sm-6 text-center">
     										<ul class="pagination pagination-sm m-a-0">
-    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('first'))"><i class="material-icons">skip_previous</i></a></li>
-    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('prev'))"><i class="material-icons">navigate_before</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('first'), cariKriteria)"><i class="material-icons">skip_previous</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('prev'), cariKriteria)"><i class="material-icons">navigate_before</i></a></li>
     											<li>
     												<div class="col-xs-3">
-    													<input type="text" class="form-control" v-model="$store.state.paging.setStart" @keyup.enter="getKriteria(localLimit, $store.state.paging.setStart - 1)">
+    													<input type="text" class="form-control" v-model="$store.state.paging.setStart" @keyup.enter="getKriteria(localLimit, $store.state.paging.setStart - 1, cariKriteria)">
     												</div>
     											</li>
-    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('next'))"><i class="material-icons">navigate_next</i></a></li>
-    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('last'))"><i class="material-icons">skip_next</i></a></li>
-												<li><a href="javascript:void(0)" @click="getKriteria(localLimit, ($store.getters.activePage - 1))"><i class="material-icons">refresh</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('next'), cariKriteria)"><i class="material-icons">navigate_next</i></a></li>
+    											<li><a href="javascript:void(0)" @click="getKriteria(localLimit, paging('last'), cariKriteria)"><i class="material-icons">skip_next</i></a></li>
+												<li><a href="javascript:void(0)" @click="getKriteria(localLimit, ($store.getters.activePage - 1), cariKriteria)"><i class="material-icons">refresh</i></a></li>
     										</ul>
     									</div>
     								</td>
@@ -94,6 +98,27 @@
 				</div>
 			</div>
       	</transition>
+		  <!-- Konfirmai hapus data -->
+		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+			<div class="modal ss-modal" data-backdrop="true" v-if="deleteConfirm">
+				<div class="modal-dialog">
+					<div class="col-sm-8 offset-sm-2">
+						<div class="modal-content black lt m-b">
+							<div class="modal-header">
+								<h5 class="modal-title">Konfirmasi</h5>
+							</div>
+							<div class="modal-body">
+								<p>Apakah anda yakin ingin menghapus kriteria yang dipilih?</p>
+							</div>
+							<div class="modal-footer">
+								<button class="btn white" @click="closeDeleteConfirm">Cancel</button>
+								<button class="btn primary" @click="deleteKriteria">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</transition>
 	  	<TambahKriteria/>
 		<EditKriteria/>
   	</div>
@@ -148,16 +173,18 @@ export default {
 			return this.$store.state.paging[param]
 		},
         ...mapActions([
-            'showPerPage', 'editKriteria'
+            'showPerPage', 'editKriteria', 'deleteKriteria',
+			'multipleDeleteKriteria',
 		]),
 		...mapMutations([
-			'showForm'
+			'showForm', 'closeDeleteConfirm', 'showDeleteConfirm',
 		])
     },
     computed: {
         ...mapState([
             'kriteria', 'localLimit', 'selectedID',
-			'showDaftarKriteria', 'alert', 'showFormAdd'
+			'showDaftarKriteria', 'alert', 'showFormAdd',
+			'deleteConfirm', 'cariKriteria',
         ])
     }
 }

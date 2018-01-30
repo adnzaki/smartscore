@@ -14,6 +14,7 @@ export const Kriteria = new Vuex.Store({
         cariKriteria: '', localLimit: 10,
         selectedID: [], showDaftarKriteria: false,
         token: '', newID: '', detailKriteria: null,
+        deleteConfirm: false, allSelected: false,
         // alert
         alert: {
             insert: false, update: false, delete: false,
@@ -25,19 +26,31 @@ export const Kriteria = new Vuex.Store({
         showFormAdd: false, showFormEdit: false,
     },
     mutations: {
-        showForm(state, form) {
+        showForm(state, form) {            
             setTimeout(() => {
                 state[form] = true
-                $.ajax({
-                    url: `${state.shared.apiUrl}admin/KriteriaController/getLastID/${state.token}`,
-                    type: 'get',
-                    dataType: 'json',
-                    success: data => {
-                        state.newID = data + 1
-                    }
-                })
+                if (form === 'showFormAdd') {
+                    $.ajax({
+                        url: `${state.shared.apiUrl}admin/KriteriaController/getLastID/${state.token}`,
+                        type: 'get',
+                        dataType: 'json',
+                        success: data => {
+                            state.newID = data + 1
+                        }
+                    })
+                }
             }, 400)
         },
+        showDeleteConfirm(state, id) {
+            state.selectedID = []
+            state.alert.unableToDelete = false
+            state.selectedID.push(id)
+            state.deleteConfirm = true
+        },
+        closeDeleteConfirm(state) {
+            state.selectedID = []
+            state.deleteConfirm = false
+        }, 
         showAlert(state, type) {
             state.alert[type] = true
             setTimeout(() => {
@@ -135,6 +148,40 @@ export const Kriteria = new Vuex.Store({
                     commit('showForm', 'showFormEdit')
                 }
             })
+        },
+        deleteKriteria({ state, commit, dispatch }) {
+            var idString = state.selectedID.join("-")
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/KriteriaController/deleteKriteria/${idString}/${state.token}`,
+                type: 'POST',
+                success: () => {
+                    state.deleteConfirm = false
+                    state.selectedID = []
+
+                    // lakukan pengecekan total baris dalam satu halaman tabel kriteria
+                    // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
+                    // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
+                    let diff = state.paging.totalRows - state.paging.offset
+                    if (diff === 1 && state.paging.offset > 0) {
+                        state.paging.offset -= state.paging.limit
+                    }
+
+                    dispatch('runGetKriteria')
+                    commit('showAlert', 'delete')
+
+                    if (state.allSelected) {
+                        state.allSelected = false
+                    }
+                }
+            })
+        },
+        multipleDeleteKriteria({ state, commit }) {
+            if (state.selectedID.length < 1) {
+                commit('showAlert', 'unableToDelete')
+            } else {
+                state.alert.unableToDelete = false
+                state.deleteConfirm = true
+            }
         },
         showPerPage({ state, dispatch }) {
             state.localLimit = parseInt(state.jmlBaris)

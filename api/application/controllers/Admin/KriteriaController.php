@@ -10,12 +10,12 @@ class KriteriaController extends SSController
         $this->load->model('KriteriaModel');
     }
 
-    public function getKriteria($limit, $offset, $token)
+    public function getKriteria($limit, $offset, $token = '', $search = '')
     {
         if($this->hasValidToken($token))
         {
             echo json_encode([
-                'kriteria' => $this->KriteriaModel->getKriteria($limit, $offset),
+                'kriteria' => $this->KriteriaModel->getKriteria($limit, $offset, $search),
                 'rows' => $this->KriteriaModel->getKriteriaRows()
             ]);
         }
@@ -77,6 +77,27 @@ class KriteriaController extends SSController
         if($this->hasValidToken($token))
         {
             echo json_encode($this->KriteriaModel->getDetailKriteria($id));
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
+    }
+
+    public function deleteKriteria($id, $token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            $arrID = explode("-", $id);
+            for($i = 0; $i < count($arrID); $i++)
+            {
+                $this->KriteriaModel->deleteKriteria($arrID[$i]);
+            }
+            echo 'success';
         }
         else 
         {
