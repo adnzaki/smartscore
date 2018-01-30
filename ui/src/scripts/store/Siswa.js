@@ -38,8 +38,7 @@ export const Siswa = new Vuex.Store({
         // error messages
         error: {
             nama: '', nis: '', nisn: '', jKelaminSiswa: '', tmptLahir: '', tglLahir: '',
-            pendSblm: '', alamatSiswa: '', namaAyah: '', namaIbu: '', alamatOrtu: '', 
-            telpOrtu: '', namaWali: '', alamatWali: '', telpWali: '', rombel: '',
+            alamatSiswa: '', namaAyah: '', namaIbu: '', rombel: '',
         },
     },
     mutations: { 
@@ -135,15 +134,10 @@ export const Siswa = new Vuex.Store({
             state.error.nisn = ''
             state.error.tmptLahir = ''
             state.error.tglLahir = ''
-            state.error.pendSblm = ''
             state.error.alamatSiswa = ''
             state.error.namaAyah = ''
             state.error.namaIbu = ''
-            state.error.alamatOrtu = ''
-            state.error.telpOrtu = ''
-            state.error.namaWali = ''
-            state.error.alamatWali = ''
-            state.error.telpWali = ''
+            state.error.rombel = ''
         },
     },
     actions: {
@@ -225,15 +219,9 @@ export const Siswa = new Vuex.Store({
                         obj.error.jKelaminSiswa = msg.j_kelamin_siswa
                         obj.error.tmptLahir = msg.tempat_lahir_siswa
                         obj.error.tglLahir = msg.tgl_lahir_siswa
-                        obj.error.pendSblm = msg.pend_sblm
                         obj.error.alamatSiswa = msg.alamat_siswa
                         obj.error.namaAyah = msg.nama_ayah
                         obj.error.namaIbu = msg.nama_ibu
-                        obj.error.alamatOrtu = msg.alamat_ortu
-                        obj.error.telpOrtu = msg.telp_ortu
-                        obj.error.namaWali = msg.nama_wali
-                        obj.error.alamatWali = msg.alamat_wali
-                        obj.error.telpWali = msg.telp_wali
                         obj.error.rombel = msg.id_rombel
                     } else {
                         commit('clearMessages')

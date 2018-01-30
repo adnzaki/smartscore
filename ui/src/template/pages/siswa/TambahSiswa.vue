@@ -62,7 +62,7 @@
                                             <label class="md-check">
                                                 <input type="radio" id="j_laki" checked name="j_kelamin_siswa" value="Laki-laki">
                                                 <i class="green"></i>Laki-laki
-                                            </label>&nbsp &nbsp &nbsp
+                                            </label>&nbsp; &nbsp; &nbsp;
                                             <label class="md-check">
                                                 <input type="radio" id="j_perempuan" name="j_kelamin_siswa" value="Perempuan">
                                                 <i class="green"></i>Perempuan
@@ -92,27 +92,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Agama</label>
-                                        <div class="col-sm-10">
-                                            <div class="form-group">
-                                                <select class="form-control c-select" name="agama_siswa">
-                                                    <option class="text-black" value="Islam">Islam</option>
-                                                    <option class="text-black" value="Katholik">Katholik</option>
-                                                    <option class="text-black" value="Protestan">Kristen Protestan</option>
-                                                    <option class="text-black" value="Hindu">Hindu</option>
-                                                    <option class="text-black" value="Buddha">Buddha</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Pendidikan Sebelumnya</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="pend_sblm" placeholder="Nama Taman Kanak-kanak (Kosongkan jika tidak ada)">
-                                            <sserror :msg="error.pendSblm"></sserror>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Alamat Siswa</label>
                                         <div class="col-sm-10">
                                             <textarea class="form-control" name="alamat_siswa" rows="2"></textarea>
@@ -131,86 +110,6 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="nama_ibu" placeholder="Nama Ibu">
                                             <sserror :msg="error.namaIbu"></sserror>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Pekerjaan Ayah</label>
-                                        <div class="col-sm-10">
-                                            <div class="form-group">
-                                                <select class="form-control c-select" name="job_ayah">
-                                                    <option class="text-black" value="PNS">PNS</option>
-                                                    <option class="text-black" value="Karyawan Swasta">Karyawan Swasta</option>
-                                                    <option class="text-black" value="Wiraswasta">Wiraswasta</option>
-                                                    <option class="text-black" value="Buruh">Buruh</option>
-                                                    <option class="text-black" value="Tidak Bekerja">Tidak Bekerja</option>
-                                                    <option class="text-black" value="Lain-lain">Lain-lain</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Pekerjaan Ibu</label>
-                                        <div class="col-sm-10">
-                                            <div class="form-group">
-                                                <select class="form-control c-select" name="job_ibu">
-                                                    <option class="text-black" value="PNS">PNS</option>
-                                                    <option class="text-black" value="Karyawan Swasta">Karyawan Swasta</option>
-                                                    <option class="text-black" value="Wiraswasta">Wiraswasta</option>
-                                                    <option class="text-black" value="Buruh">Buruh</option>
-                                                    <option class="text-black" value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
-                                                    <option class="text-black" value="Lain-lain">Lain-lain</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Alamat Orang Tua</label>
-                                        <div class="col-sm-10">
-                                            <textarea class="form-control" name="alamat_ortu" rows="2"></textarea>
-                                            <sserror :msg="error.alamatOrtu"></sserror>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">No. Telp. Orang tua</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="telp_ortu" placeholder="No. Telepon" minlength="11" maxlength="13">
-                                            <sserror :msg="error.telpOrtu"></sserror>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Nama Wali</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="nama_wali" placeholder="Nama Wali (Kosongkan jika tidak ada)">
-                                            <sserror :msg="error.namaWali"></sserror>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Alamat Wali</label>
-                                        <div class="col-sm-10">
-                                            <textarea class="form-control" name="alamat_wali" rows="2" placeholder="Alamat Wali (Kosongkan jika tidak ada)"></textarea>
-                                            <sserror :msg="error.alamatWali"></sserror>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">Pekerjaan Wali</label>
-                                        <div class="col-sm-10">
-                                            <div class="form-group">
-                                                <select class="form-control c-select" name="job_wali">
-                                                    <option class="text-black" value="PNS">PNS</option>
-                                                    <option class="text-black" value="Karyawan Swasta">Karyawan Swasta</option>
-                                                    <option class="text-black" value="Wiraswasta">Wiraswasta</option>
-                                                    <option class="text-black" value="Buruh">Buruh</option>
-                                                    <option class="text-black" value="Tidak Bekerja">Tidak Bekerja</option>
-                                                    <option class="text-black" value="Lain-lain">Lain-lain</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 form-control-label">No. Telp. Wali</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="telp_wali" placeholder="No. Telepon Wali (Kosongkan jika tidak ada)" minlength="12" maxlength="15">
-                                            <sserror :msg="error.telpWali"></sserror>
                                         </div>
                                     </div>
                                     <div class="form-group row">

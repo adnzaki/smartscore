@@ -98,11 +98,6 @@ class SiswaController extends SSController
                     'rules' => 'required|exact_length[10]'
                 ],
                 [
-                    'field' => 'pend_sblm',
-                    'label' => 'pendidikan sebelumnya',
-                    'rules' => 'max_length[100]'
-                ],
-                [
                     'field' => 'alamat_siswa',
                     'label' => 'alamat siswa',
                     'rules' => 'required|max_length[250]'
@@ -116,31 +111,6 @@ class SiswaController extends SSController
                     'field' => 'nama_ibu',
                     'label' => 'nama ibu',
                     'rules' => 'required|max_length[100]'
-                ],
-                [
-                    'field' => 'alamat_ortu',
-                    'label' => 'alamat orang tua',
-                    'rules' => 'required|max_length[255]'
-                ],
-                [
-                    'field' => 'telp_ortu',
-                    'label' => 'nomor telepon orang tua',
-                    'rules' => 'required|min_length[11]|max_length[13]|numeric'
-                ],
-                [
-                    'field' => 'nama_wali',
-                    'label' => 'nama wali',
-                    'rules' => 'max_length[50]'
-                ],
-                [
-                    'field' => 'alamat_wali',
-                    'label' => 'alamat wali',
-                    'rules' => 'max_length[255]'
-                ],
-                [
-                    'field' => 'telp_wali',
-                    'label' => 'nomor telepon wali',
-                    'rules' => 'min_length[11]|max_length[15]|numeric'
                 ],
                 [
                     'field' => 'id_rombel',
@@ -167,15 +137,9 @@ class SiswaController extends SSController
                     'j_kelamin_siswa' => form_error('j_kelamin_siswa'),
                     'tempat_lahir_siswa' => form_error('tempat_lahir_siswa'),
                     'tgl_lahir_siswa' => form_error('tgl_lahir_siswa'),
-                    'pend_sblm'     => form_error('pend_sblm'),
                     'alamat_siswa'  => form_error('alamat_siswa'),
                     'nama_ayah'     => form_error('nama_ayah'),
                     'nama_ibu'      => form_error('nama_ibu'),
-                    'alamat_ortu'   => form_error('alamat_ortu'),
-                    'telp_ortu'     => form_error('telp_ortu'),
-                    'nama_wali'     => form_error('nama_wali'),
-                    'alamat_wali'   => form_error('alamat_wali'),
-                    'telp_wali'     => form_error('telp_wali'),
                     'id_rombel'     => form_error('id_rombel'),
                 ];
                 echo json_encode($errors);
@@ -310,49 +274,19 @@ class SiswaController extends SSController
                         'j_kelamin_siswa'       => $worksheet[$i]['F'],
                         'tempat_lahir_siswa'    => $worksheet[$i]['G'],
                         'tgl_lahir_siswa'       => $worksheet[$i]['H'],
-                        'agama_siswa'           => $worksheet[$i]['I'],
-                        'pend_sblm'             => $worksheet[$i]['J'],
                         'alamat_siswa'          => $worksheet[$i]['K'],
                         'nama_ayah'             => $worksheet[$i]['L'],
                         'nama_ibu'              => $worksheet[$i]['M'],
-                        'job_ayah'              => $worksheet[$i]['N'],
-                        'job_ibu'               => $worksheet[$i]['O'],
-                        'alamat_ortu'           => $worksheet[$i]['P'],
-                        'telp_ortu'             => $worksheet[$i]['Q'],
-                        'nama_wali'             => $worksheet[$i]['R'],
-                        'alamat_wali'           => $worksheet[$i]['S'],
-                        'job_wali'              => $worksheet[$i]['T'],
-                        'telp_wali'             => $worksheet[$i]['U'],
                     ];
-    
-                    $agama = [
-                        'Islam', 'Katholik',
-                        'Kristen Protestan',
-                        'Hindu', 'Buddha'
-                    ];
-    
-                    $jobAyah = [
-                        'PNS', 'Karyawan Swasta', 'Wiraswasta',
-                        'Buruh', 'Tidak Bekerja', 'Lain-lain'
-                    ];
-    
-                    $jobIbu = [
-                        'PNS', 'Karyawan Swasta', 'Wiraswasta',
-                        'Buruh', 'Ibu Rumah Tangga', 'Lain-lain'
-                    ];
-    
+        
                     if(
                         preg_match('/[^0-9]/', $data['id_rombel']) OR 
                         preg_match('/[^0-9]/', $data['nis']) === 1 OR preg_match('/[^0-9]/', $data['nisn']) === 1
-                        OR (strlen($data['nis']) !== 9) OR (strlen($data['nisn']) !== 10)
-                        OR isUnique($data['nis'], 'nis', 'siswa') OR isUnique($data['nisn'], 'nisn', 'siswa')
-                        OR empty($data['nis']) OR empty($data['nisn']) OR empty($data['nama_siswa']) OR empty($data['j_kelamin_siswa'])
-                        OR (strlen($data['j_kelamin_siswa']) !== 1) OR empty($data['tempat_lahir_siswa']) OR empty($data['tgl_lahir_siswa'])
-                        OR !isValidDate($data['tgl_lahir_siswa']) OR empty($data['agama_siswa']) OR !in_array($data['agama_siswa'], $agama)
-                        OR empty($data['alamat_siswa']) OR empty($data['nama_ayah']) OR empty($data['nama_ibu'])
-                        OR empty($data['job_ayah']) OR empty($data['job_ibu']) OR !in_array($data['job_ayah'], $jobAyah) OR !in_array($data['job_ibu'], $jobIbu)
-                        OR empty($data['alamat_ortu']) OR empty($data['telp_ortu']) OR preg_match('/[^0-9]/', $data['telp_ortu']) === 1
-                        OR (strlen($data['telp_ortu']) < 11) OR (strlen($data['telp_ortu']) > 13)
+                        OR (strlen($data['nis']) !== 9) OR (strlen($data['nisn']) !== 10) OR isUnique($data['nis'], 'nis', 'siswa')
+                        OR isUnique($data['nisn'], 'nisn', 'siswa') OR empty($data['nis']) OR empty($data['nisn']) 
+                        OR empty($data['nama_siswa']) OR empty($data['j_kelamin_siswa']) OR (strlen($data['j_kelamin_siswa']) !== 1)
+                        OR empty($data['tempat_lahir_siswa']) OR empty($data['tgl_lahir_siswa']) OR !isValidDate($data['tgl_lahir_siswa'])
+                        OR empty($data['alamat_siswa']) OR empty($data['nama_ayah']) OR empty($data['nama_ibu'])                      
                     )
                     {
                         array_push($importFailed, $i);
