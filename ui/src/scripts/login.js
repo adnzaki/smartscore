@@ -18,7 +18,8 @@ new Vue({
         msg: '',
         title: 'Silakan login dengan menggunakan akun Smartscore anda',
         username: '', password: '',
-        tahunAjaran: []
+        tahunAjaran: [], tahunAjaranValue: '',
+        showTahunAjaran: false,
     },
     mounted() {
         $.ajax({
@@ -27,6 +28,7 @@ new Vue({
             dataType: 'json',
             success: data => {
                 this.tahunAjaran = data
+                this.tahunAjaranValue = data[0].tahun_ajaran
             }
         })
     },

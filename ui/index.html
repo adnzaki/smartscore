@@ -51,17 +51,18 @@
           <input type="password" name="password" v-model="password" @keyup.enter="login" class="md-input" required>
           <label>Password</label>
         </div>
-        <div class="md-form-group float-label">
+        <div class="md-form-group float-label" v-if="showTahunAjaran">
           <label>Tahun Ajaran</label>
-          <select class="form-control c-select" name="tahun_ajaran">
+          <select class="form-control c-select" v-model="tahunAjaranValue">
             <option v-for="item in tahunAjaran" v-bind:value="item.tahun_ajaran">
               {{ item.nama_tahun_ajaran }}
             </option>
           </select>
         </div>      
+        <input type="hidden" v-model="tahunAjaranValue" name="tahun_ajaran" />
         <div class="m-b-md">        
           <label class="md-check">
-            <input type="checkbox"><i class="primary"></i> Keep me signed in
+            <input type="checkbox"><i class="primary"></i> Ingatkan saya
           </label>
         </div>
         <strong class="ss-error">{{ msg }}</strong>
@@ -70,8 +71,8 @@
     </div>
 
     <div class="p-v-lg text-center">
-      <div class="m-b"><a ui-sref="access.forgot-password" href="javascript:void(0)" class="text-primary _600">Forgot password?</a></div>
-      <div>Do not have an account? <a ui-sref="access.signup" href="javascript:void(0)" class="text-primary _600">Sign up</a></div>
+      <div class="m-b"><a ui-sref="access.forgot-password" href="javascript:void(0)" class="text-primary _600">Lupa password?</a></div>
+      <div>Belum punya akun? <a ui-sref="access.signup" href="javascript:void(0)" class="text-primary _600">Daftar</a></div>
     </div>
   </div>
 
