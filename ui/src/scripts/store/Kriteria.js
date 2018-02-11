@@ -26,6 +26,19 @@ export const Kriteria = new Vuex.Store({
         showFormAdd: false, showFormEdit: false,
     },
     mutations: {
+        selectAll(state) {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/KriteriaController/getAllKriteriaID/${state.token}`,
+                type: 'get',
+                dataType: 'json',
+                success: data => {
+                    state.selectedID = []
+                    if (state.allSelected) {
+                        state.selectedID = data
+                    }
+                }
+            })
+        },        
         showForm(state, form) {            
             setTimeout(() => {
                 state[form] = true
@@ -35,7 +48,7 @@ export const Kriteria = new Vuex.Store({
                         type: 'get',
                         dataType: 'json',
                         success: data => {
-                            state.newID = data + 1
+                            state.newID = data
                         }
                     })
                 }
@@ -50,6 +63,7 @@ export const Kriteria = new Vuex.Store({
         closeDeleteConfirm(state) {
             state.selectedID = []
             state.deleteConfirm = false
+            state.allSelected = false
         }, 
         showAlert(state, type) {
             state.alert[type] = true

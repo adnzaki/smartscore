@@ -21,10 +21,10 @@ class KriteriaController extends SSController
         }
         else 
         {
-            $res = [
+            echo json_encode([
                 'code'  => 0,
                 'msg'   => lang('unableToGetData')
-            ];
+            ]);
         }
     }
 
@@ -109,12 +109,41 @@ class KriteriaController extends SSController
         }
     }
 
+    public function getAllKriteriaID($token = '')
+    {      
+        if($this->hasValidToken($token))
+        {
+            $data = $this->KriteriaModel->getAllKriteriaID();
+            $formatted = [];
+            foreach($data as $res)
+            {
+                $formatted[] = $res->id_kriteria;
+            }
+            echo json_encode($formatted);
+        }  
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
+    }
+
     public function getLastID($token = '')
     {
         if($this->hasValidToken($token))
         {
             $result = $this->KriteriaModel->getLastID();
-            echo $result[0]->id_kriteria;
+            if($result === 0)
+            {
+                echo json_encode($result + 1);
+            }
+            else 
+            {
+                echo json_encode($result[0]->id_kriteria + 1);
+            }
         }
     }
 }

@@ -46,7 +46,7 @@
 								<thead>
 									<tr>
 										<th class="text-center">
-											<label class="md-check"><input type="checkbox">
+											<label class="md-check"><input type="checkbox" v-model="$store.state.allSelected" @click="selectAll">
 												<i class="primary"></i>
 											</label>
     									</th>
@@ -178,6 +178,7 @@ export default {
 		]),
 		...mapMutations([
 			'showForm', 'closeDeleteConfirm', 'showDeleteConfirm',
+			'selectAll',
 		])
     },
     computed: {
