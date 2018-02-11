@@ -221,9 +221,7 @@ export default {
 		next()
 	},
 	data() {
-		return {
-			cookie: this.$store.state.shared.cookieName
-		}
+		return {}
 	},
 	methods: {
 		...mapMutations([
