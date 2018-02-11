@@ -58,11 +58,11 @@
 					<nav class="scroll nav-light">
 						<ul class="nav" ui-nav>
 							<li class="nav-header hidden-folded">
-								<small class="text-muted">Master</small>
+								<small class="text-muted">Umum</small>
 							</li>
 
 							<router-link to="/dashboard" tag="li">
-								<a href="javascript:void(0)">
+								<a>
 									<span class="nav-icon">
 										<i class="material-icons">home</i>
 									</span>
@@ -71,14 +71,14 @@
 							</router-link>
 
 							<router-link to="/siswa" tag="li">
-								<a href="javascript:void(0)">
+								<a>
 									<span class="nav-icon">
 										<i class="material-icons">people</i>
 									</span>
 									<span class="nav-text">Siswa</span>
 								</a>
 							</router-link>							
-							<router-link to="/guru" tag="li">
+							<!-- <router-link to="/guru" tag="li">
 								<a href="javascript:void(0)">
 									<span class="nav-icon">
 										<i class="material-icons">person</i>
@@ -93,26 +93,65 @@
 									</span>
 									<span class="nav-text">Rombel</span>
 								</a>
-							</router-link>
+							</router-link> -->
 
 							<li class="nav-header hidden-folded">
 								<small class="text-muted">SPK</small>
 							</li>
-							<router-link to="/kriteria" tag="li">
-								<a href="javascript:void(0)">
+							<li>
+								<a>
+									<span class="nav-caret">
+										<i class="fa fa-caret-down"></i>
+									</span>
 									<span class="nav-icon">
-										<i class="material-icons">assignment</i>
+										<i class="material-icons">assignment
+											<span ui-include="'../assets/images/i_2.svg'"></span>
+										</i>
 									</span>
 									<span class="nav-text">Kriteria</span>
 								</a>
-							</router-link>
+								<ul class="nav-sub">
+									<router-link to="/kriteria" tag="li">
+										<a href="javascript:void(0)">
+											<span class="nav-text">Daftar Kriteria</span>
+										</a>
+									</router-link>
+									<router-link to="/kriteria" tag="li">
+										<a href="javascript:void(0)">
+											<span class="nav-text">Perbandingan</span>
+										</a>
+									</router-link>
+								</ul>
+							</li>
 							<li>
-								<a href="javascript:void(0)">
-									<span class="nav-icon">
-										<i class="material-icons">assessment</i>
+								<a>
+									<span class="nav-caret">
+										<i class="fa fa-caret-down"></i>
 									</span>
-									<span class="nav-text">Penilaian</span>
+									<span class="nav-icon">
+										<i class="material-icons">assessment
+											<span ui-include="'../assets/images/i_2.svg'"></span>
+										</i>
+									</span>
+									<span class="nav-text">Alternatif</span>
 								</a>
+								<ul class="nav-sub">
+									<router-link to="/kriteria" tag="li">
+										<a href="javascript:void(0)">
+											<span class="nav-text">Perbandingan Alternatif</span>
+										</a>
+									</router-link>
+									<router-link to="/kriteria" tag="li">
+										<a href="javascript:void(0)">
+											<span class="nav-text">Nilai Eigen</span>
+										</a>
+									</router-link>
+									<router-link to="/kriteria" tag="li">
+										<a href="javascript:void(0)">
+											<span class="nav-text">Prioritas Solusi</span>
+										</a>
+									</router-link>
+								</ul>
 							</li>				
 
 							<!-- Pengaturan -->
