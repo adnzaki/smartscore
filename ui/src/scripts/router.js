@@ -26,8 +26,19 @@ import Siswa from '../template/pages/siswa/Siswa.vue'
 import Rombel from '../template/pages/rombel/Rombel.vue'
 import Guru from '../template/pages/guru/Guru.vue'
 import Kriteria from '../template/pages/kriteria/Kriteria.vue'
+import Multiselect from 'vue-multiselect'
+import ssalert from '../template/content/alert.vue'
 
 Vue.use(VueRouter)
+
+Vue.component('ssalert', ssalert)
+
+Vue.component('sserror', {
+    props: ['msg'],
+    template: '<p class="ss-error">{{ msg }}</p>'
+})
+
+Vue.component('multiselect', Multiselect)
 
 const routes = [
     { path: '/dashboard', component: Dashboard },
