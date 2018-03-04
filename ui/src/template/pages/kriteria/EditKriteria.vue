@@ -45,8 +45,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { Kriteria } from '../../../scripts/store/Kriteria'
-import ssalert from '../../../template/content/alert.vue'
-import { sserror } from '../../../scripts/modules/Shared'
 
 Vue.use(Vuex)
 
@@ -54,8 +52,6 @@ export default {
     name: 'EditKriteria',
     store: Kriteria,
     components: {
-        ssalert,
-        sserror
     },
     data() {
         return {}

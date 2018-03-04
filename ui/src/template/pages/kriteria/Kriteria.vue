@@ -98,7 +98,7 @@
 				</div>
 			</div>
       	</transition>
-		  <!-- Konfirmai hapus data -->
+		<!-- Konfirmai hapus data -->
 		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 			<div class="modal ss-modal" data-backdrop="true" v-if="deleteConfirm">
 				<div class="modal-dialog">
@@ -137,8 +137,6 @@ import {
 import { Kriteria } from '../../../scripts/store/Kriteria'
 import TambahKriteria from './TambahKriteria.vue'
 import EditKriteria from './EditKriteria.vue'
-import ssalert from '../../../template/content/alert.vue'
-import { sserror } from '../../../scripts/modules/Shared'
 
 export default {
     name: 'Kriteria',
@@ -146,8 +144,6 @@ export default {
     components: {
 		TambahKriteria,
 		EditKriteria,
-		sserror,
-		ssalert,
     },
     beforeRouteEnter(to, from, next) {
 		next(vm => vm.getKriteria(10, 0, ''))

@@ -101,8 +101,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { Rombel } from '../../../scripts/store/Rombel'
-import ssalert from '../../../template/content/alert.vue'
-import { sserror } from '../../../scripts/modules/Shared'
 
 Vue.use(Vuex)
 
@@ -110,8 +108,6 @@ export default {
     name: 'EditRombel',
     store: Rombel,
     components: {
-        ssalert,
-        sserror
     },
     data() {
         return {}

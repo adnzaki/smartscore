@@ -141,8 +141,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { Siswa } from '../../../scripts/store/Siswa'
-import ssalert from '../../../template/content/alert.vue'
-import { sserror } from '../../../scripts/modules/Shared'
 
 Vue.use(Vuex)
 
@@ -150,8 +148,6 @@ export default {
     name: 'EditSiswa',
     store: Siswa,
     components: {
-        ssalert,
-        sserror
     },
     data() {
         return {

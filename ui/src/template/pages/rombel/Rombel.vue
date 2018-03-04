@@ -195,8 +195,6 @@ import {
 import { Rombel } from '../../../scripts/store/Rombel'
 import TambahRombel from './TambahRombel.vue'
 import EditRombel from './EditRombel.vue'
-import ssalert from '../../../template/content/alert.vue'
-import { sserror } from '../../../scripts/modules/Shared'
 
 Vue.use(Vuex)
 
@@ -204,8 +202,6 @@ export default {
 	name: 'Rombel',
 	store: Rombel,
 	components: {
-		sserror,
-		ssalert,
 		TambahRombel,
 		EditRombel
 	},

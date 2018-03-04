@@ -15,12 +15,7 @@ import { ssconfig } from '../../../app.config'
 
 Vue.use(Vuex)
 
-const sserror = {
-    props: ['msg'],
-    template: '<p class="ss-error">{{ msg }}</p>'
-}
-
-const shared = {
+export const shared = {
     state: {
         apiUrl: ssconfig.apiUrl,
         loginUrl: ssconfig.loginUrl,
@@ -43,5 +38,3 @@ const shared = {
         
     },
 }
-
-export { sserror, shared }

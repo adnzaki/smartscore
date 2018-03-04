@@ -215,8 +215,6 @@
 	import { Siswa } from '../../../scripts/store/Siswa'
 	import TambahSiswa from './TambahSiswa.vue'
 	import EditSiswa from './EditSiswa.vue'
-	import ssalert from '../../../template/content/alert.vue'
-	import { sserror } from '../../../scripts/modules/Shared'
 
 	Vue.use(Vuex)
 
@@ -224,8 +222,6 @@
 		name: 'Siswa',
 		store: Siswa,
 		components: {
-			sserror,
-			ssalert,
 			TambahSiswa,
 			EditSiswa
 		},
