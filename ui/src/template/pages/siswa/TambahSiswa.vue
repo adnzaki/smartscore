@@ -125,9 +125,12 @@
                                     </div>
 
                                     <div class="form-group row m-t-md">
-                                        <div class="offset-sm-8 col-sm-4 text-right">
+                                        <div class="offset-sm-4 col-sm-8 text-right">
                                             <a ui-scroll-to="content">
-                                                <button type="button" class="btn btn-fw success" @click="save">Simpan</button>
+                                                <button type="button" class="btn btn-fw success" @click="save(false)">Simpan</button>
+                                            </a>
+                                            <a>
+                                                <button type="button" class="btn btn-fw success" @click="save(true)">Simpan dan Tutup</button>
                                             </a>
                                             <button type="button" class="btn btn-fw info" @click="closeForm('showFormAdd')">Tutup</button>
                                         </div>
@@ -162,10 +165,11 @@ export default {
         ...mapActions([
             'closeForm', 'editSiswa'
         ]),
-        save() {
+        save(closeForm) {
             this.$store.dispatch('insertSiswa', {
                 event: 'insert',
-                id: 'null'
+                id: 'null',
+                closeForm: closeForm,
             })
         }
     },

@@ -32,7 +32,7 @@ export const Siswa = new Vuex.Store({
         token: '',
 
         // alert
-        insertAlert: false, updateAlert: false, deleteAlert: false,
+        insertAlert: false, updateAlert: false, deleteAlert: false, insertAndClose: false,
         errorInsert: false, errorUpdate: false, unableToDelete: false,
 
         // error messages
@@ -230,16 +230,26 @@ export const Siswa = new Vuex.Store({
                         // maka bersihkan form, lalu tampilkan alert dan ambil id_siswa
                         if (payload.event === 'insert') {
                             form.trigger("reset")
-                            obj.insertAlert = true
                             obj.errorInsert = false
-                            obj.idSiswa = msg['id'][0].id_siswa
+                            if(payload.closeForm) {
+                                dispatch('closeForm', 'showFormAdd')
+                                commit('showAlert', 'insertAndClose')
+                            } else {
+                                //commit('showAlert', 'insert')
+                                obj.insertAlert = true
+                                obj.idSiswa = msg['id'][0].id_siswa                       
+                            }
 
                             // selain itu, jika event nya adalah update data siswa,
                             // maka tampilkan kembali form edit siswa dan tampilkan alert
                         } else {
-                            dispatch('editSiswa', payload.id)
-                            commit('showAlert', 'updateAlert')
                             obj.errorUpdate = false
+                            if (payload.closeForm) {
+                                dispatch('closeForm', 'showFormEdit')
+                            } else {
+                                dispatch('editSiswa', payload.id)
+                            }                            
+                            commit('showAlert', 'updateAlert')
                         }
                     }
                 }

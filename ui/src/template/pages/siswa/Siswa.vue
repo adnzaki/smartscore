@@ -4,8 +4,13 @@
 		<ssalert :alertClass="'alert-success'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil dihapus.'" />
 
 		<!-- Unable to delete -->
-		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'"
-		/>
+		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'" />
+
+		<!-- Success alert -->
+        <ssalert :alertClass="'alert-success'" :target="updateAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil diperbarui'"></ssalert>
+
+		<!-- Success alert -->
+        <ssalert :alertClass="'alert-success'" :target="insertAndClose" :initMsg="'Sukses!'" :msg="'Data siswa berhasil ditambahkan'"></ssalert>
 
 		<!-- TABEL DAFTAR SISWA -->
 		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -271,7 +276,7 @@
 				'deleteAlert', 'unableToDelete', 'showDaftarSiswa',
 				'deleteConfirm', 'importDialog', 'importProgress',
 				'jmlBaris', 'cariSiswa', 'daftarSiswa', 'selectedID',
-				'localLimit', 'loadingText',
+				'localLimit', 'loadingText', 'updateAlert', 'insertAndClose'
 			]),
 		}
 	}

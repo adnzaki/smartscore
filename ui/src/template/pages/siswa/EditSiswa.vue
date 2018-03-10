@@ -1,7 +1,5 @@
 <template>  
     <div>
-        <!-- Success alert -->
-        <ssalert :alertClass="'alert-success'" :target="updateAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil diperbarui'"></ssalert>
 
         <!-- Error alert -->
         <ssalert :alertClass="'alert-danger'" :target="errorUpdate" :initMsg="'Error!'" :msg="'Gagal memperbarui data siswa, silakan isi form dengan benar'"></ssalert>
@@ -119,9 +117,12 @@
                                     </div>
                                     <!-- ################### END OF FORM ######################## -->
                                     <div class="form-group row m-t-md">
-                                        <div class="offset-sm-8 col-sm-4 text-right">
+                                        <div class="offset-sm-4 col-sm-8 text-right">
                                             <a>
-                                                <button type="button" class="btn btn-fw success" @click="save">Simpan</button>
+                                                <button type="button" class="btn btn-fw success" @click="save(false)">Simpan</button>
+                                            </a>
+                                            <a>
+                                                <button type="button" class="btn btn-fw success" @click="save(true)">Simpan dan Tutup</button>
                                             </a>
                                             <button type="button" class="btn btn-fw info" @click="closeForm('showFormEdit')">Tutup</button>
                                         </div>
@@ -158,10 +159,11 @@ export default {
         ...mapActions([
             'closeForm'
         ]),
-        save() {
+        save(closeForm) {
             this.$store.dispatch('insertSiswa', {
                 event: 'update',
-                id: this.detailSiswa.id_siswa
+                id: this.detailSiswa.id_siswa,
+                closeForm: closeForm
             })
         }
     },
