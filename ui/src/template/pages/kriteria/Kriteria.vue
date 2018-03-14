@@ -38,7 +38,7 @@
 										</div>
 									</div>
                                     <div class="col-sm-3 col-xs-12">
-										<input type="text" class="form-control" v-model="$store.state.cariKriteria" @keyup.enter="getKriteria(localLimit, 0, $store.state.cariKriteria)" placeholder="Cari siswa (ketik dan enter)">
+										<input type="text" class="form-control" v-model="$store.state.cariKriteria" @keyup.enter="getKriteria(localLimit, 0, $store.state.cariKriteria)" placeholder="Cari kriteria (ketik dan enter)">
 									</div>
 								</div>
                             </div>
@@ -53,11 +53,12 @@
 										<th>ID Kriteria</th>
 										<th>Nama Kriteria</th>
 										<th>Nilai Eigen</th>
+										<th>Persentase</th>
 										<th colspan="3" class="text-center">Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="value in kriteria">
+									<tr v-for="(value, index) in kriteria">
 										<td class="text-center">
 											<label class="md-check"><input type="checkbox" v-model="$store.state.selectedID" :value="value.id_kriteria">
 												<i class="primary"></i>
@@ -65,10 +66,18 @@
 										</td>
 										<td>{{ value.id_kriteria }}</td>      
 										<td class="nama-kriteria">{{ value.nama_kriteria }}</td>   
-										<td>{{ value.eigen_value }}</td>                                     
+										<td>{{ value.eigen_value }}</td>
+										<td>{{ persentase[index] }}%</td>
 										<td class="text-center ss-cursor-pointer" @click="editKriteria(value.id_kriteria)"><i class="material-icons">edit</i></td>
 										<td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(value.id_kriteria)"><i class="material-icons">delete</i></td>
-										<td class="text-center ss-cursor-pointer"><i class="fa fa-th-large"></i></td>
+										<td class="text-center ss-cursor-pointer">
+											<router-link :to="'/kriteria/input-perbandingan/'+ value.id_kriteria" tag="a"><i class="fa fa-th-large"></i></router-link>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3" class="text-center"><strong>JUMLAH</strong></td>
+										<td><strong>{{ jumlahEigen }}</strong></td>
+										<td><strong>{{ jumlahPersen }}%</strong></td>
 									</tr>
 								</tbody>
 								<tfoot>
@@ -179,7 +188,8 @@ export default {
     },
     computed: {
         ...mapState([
-            'kriteria', 'localLimit', 'selectedID',
+            'kriteria', 'persentase', 'jumlahEigen', 'jumlahPersen', 
+			'localLimit', 'selectedID',
 			'showDaftarKriteria', 'alert', 'showFormAdd',
 			'deleteConfirm', 'cariKriteria',
         ])

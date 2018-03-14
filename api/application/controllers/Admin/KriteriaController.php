@@ -14,8 +14,20 @@ class KriteriaController extends SSController
     {
         if($this->hasValidToken($token))
         {
+            $kriteria = $this->KriteriaModel->getKriteria($limit, $offset, $search);
+            $persentase = [];
+            $eigenArray = [];
+            foreach($kriteria as $res)
+            {
+                $hasil = $res->eigen_value * 100;
+                $eigenArray[] = $res->eigen_value;
+                $persentase[] = number_format($hasil, 1);
+            }
             echo json_encode([
-                'kriteria' => $this->KriteriaModel->getKriteria($limit, $offset, $search),
+                'kriteria' => $kriteria,
+                'persentase' => $persentase,
+                'jumlahEigen' => number_format(array_sum($eigenArray), 3, '.', ','),
+                'jumlahPersen' => number_format(array_sum($persentase), 1),
                 'rows' => $this->KriteriaModel->getKriteriaRows()
             ]);
         }

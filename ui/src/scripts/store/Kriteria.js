@@ -10,7 +10,8 @@ export const Kriteria = new Vuex.Store({
         paging, shared
     },
     state: {
-        kriteria: [], jmlBaris: 10,
+        kriteria: [], jmlBaris: 10, persentase: [],
+        jumlahEigen: 0, jumlahPersen: 0,
         cariKriteria: '', localLimit: 10,
         selectedID: [], showDaftarKriteria: false,
         token: '', newID: '', detailKriteria: null,
@@ -92,6 +93,9 @@ export const Kriteria = new Vuex.Store({
                     dataType: 'json',
                     success: data => {
                         state.kriteria = data['kriteria']
+                        state.persentase = data['persentase']
+                        state.jumlahEigen = data['jumlahEigen']
+                        state.jumlahPersen = data['jumlahPersen']
                         setTimeout(() => {
                             state.showDaftarKriteria = true
                         }, 400)
