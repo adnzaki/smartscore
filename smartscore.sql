@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23 Jan 2018 pada 16.04
+-- Generation Time: 14 Mar 2018 pada 20.42
 -- Versi Server: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -43,6 +43,33 @@ INSERT INTO `agama` (`id_agama`, `nama_agama`) VALUES
 (3, 'Kristen Protestan'),
 (4, 'Hindu'),
 (5, 'Budha');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `daftar_alternatif`
+--
+
+CREATE TABLE `daftar_alternatif` (
+  `id_daftar_alternatif` int(11) NOT NULL,
+  `id_siswa` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `daftar_alternatif`
+--
+
+INSERT INTO `daftar_alternatif` (`id_daftar_alternatif`, `id_siswa`) VALUES
+(1, 318),
+(3, 320),
+(4, 321),
+(10, 322),
+(6, 323),
+(7, 325),
+(8, 326),
+(9, 328),
+(2, 343),
+(5, 344);
 
 -- --------------------------------------------------------
 
@@ -107,11 +134,11 @@ CREATE TABLE `kriteria` (
 --
 
 INSERT INTO `kriteria` (`id_kriteria`, `nama_kriteria`, `eigen_value`) VALUES
-(1, 'Rapor', '0.000'),
-(2, 'Absensi', '0.000'),
-(3, 'Keterampilan', '0.000'),
-(4, 'Sikap Sosial', '0.000'),
-(5, 'Sikap Spiritual', '0.000');
+(1, 'Rapor', '0.288'),
+(2, 'Absensi', '0.188'),
+(3, 'Keterampilan', '0.074'),
+(4, 'Sikap Sosial', '0.225'),
+(5, 'Sikap Spiritual', '0.225');
 
 -- --------------------------------------------------------
 
@@ -144,8 +171,115 @@ CREATE TABLE `perbandingan_alternatif` (
   `id_alternatif` int(11) NOT NULL,
   `id_siswa` int(11) DEFAULT NULL,
   `pembanding` int(11) DEFAULT NULL,
+  `id_kriteria` int(11) DEFAULT NULL,
   `nilai_perbandingan` decimal(4,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `perbandingan_alternatif`
+--
+
+INSERT INTO `perbandingan_alternatif` (`id_alternatif`, `id_siswa`, `pembanding`, `id_kriteria`, `nilai_perbandingan`) VALUES
+(1, 318, 318, 1, '1.00'),
+(2, 318, 343, 1, '3.00'),
+(3, 318, 320, 1, '3.00'),
+(4, 318, 321, 1, '5.00'),
+(5, 318, 344, 1, '0.33'),
+(6, 318, 323, 1, '1.00'),
+(7, 318, 325, 1, '0.33'),
+(8, 318, 326, 1, '3.00'),
+(9, 318, 328, 1, '1.00'),
+(10, 318, 322, 1, '3.00'),
+(11, 343, 318, 1, '0.33'),
+(12, 343, 343, 1, '1.00'),
+(13, 343, 320, 1, '2.00'),
+(14, 343, 321, 1, '3.00'),
+(15, 343, 344, 1, '0.20'),
+(16, 343, 323, 1, '0.33'),
+(17, 343, 325, 1, '0.20'),
+(18, 343, 326, 1, '0.50'),
+(19, 343, 328, 1, '0.33'),
+(20, 343, 322, 1, '1.00'),
+(21, 320, 318, 1, '0.33'),
+(22, 320, 343, 1, '0.50'),
+(23, 320, 320, 1, '2.00'),
+(24, 320, 321, 1, '0.25'),
+(25, 320, 344, 1, '0.33'),
+(26, 320, 323, 1, '0.33'),
+(27, 320, 325, 1, '0.20'),
+(28, 320, 326, 1, '1.00'),
+(29, 320, 328, 1, '1.00'),
+(30, 320, 322, 1, '0.50'),
+(31, 321, 318, 1, '0.20'),
+(32, 321, 343, 1, '0.33'),
+(33, 321, 320, 1, '0.50'),
+(34, 321, 321, 1, '1.00'),
+(35, 321, 344, 1, '0.20'),
+(36, 321, 323, 1, '0.33'),
+(37, 321, 325, 1, '0.20'),
+(38, 321, 326, 1, '1.00'),
+(39, 321, 328, 1, '0.50'),
+(40, 321, 322, 1, '3.00'),
+(41, 344, 318, 1, '3.00'),
+(42, 344, 343, 1, '5.00'),
+(43, 344, 320, 1, '4.00'),
+(44, 344, 321, 1, '5.00'),
+(45, 344, 344, 1, '1.00'),
+(46, 344, 323, 1, '1.00'),
+(47, 344, 325, 1, '1.00'),
+(48, 344, 326, 1, '3.00'),
+(49, 344, 328, 1, '3.00'),
+(50, 344, 322, 1, '7.00'),
+(51, 323, 318, 1, '1.00'),
+(52, 323, 343, 1, '3.00'),
+(53, 323, 320, 1, '3.00'),
+(54, 323, 321, 1, '3.00'),
+(55, 323, 344, 1, '1.00'),
+(56, 323, 323, 1, '1.00'),
+(57, 323, 325, 1, '0.33'),
+(58, 323, 326, 1, '3.00'),
+(59, 323, 328, 1, '3.00'),
+(60, 323, 322, 1, '3.00'),
+(61, 325, 318, 1, '3.00'),
+(62, 325, 343, 1, '5.00'),
+(63, 325, 320, 1, '5.00'),
+(64, 325, 321, 1, '5.00'),
+(65, 325, 344, 1, '1.00'),
+(66, 325, 323, 1, '3.00'),
+(67, 325, 325, 1, '1.00'),
+(68, 325, 326, 1, '3.00'),
+(69, 325, 328, 1, '4.00'),
+(70, 325, 322, 1, '7.00'),
+(71, 326, 318, 1, '3.00'),
+(72, 326, 343, 1, '2.00'),
+(73, 326, 320, 1, '1.00'),
+(74, 326, 321, 1, '1.00'),
+(75, 326, 344, 1, '0.33'),
+(76, 326, 323, 1, '0.33'),
+(77, 326, 325, 1, '0.33'),
+(78, 326, 326, 1, '1.00'),
+(79, 326, 328, 1, '1.00'),
+(80, 326, 322, 1, '3.00'),
+(81, 328, 318, 1, '1.00'),
+(82, 328, 343, 1, '3.00'),
+(83, 328, 320, 1, '1.00'),
+(84, 328, 321, 1, '2.00'),
+(85, 328, 344, 1, '0.33'),
+(86, 328, 323, 1, '0.33'),
+(87, 328, 325, 1, '0.25'),
+(88, 328, 326, 1, '1.00'),
+(89, 328, 328, 1, '1.00'),
+(90, 328, 322, 1, '3.00'),
+(91, 322, 318, 1, '0.33'),
+(92, 322, 343, 1, '3.00'),
+(93, 322, 320, 1, '2.00'),
+(94, 322, 321, 1, '0.33'),
+(95, 322, 344, 1, '0.14'),
+(96, 322, 323, 1, '0.33'),
+(97, 322, 325, 1, '0.14'),
+(98, 322, 326, 1, '0.33'),
+(99, 322, 328, 1, '0.33'),
+(100, 322, 322, 1, '1.00');
 
 -- --------------------------------------------------------
 
@@ -165,31 +299,31 @@ CREATE TABLE `perbandingan_kriteria` (
 --
 
 INSERT INTO `perbandingan_kriteria` (`id_perbandingan`, `id_kriteria`, `pembanding`, `nilai_perbandingan`) VALUES
-(1, 1, 1, '1.00'),
-(2, 1, 2, '3.00'),
-(3, 1, 3, '3.00'),
-(4, 1, 4, '1.00'),
-(5, 1, 5, '1.00'),
-(6, 2, 1, '0.33'),
-(7, 2, 2, '1.00'),
-(8, 2, 3, '3.00'),
-(9, 2, 4, '1.00'),
-(10, 2, 5, '1.00'),
-(11, 3, 1, '0.33'),
-(12, 3, 2, '0.33'),
-(13, 3, 3, '1.00'),
-(14, 3, 4, '0.33'),
-(15, 3, 5, '0.33'),
-(16, 4, 1, '1.00'),
-(17, 4, 2, '1.00'),
-(18, 4, 3, '3.00'),
-(19, 4, 4, '1.00'),
-(20, 4, 5, '1.00'),
-(21, 5, 1, '1.00'),
-(22, 5, 2, '1.00'),
-(23, 5, 3, '3.00'),
-(24, 5, 4, '1.00'),
-(25, 5, 5, '1.00');
+(119, 1, 1, '1.00'),
+(120, 1, 2, '3.00'),
+(121, 2, 1, '0.33'),
+(122, 2, 2, '1.00'),
+(123, 1, 3, '3.00'),
+(124, 2, 3, '3.00'),
+(125, 3, 1, '0.33'),
+(126, 3, 2, '0.33'),
+(127, 3, 3, '1.00'),
+(128, 1, 4, '1.00'),
+(129, 2, 4, '1.00'),
+(130, 3, 4, '0.33'),
+(131, 4, 1, '1.00'),
+(132, 4, 2, '1.00'),
+(133, 4, 3, '3.00'),
+(134, 4, 4, '1.00'),
+(135, 1, 5, '1.00'),
+(136, 2, 5, '1.00'),
+(137, 3, 5, '0.33'),
+(138, 4, 5, '1.00'),
+(139, 5, 1, '1.00'),
+(140, 5, 2, '1.00'),
+(141, 5, 3, '3.00'),
+(142, 5, 4, '1.00'),
+(143, 5, 5, '1.00');
 
 -- --------------------------------------------------------
 
@@ -223,10 +357,8 @@ CREATE TABLE `rombel` (
 --
 
 INSERT INTO `rombel` (`id_rombel`, `nama_rombel`, `tingkat`, `paralel`, `id_guru`) VALUES
-(1, 'Kelas 1A', 1, 'A', 2),
-(2, 'Kelas 3B', 3, 'B', 1),
-(3, 'Kelas 2C', 2, 'C', 2),
-(4, 'Kelas 4B', 4, 'B', 3);
+(6, 'Kelas 5A', 5, 'A', 1),
+(8, 'Kelas 5B', 5, 'B', 2);
 
 -- --------------------------------------------------------
 
@@ -242,19 +374,9 @@ CREATE TABLE `siswa` (
   `j_kelamin_siswa` char(1) DEFAULT NULL,
   `tempat_lahir_siswa` varchar(100) DEFAULT NULL,
   `tgl_lahir_siswa` date DEFAULT NULL,
-  `agama_siswa` varchar(50) DEFAULT NULL,
-  `pend_sblm` varchar(100) DEFAULT NULL,
   `alamat_siswa` varchar(250) DEFAULT NULL,
   `nama_ayah` varchar(100) DEFAULT NULL,
   `nama_ibu` varchar(100) DEFAULT NULL,
-  `job_ayah` varchar(50) DEFAULT NULL,
-  `job_ibu` varchar(50) DEFAULT NULL,
-  `alamat_ortu` varchar(255) DEFAULT NULL,
-  `telp_ortu` varchar(15) DEFAULT NULL,
-  `nama_wali` varchar(50) DEFAULT NULL,
-  `alamat_wali` varchar(255) DEFAULT NULL,
-  `job_wali` varchar(50) DEFAULT NULL,
-  `telp_wali` varchar(15) DEFAULT NULL,
   `id_rombel` int(11) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -263,29 +385,17 @@ CREATE TABLE `siswa` (
 -- Dumping data untuk tabel `siswa`
 --
 
-INSERT INTO `siswa` (`id_siswa`, `nis`, `nisn`, `nama_siswa`, `j_kelamin_siswa`, `tempat_lahir_siswa`, `tgl_lahir_siswa`, `agama_siswa`, `pend_sblm`, `alamat_siswa`, `nama_ayah`, `nama_ibu`, `job_ayah`, `job_ibu`, `alamat_ortu`, `telp_ortu`, `nama_wali`, `alamat_wali`, `job_wali`, `telp_wali`, `id_rombel`, `status`) VALUES
-(296, '518131350', '6153135813', 'Arvindha Pramudya', 'L', 'Jakarta', '2004-12-20', 'Islam', NULL, 'Jl.Taman Bekasi Asri No.35', 'Iswidiyanto', 'Hernawati', 'PNS', 'Wiraswasta', 'SDF', '12345678912', NULL, NULL, NULL, NULL, 1, 'aktif'),
-(297, '518131351', '3581381463', 'Carissa Astrid Alissya', 'P', 'Ciamis', '1906-01-12', 'Islam', NULL, 'Jl.Pariwisata 2 No.12A', 'Asep Adang Rustiawan', 'Elis Faridah', 'PNS', 'PNS', 'SAD', '12345678912', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(298, '248218413', '3513814381', 'Fabian Noval Putra', 'L', 'Bekasi', '2004-02-15', 'Islam', NULL, 'Jl.Borobudur Blok 6 No.11', 'Tony Hamidi', 'Sri Mulyati', 'PNS', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 3, 'aktif'),
-(299, '248218414', '3446247299', 'Fajar', 'L', 'Bekasi', '2004-08-04', 'Islam', NULL, 'Jl. Bambu Kuning No. 162', 'parano', 'Asiah', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 1, 'aktif'),
-(300, '248218415', '3378680217', 'Faris Maulana Raka Utomo', 'L', 'Bekasi', '2004-05-04', 'Islam', NULL, 'Jl.Carita C No.199 Blok VII', 'Yogie Muliantoni R.', 'Dini Gema Juniarsih', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(301, '248218416', '3311113135', 'Fitria Hayati Solichin', 'P', 'Bekasi', '2005-11-13', 'Islam', NULL, 'Jl. Haji Salam II No. 08', 'Solichin', 'Andriyani Milaningsih', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 3, 'aktif'),
-(302, '248218417', '3243546053', 'Gilas Gemma Barratirani', 'L', 'Karanganyar', '2004-12-18', 'Islam', NULL, 'Jl.Kinan No.3 Kp.Sepatan', 'Arif Widodo', 'Wahyu Tri Susilowati', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 1, 'aktif'),
-(303, '248218418', '3175978971', 'Hania Ayu Karin', 'P', 'Bekasi', '2005-06-28', 'Islam', NULL, 'Pengasinan Jl.Gapo Gg.Botton', 'Burhanudin', 'Marnia', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(304, '248218419', '3108411889', 'Hendra Khumar', 'L', 'Pamekasan', '2003-02-02', 'Islam', NULL, 'Jl. Binacipta Kav. Binamarga', 'Fardan Ihsanuddin', 'Bahriyah', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 3, 'aktif'),
-(305, '248218420', '3040844807', 'Ikhwan Arya Kusuma', 'L', 'Bekasi', '2005-08-11', 'Islam', NULL, 'Jl.Masjid Al Hidayah Gg.H.Salam I', 'Joko Prayitno', 'Rubiati', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 1, 'aktif'),
-(306, '248218421', '2973277725', 'Jihan Hanifah Wal Hamidah', 'P', 'Bekasi', '2005-02-15', 'Islam', NULL, 'Jl. Pasir Putih H No. 207', 'Erry Prabowo', 'Eti Marliyana', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(307, '248218424', '2770576479', 'Kevin Albimo Suwastono', 'L', 'Kota Bekasi', '2005-11-22', 'Islam', NULL, 'Jl.Kintamani I No.80', 'Suwastono', 'Septi Amelia', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(308, '248218425', '2703009397', 'Laurensia Monika Dio Nathania', 'P', 'Bekasi', '2006-01-12', 'Katholik', NULL, 'Taman Bekasi Asri Blok B 5', 'Didik Dwi Budi Utomo', 'Okatavianna Setyorini', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 3, 'aktif'),
-(309, '248218426', '2635442315', 'M. Dias Aryangga', 'L', 'Bekasi', '2005-07-08', 'Islam', NULL, 'Kp.Pengasinan', 'Subaryo', 'Fitri Komalasari', 'Wiraswasta', 'PNS', 'dsafs', '12345678912', NULL, NULL, NULL, NULL, 1, 'aktif'),
-(310, '248218427', '2567875233', 'Muhamad Ramsey Akbar', 'L', 'Bekasi', '2005-02-01', 'Islam', NULL, 'Gg. Nyamuk No. 41', 'Beny Hamidi', 'Ovi Nofita', 'Wiraswasta', 'PNS', 'dsafs', '12345678913', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(311, '248218428', '2500308151', 'Mutia Nur Khoerani', 'P', 'Bekasi', '2005-05-28', 'Islam', NULL, 'Jl.Bambu Kuning', 'Supi Irawan', 'Sumiati', 'Wiraswasta', 'PNS', 'dsafs', '12345678914', NULL, NULL, NULL, NULL, 3, 'aktif'),
-(312, '248218429', '2432741069', 'Nadya Wulandari', 'P', 'Bekasi', '2005-04-05', 'Islam', NULL, 'Jl. Kintamani', 'Zaidun Ubid', 'Aznawati', 'Wiraswasta', 'PNS', 'dsafs', '12345678915', NULL, NULL, NULL, NULL, 1, 'aktif'),
-(313, '248218430', '2365173987', 'Najwa Alia', 'P', 'Semarang', '2005-04-22', 'Islam', NULL, 'Jl.Telaga Sarangan G No.167', 'Mochamad Ali', 'Tumini', 'Wiraswasta', 'PNS', 'dsafs', '12345678916', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(314, '248218431', '2297606905', 'Nur Fitri', 'P', 'Kab. Cirebon', '2004-11-01', 'Islam', NULL, 'Jl.Carita', 'Muhtarun', 'Yayah Juhariyah', 'Wiraswasta', 'PNS', 'dsafs', '12345678917', NULL, NULL, NULL, NULL, 3, 'aktif'),
-(315, '248218432', '2230039823', 'Puan Hasanah Marwah', 'P', 'Jakarta', '2005-03-15', 'Islam', NULL, 'Jl.pangandaran', 'Harun Al Rasyid', 'Susanti', 'Wiraswasta', 'PNS', 'dsafs', '12345678918', NULL, NULL, NULL, NULL, 1, 'aktif'),
-(316, '248218433', '2162472741', 'Raflyano Fitransyah', 'L', 'Bogor', '2004-11-12', 'Islam', NULL, 'Jl.Bina Cipta Kav.Bina Marga Blok H No.22A', 'RD. Indra Sampoerna', 'Yunia Nur Ismirat', 'Wiraswasta', 'PNS', 'dsafs', '12345678919', NULL, NULL, NULL, NULL, 2, 'aktif'),
-(317, '248218434', '2094905659', 'Rama Alviansha', 'L', 'Kota Bekasi', '2005-10-05', 'Islam', NULL, 'Jl.Telaga Sarangan E No.231', 'A. Sofyan Syah', 'Santi', 'Wiraswasta', 'PNS', 'dsafs', '12345678920', NULL, NULL, NULL, NULL, 3, 'aktif');
+INSERT INTO `siswa` (`id_siswa`, `nis`, `nisn`, `nama_siswa`, `j_kelamin_siswa`, `tempat_lahir_siswa`, `tgl_lahir_siswa`, `alamat_siswa`, `nama_ayah`, `nama_ibu`, `id_rombel`, `status`) VALUES
+(318, '098209238', '0928301481', 'Al Azza Herfa Akbar', 'L', 'Jakarta', '2006-05-06', 'Jl. jalan', 'heheh', 'hehehe', 6, 'aktif'),
+(320, '518131351', '3581381463', 'Desi Asca Safitri', 'P', 'Ciamis', '1906-01-12', 'Jl.Pariwisata 2 No.12A', 'Asep Adang Rustiawan', 'Elis Faridah', 8, 'aktif'),
+(321, '248218413', '3513814381', 'Dimaz Aryo Wicaksono', 'L', 'Bekasi', '2004-02-15', 'Jl.Borobudur Blok 6 No.11', 'Tony Hamidi', 'Sri Mulyati', 6, 'aktif'),
+(322, '248218414', '3446247299', 'Tsalisa Laila Hazna ', 'L', 'Bekasi', '2004-08-04', 'Jl. Bambu Kuning No. 162', 'parano', 'Asiah', 8, 'aktif'),
+(323, '248218415', '3378680217', 'Mahesa Arya Saputra', 'L', 'Bekasi', '2004-05-04', 'Jl.Carita C No.199 Blok VII', 'Yogie Muliantoni R.', 'Dini Gema Juniarsih', 6, 'aktif'),
+(325, '248218417', '3243546053', 'Nabil Caesar Ramadhan', 'L', 'Karanganyar', '2004-12-18', 'Jl.Kinan No.3 Kp.Sepatan', 'Arif Widodo', 'Wahyu Tri Susilowati', 6, 'aktif'),
+(326, '248218418', '3175978971', 'Nova Pratama ', 'P', 'Bekasi', '2005-06-28', 'Pengasinan Jl.Gapo Gg.Botton', 'Burhanudin', 'Marnia', 8, 'aktif'),
+(328, '248218420', '3040844807', 'Shofa Pritama ', 'L', 'Bekasi', '2005-08-11', 'Jl.Masjid Al Hidayah Gg.H.Salam I', 'Joko Prayitno', 'Rubiati', 8, 'aktif'),
+(343, '092384023', '1209830192', 'Annisarizqa Asward', 'P', 'Cirebon', '1997-04-01', 'Jl. Kamu Masih panjang neng', 'Suradiman', 'MKLS', 6, 'aktif'),
+(344, '390345908', '2903280948', 'Imam Al Gazali', 'L', 'Jakarta', '1998-06-06', 'dhs', 'jkbjk', 'jk', 6, 'aktif');
 
 -- --------------------------------------------------------
 
@@ -329,6 +439,13 @@ ALTER TABLE `agama`
   ADD PRIMARY KEY (`id_agama`);
 
 --
+-- Indexes for table `daftar_alternatif`
+--
+ALTER TABLE `daftar_alternatif`
+  ADD PRIMARY KEY (`id_daftar_alternatif`),
+  ADD KEY `fk_siswa_alternatif` (`id_siswa`);
+
+--
 -- Indexes for table `guru`
 --
 ALTER TABLE `guru`
@@ -358,8 +475,9 @@ ALTER TABLE `pengguna`
 --
 ALTER TABLE `perbandingan_alternatif`
   ADD PRIMARY KEY (`id_alternatif`),
-  ADD KEY `fk_siswa` (`id_siswa`),
-  ADD KEY `fk_pembanding_alternatif` (`pembanding`);
+  ADD KEY `fk_param_kriteria` (`id_kriteria`),
+  ADD KEY `fk_pembanding_alternatif` (`pembanding`),
+  ADD KEY `fk_siswa` (`id_siswa`);
 
 --
 -- Indexes for table `perbandingan_kriteria`
@@ -373,7 +491,9 @@ ALTER TABLE `perbandingan_kriteria`
 -- Indexes for table `prioritas_solusi`
 --
 ALTER TABLE `prioritas_solusi`
-  ADD PRIMARY KEY (`id_prioritas`);
+  ADD PRIMARY KEY (`id_prioritas`),
+  ADD KEY `fk_siswa_prioritas` (`id_siswa`),
+  ADD KEY `fk_kriteria_prioritas` (`id_kriteria`);
 
 --
 -- Indexes for table `rombel`
@@ -412,6 +532,12 @@ ALTER TABLE `agama`
   MODIFY `id_agama` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `daftar_alternatif`
+--
+ALTER TABLE `daftar_alternatif`
+  MODIFY `id_daftar_alternatif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `guru`
 --
 ALTER TABLE `guru`
@@ -439,13 +565,13 @@ ALTER TABLE `pengguna`
 -- AUTO_INCREMENT for table `perbandingan_alternatif`
 --
 ALTER TABLE `perbandingan_alternatif`
-  MODIFY `id_alternatif` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_alternatif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `perbandingan_kriteria`
 --
 ALTER TABLE `perbandingan_kriteria`
-  MODIFY `id_perbandingan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_perbandingan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
 
 --
 -- AUTO_INCREMENT for table `prioritas_solusi`
@@ -457,13 +583,13 @@ ALTER TABLE `prioritas_solusi`
 -- AUTO_INCREMENT for table `rombel`
 --
 ALTER TABLE `rombel`
-  MODIFY `id_rombel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_rombel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=318;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=345;
 
 --
 -- AUTO_INCREMENT for table `user_log`
@@ -476,6 +602,12 @@ ALTER TABLE `user_log`
 --
 
 --
+-- Ketidakleluasaan untuk tabel `daftar_alternatif`
+--
+ALTER TABLE `daftar_alternatif`
+  ADD CONSTRAINT `fk_siswa_alternatif` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Ketidakleluasaan untuk tabel `guru`
 --
 ALTER TABLE `guru`
@@ -485,15 +617,23 @@ ALTER TABLE `guru`
 -- Ketidakleluasaan untuk tabel `perbandingan_alternatif`
 --
 ALTER TABLE `perbandingan_alternatif`
-  ADD CONSTRAINT `fk_pembanding_alternatif` FOREIGN KEY (`pembanding`) REFERENCES `siswa` (`id_siswa`),
-  ADD CONSTRAINT `fk_siswa` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`);
+  ADD CONSTRAINT `fk_param_kriteria` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `fk_pembanding_alternatif` FOREIGN KEY (`pembanding`) REFERENCES `siswa` (`id_siswa`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `fk_siswa` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Ketidakleluasaan untuk tabel `perbandingan_kriteria`
 --
 ALTER TABLE `perbandingan_kriteria`
-  ADD CONSTRAINT `fk_kriteria` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`),
-  ADD CONSTRAINT `fk_pembanding` FOREIGN KEY (`pembanding`) REFERENCES `kriteria` (`id_kriteria`);
+  ADD CONSTRAINT `fk_kriteria` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `fk_pembanding` FOREIGN KEY (`pembanding`) REFERENCES `kriteria` (`id_kriteria`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
+-- Ketidakleluasaan untuk tabel `prioritas_solusi`
+--
+ALTER TABLE `prioritas_solusi`
+  ADD CONSTRAINT `fk_kriteria_prioritas` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_siswa_prioritas` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ketidakleluasaan untuk tabel `rombel`
