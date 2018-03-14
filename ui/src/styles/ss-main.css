@@ -43,7 +43,10 @@
 .ss-fly-alert {
     position: fixed;
     z-index: 1024;
-    width: calc(100% - 250px);
+    width: calc(100% - 650px);
+    left: 30% !important;
+    right: 30% !important;
+    top: 250px !important;
 }
 
 .text-black {
@@ -59,7 +62,16 @@
 }
 
 .nama-kriteria {
-    min-width: 180px;
+    min-width: 200px;
+}
+
+.decrease-td-padding {
+    padding-top: .4rem !important;
+    padding-bottom: .2rem !important;
+}
+
+.decrease-paging-line-height {
+    line-height: 1 !important;
 }
 
 @media (max-width: 991px) {
