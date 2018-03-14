@@ -71,7 +71,7 @@
 										<td class="text-center ss-cursor-pointer" @click="editKriteria(value.id_kriteria)"><i class="material-icons">edit</i></td>
 										<td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(value.id_kriteria)"><i class="material-icons">delete</i></td>
 										<td class="text-center ss-cursor-pointer">
-											<router-link :to="'/kriteria/input-perbandingan/'+ value.id_kriteria" tag="a"><i class="fa fa-th-large"></i></router-link>
+											<router-link :to="'/kriteria/perbandingan/input/'+ value.id_kriteria" tag="a"><i class="fa fa-th-large"></i></router-link>
 										</td>
 									</tr>
 									<tr>
