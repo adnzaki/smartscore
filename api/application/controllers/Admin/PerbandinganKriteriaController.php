@@ -61,20 +61,48 @@ class PerbandinganKriteriaController extends SSController
 
     public function getComparisonResult($token = '')
     {
-        $kriteria = $this->KriteriaModel->getKriteria();
-        $result = $this->countResult();
-        $data = [];
-        for($i = 0; $i < count($kriteria); $i++)
+        if($this->hasValidToken($token))
         {
-            $data[$kriteria[$i]->nama_kriteria]['angka'] = $result['sumResult'][$i];
-            $data[$kriteria[$i]->nama_kriteria]['eigen'] = $result['eigen'][$i];
-        }
+            $kriteria = $this->KriteriaModel->getKriteria();
+            $result = $this->countResult();
+            $data = [];
+            for($i = 0; $i < count($kriteria); $i++)
+            {
+                $data[$kriteria[$i]->nama_kriteria]['angka'] = $result['sumResult'][$i];
+                $data[$kriteria[$i]->nama_kriteria]['eigen'] = $result['eigen'][$i];
+            }
 
-        echo json_encode([
-            'hasil' => $data,
-            'CR' => $result['CR'],
-            'konsistensi' => $result['konsistensi'],
-        ]);
+            echo json_encode([
+                'hasil' => $data,
+                'CR' => $result['CR'],
+                'konsistensi' => $result['konsistensi'],
+            ]);
+        }
+        else
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('unableToGetData')
+            ];
+            echo json_encode($res);
+        }        
+    }
+
+    public function getKriteriaName($idKriteria, $token)
+    {
+        if($this->hasValidToken($token))
+        {
+            $kriteria = $this->KriteriaModel->getDetailKriteria($idKriteria);
+            echo $kriteria->nama_kriteria;
+        }
+        else
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('unableToGetData')
+            ];
+            echo json_encode($res);
+        } 
     }
 
     public function save($token)

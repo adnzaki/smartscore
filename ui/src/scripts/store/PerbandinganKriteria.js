@@ -13,7 +13,8 @@ export const PerbandinganKriteria = new Vuex.Store({
         kriteria: [], token: '', kriteriaToCompare: [],
         CR: '', konsistensi: '', jumlahKolom: {},
         hasilPerbandingan: [], eigen: [],
-        saveProgress: false, alert: { successSave: false, errorSave: false, }
+        namaKriteria: '', saveProgress: false, 
+        alert: { successSave: false, errorSave: false, }
     },
     mutations: {
         showAlert(state, type) {
@@ -107,6 +108,22 @@ export const PerbandinganKriteria = new Vuex.Store({
                     }
                 })
             }
-        }
+        },
+        getKriteriaName({ state, commit, dispatch }, kriteriaID) {
+            commit('getCookie', 'ss_session')
+            state.token = state.shared.cookieName
+            if (state.token === '') {
+                window.location.href = `${state.shared.apiUrl}AuthController/logout/`
+            } else {
+                $.ajax({
+                    url: `${state.shared.apiUrl}admin/PerbandinganKriteriaController/getKriteriaName/${kriteriaID}/${state.token}`,
+                    type: 'GET',
+                    crossDomain: true,
+                    success: data => {
+                        state.namaKriteria = data
+                    }
+                })
+            }
+        },
     }
 })

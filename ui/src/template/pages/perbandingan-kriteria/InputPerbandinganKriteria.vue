@@ -9,6 +9,9 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="box">	
+						<div class="box-header">
+								<h2>Input Perbandingan untuk Kriteria: {{ namaKriteria }}</h2>								
+							</div>   
 						<div class="box-body">
 							<div class="row">
 								<div class="col-xs-12">
@@ -113,6 +116,7 @@ export default {
     methods: {
         getKriteriaToCompare() {
             this.$store.dispatch('getKriteriaToCompare', this.$route.params.kriteriaID)
+			this.$store.dispatch('getKriteriaName', this.$route.params.kriteriaID)
         },
 		save() {
 			if(this.dataToSend.length === 0) {
@@ -189,7 +193,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'kriteriaToCompare', 'saveProgress', 'alert',
+            'kriteriaToCompare', 'saveProgress', 'alert','namaKriteria',
         ])
     }
 }
