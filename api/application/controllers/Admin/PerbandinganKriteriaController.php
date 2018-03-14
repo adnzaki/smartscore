@@ -59,7 +59,7 @@ class PerbandinganKriteriaController extends SSController
         }
     }
 
-    public function getComparisonResult($token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidGFodW5fYWphcmFuIjoiMjAxNjEifQ.3JpFo3KimCYupqexVyJPR3hVLHPxLzW5zZMGfypjK8c')
+    public function getComparisonResult($token = '')
     {
         $kriteria = $this->KriteriaModel->getKriteria();
         $result = $this->countResult();
