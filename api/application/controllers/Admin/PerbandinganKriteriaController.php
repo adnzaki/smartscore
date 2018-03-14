@@ -110,6 +110,7 @@ class PerbandinganKriteriaController extends SSController
     {
         $column = $this->sumColumn();
         $kriteria = $this->KriteriaModel->getKriteria();
+        $kriteriaLength = count($kriteria);
         $idKriteria = [];
         $eigen = [];
         $normalize = [];
@@ -122,7 +123,7 @@ class PerbandinganKriteriaController extends SSController
         {
             $pembanding = $this->KriteriaModel->getPembanding($res->id_kriteria, 'id_kriteria');
             $container = [];
-            $i = 0;
+
             foreach($pembanding as $col)
             {
                 $container[] = $col->nilai_perbandingan;
@@ -159,11 +160,11 @@ class PerbandinganKriteriaController extends SSController
 
         $maxEigen = array_sum($eigenXcolumn);
 
-        $consistencyIndex = ($maxEigen - count($kriteria)) / (count($kriteria) - 1);
+        $consistencyIndex = ($maxEigen - $kriteriaLength) / ($kriteriaLength - 1);
 
-        $consistencyRatio = $consistencyIndex / $this->randomIndex[count($kriteria)];
+        $consistencyRatio = $consistencyIndex / $this->randomIndex[$kriteriaLength];
 
-        $consistencyLimit = count($kriteria) / 100;
+        $consistencyLimit = $kriteriaLength / 100;
 
         $isConsistent = '';
         ($consistencyRatio < $consistencyLimit) ? $isConsistent = 'Konsistensi dapat diterima' 
