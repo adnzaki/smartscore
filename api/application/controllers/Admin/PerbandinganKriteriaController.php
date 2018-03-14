@@ -106,11 +106,6 @@ class PerbandinganKriteriaController extends SSController
         }
     }
 
-    public function accessResult()
-    {
-        echo json_encode($this->countResult());
-    }
-
     private function countResult()
     {
         $column = $this->sumColumn();
