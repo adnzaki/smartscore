@@ -105,8 +105,6 @@ import {
 } from 'vuex'
 
 import { Guru } from '../../../scripts/store/Guru'
-import ssalert from '../../../template/content/alert.vue'
-import { sserror } from '../../../scripts/modules/Shared'
 
 Vue.use(Vuex)
 
@@ -114,8 +112,6 @@ export default {
     name: 'Guru',
     store: Guru,
     components: {
-		sserror,
-		ssalert,
 	},
     beforeRouteEnter(to, from, next) {
 		next(vm => vm.getGuru(10, 0, ''))
