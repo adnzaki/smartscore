@@ -26,6 +26,11 @@ import Siswa from '../template/pages/siswa/Siswa.vue'
 import Rombel from '../template/pages/rombel/Rombel.vue'
 import Guru from '../template/pages/guru/Guru.vue'
 import Kriteria from '../template/pages/kriteria/Kriteria.vue'
+import PerbandinganKriteria from '../template/pages/perbandingan-kriteria/PerbandinganKriteria.vue'
+import InputPerbandinganKriteria from '../template/pages/perbandingan-kriteria/InputPerbandinganKriteria.vue'
+import HasilPerbandinganKriteria from '../template/pages/perbandingan-kriteria/HasilPerbandinganKriteria.vue'
+import PerbandinganAlternatif from '../template/pages/perbandingan-alternatif/PerbandinganAlternatif.vue'
+import PrioritasSolusi from '../template/pages/perbandingan-alternatif/PrioritasSolusi.vue'
 import Multiselect from 'vue-multiselect'
 import ssalert from '../template/content/alert.vue'
 
@@ -41,11 +46,17 @@ Vue.component('sserror', {
 Vue.component('multiselect', Multiselect)
 
 const routes = [
+    { path: '/', component: Dashboard },
     { path: '/dashboard', component: Dashboard },
     { path: '/siswa', component: Siswa },
     { path: '/rombel', component: Rombel },
     { path: '/guru', component: Guru },
-    { path: '/kriteria', component: Kriteria },
+    { path: '/kriteria/daftar-kriteria', component: Kriteria },
+    { path: '/kriteria/perbandingan', component: PerbandinganKriteria },
+    { path: '/kriteria/perbandingan/input/:kriteriaID', component: InputPerbandinganKriteria },
+    { path: '/kriteria/perbandingan/hasil', component: HasilPerbandinganKriteria },
+    { path: '/alternatif/perbandingan', component: PerbandinganAlternatif },
+    { path: '/alternatif/prioritas-solusi', component: PrioritasSolusi }
 ]
 
 const router = new VueRouter({

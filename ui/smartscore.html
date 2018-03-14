@@ -111,12 +111,12 @@
 									<span class="nav-text">Kriteria</span>
 								</a>
 								<ul class="nav-sub">
-									<router-link to="/kriteria" tag="li">
+									<router-link to="/kriteria/daftar-kriteria" tag="li">
 										<a href="javascript:void(0)">
 											<span class="nav-text">Daftar Kriteria</span>
 										</a>
 									</router-link>
-									<router-link to="/kriteria" tag="li">
+									<router-link to="/kriteria/perbandingan" tag="li">
 										<a href="javascript:void(0)">
 											<span class="nav-text">Perbandingan</span>
 										</a>
@@ -136,18 +136,13 @@
 									<span class="nav-text">Alternatif</span>
 								</a>
 								<ul class="nav-sub">
-									<router-link to="/kriteria" tag="li">
-										<a href="javascript:void(0)">
+									<router-link to="/alternatif/perbandingan" tag="li">
+										<a>
 											<span class="nav-text">Perbandingan Alternatif</span>
 										</a>
 									</router-link>
-									<router-link to="/kriteria" tag="li">
-										<a href="javascript:void(0)">
-											<span class="nav-text">Nilai Eigen</span>
-										</a>
-									</router-link>
-									<router-link to="/kriteria" tag="li">
-										<a href="javascript:void(0)">
+									<router-link to="/alternatif/prioritas-solusi" tag="li">
+										<a>
 											<span class="nav-text">Prioritas Solusi</span>
 										</a>
 									</router-link>
@@ -166,14 +161,14 @@
 									<span class="nav-text">Aplikasi</span>
 								</a>
 							</li>
-							<li>
-								<a href="javascript:void(0)">
-		                  <span class="nav-icon">
-		                    <i class="material-icons">account_circle</i>
-		                  </span>
-		                  <span class="nav-text">Pengguna</span>
-		                </a>
-							</li>
+							<router-link to="/siswa" tag="li">
+								<a>
+									<span class="nav-icon">
+										<i class="material-icons">account_circle</i>
+									</span>
+									<span class="nav-text">Pengguna</span>
+								</a>
+							</router-link>
 							<li class="ss-logout-btn">
 								<a v-bind:href="config.apiUrl + 'AuthController/logout'">
 									<span class="nav-icon">
