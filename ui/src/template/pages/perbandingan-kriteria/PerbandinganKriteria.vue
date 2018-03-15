@@ -39,13 +39,6 @@
 									</tbody>
 								</table>
 							</div>                              
-							<div class="box-body">
-								<div class="row">
-									<div class="col-xs-12">
-                                        <p>Rasio Konsistensi: {{ CR }} ({{ konsistensi }})</p>
-									</div>
-								</div>
-                            </div> 
 						</div>
                     </div>
 				</div>
@@ -94,7 +87,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'kriteria', 'CR', 'konsistensi', 'jumlahKolom',
+            'kriteria', 'jumlahKolom',
         ])
     }
 }
