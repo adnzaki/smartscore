@@ -151,35 +151,13 @@ export default {
 		},
 		isActive(kriteria, value) {
 			var data = this.dataToSend
-			//var result
-
 			if(data.length !== 0) {
-				const result = data.find(function(key) {
-					return key.kriteriaID === kriteria && key.value === value
-				})
-
-				// const result = data.find(searchObject)
-				// const result = { value: value }
-				// if(result === undefined) {
-				// 	result = { value: value }
-				// }
-
-				// if(result.value === value) {
-				// 	//console.log('active')
-				// 	return 'active'
-				// } else {
-				// 	//console.log(null)
-				// 	return ''
-				// }
-				//return 'active'
-				//return result[value]
-				// if(result === undefined) {
-				// 	var result = 'active'
-				// }
-				var eek = result
-				console.log(data)
-			} 
-			//return result
+				for(let i = 0; i < data.length; i++) {
+					if(data[i].kriteriaID === kriteria && data[i].value === value) {
+						return 'active'
+					}
+				}
+			}
 		},
 		close() {
 			this.$router.push('/kriteria/perbandingan')
