@@ -4,10 +4,12 @@ header('Access-Control-Allow-Origin: *');
 
 class AuthController extends SSController 
 {
+    private $setting;
     public function __construct()
     {
         parent:: __construct();
         $this->load->model('AuthModel');
+        $this->setting = $this->getSetting();
     }
 
     public function validate()
@@ -71,7 +73,25 @@ class AuthController extends SSController
     public function logout() 
     {
         delete_cookie('ss_session');
-        header('Location: http://localhost:8080/');
+        header('Location: http://'.$this->setting[0]->appUrl.'/');
+    }
+
+    public function getSettingJSON()
+    {
+        echo json_encode($this->getSetting());
+    }
+
+    public function setAppUrl($url)
+    {
+        // update App URL
+        $this->db->set('appUrl', $url);
+        $this->db->where('appUrl', $this->setting[0]->appUrl);
+        $this->db->update('settings');
+    }
+
+    private function getSetting()
+    {
+        return $this->db->get('settings')->result();
     }
 
     public function getTahunAjaran()

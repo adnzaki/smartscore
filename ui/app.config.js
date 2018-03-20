@@ -24,10 +24,10 @@ export const ssconfig = {
     // URL untuk menuju alamat utama API Smartscore
     // untuk mengisi nilai ini, anda harus mengetahui alamat
     // web server anda
-    apiUrl: 'http://localhost:72/smartscore/api/',
+    apiUrl: 'http://'+window.location.hostname+':72/smartscore/api/',
 
     // URL halaman login
-    loginUrl: 'http://localhost:8080/',
+    loginUrl: 'http://'+window.location.host+'/',
 
     // nama key dari cookie yang akan disimpan oleh browser
     cookieName: 'ss_session',
@@ -42,3 +42,13 @@ export const ssconfig = {
     // nilai ini diambil dari bagian URL setelah ... smartscore.html#/
     mainPage: 'dashboard',
 }
+
+// update url aplikasi...
+$.ajax({
+    url: `${ssconfig.apiUrl}AuthController/setAppUrl/${window.location.host}`,
+    type: 'POST',
+    data: window.location.host,
+    success: () => {
+        console.info('Smartscore App URL updated.')
+    }
+})
