@@ -21,7 +21,7 @@ export const PerbandinganKriteria = new Vuex.Store({
             state.alert[type] = true
             setTimeout(() => {
                 state.alert[type] = false
-            }, 3500)
+            }, 4000)
         },
     },
     actions: {
@@ -74,7 +74,6 @@ export const PerbandinganKriteria = new Vuex.Store({
                     crossDomain: true,
                     dataType: 'json',
                     success: data => {
-                        state.eigen = data['eigen']
                         state.CR = data['CR']
                         state.konsistensi = data['konsistensi']
                         state.hasilPerbandingan = data['hasil']
