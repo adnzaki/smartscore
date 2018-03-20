@@ -81,7 +81,6 @@ import {
 	mapActions
 } from 'vuex'
 import { PerbandinganKriteria } from '../../../scripts/store/PerbandinganKriteria'
-import { sserror } from '../../../scripts/modules/Shared'
 
 export default {
     name: 'InputPerbandinganKriteria',
@@ -109,7 +108,6 @@ export default {
 				{ value: '0.20', text: '1/5' }, { value: '0.16', text: '1/6' }, { value: '0.14', text: '1/7' },
 				{ value: '0.13', text: '1/8' }, { value: '0.11', text: '1/9' },
 			],
-			columnSum: [], test: [],
 			dataToSend: [], dataQuery: '',
 		}
     },
