@@ -57,6 +57,14 @@
     color: #e6db1a;
 }
 
+.text-red {
+    color: #f36464;
+}
+
+.text-green {
+    color: #44db46;
+}
+
 .text-bold {
     font-weight: bold;
 }
