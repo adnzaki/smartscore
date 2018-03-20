@@ -136,6 +136,11 @@
 									<span class="nav-text">Alternatif</span>
 								</a>
 								<ul class="nav-sub">
+									<router-link to="/alternatif/daftar-siswa" tag="li">
+										<a>
+											<span class="nav-text">Daftar Alternatif</span>
+										</a>
+									</router-link>
 									<router-link to="/alternatif/perbandingan" tag="li">
 										<a>
 											<span class="nav-text">Perbandingan Alternatif</span>
@@ -170,7 +175,7 @@
 								</a>
 							</router-link>
 							<li class="ss-logout-btn">
-								<a v-bind:href="config.apiUrl + 'AuthController/logout'">
+								<a v-bind:href="config.apiUrl + 'logout'">
 									<span class="nav-icon">
 										<i class="material-icons">exit_to_app</i>
 									</span>
