@@ -163,16 +163,6 @@ class KriteriaModel extends CI_Model
         ])->result();
     }
 
-    public function testGetValue($kriteria, $pembanding)
-    {
-        $this->db->where(['id_kriteria' => $kriteria, 'pembanding' => $pembanding]);
-        $this->db->or_where('id_kriteria = '.$pembanding.' AND pembanding = '.$kriteria);
-        //$query = $this->db->query("SELECT * FROM perbandingan_kriteria WHERE id_kriteria={$kriteria} AND pembanding={$pembanding} OR id_kriteria={$pembanding} AND pembanding={$kriteria}");
-        //return $this->db->get($this->table['perbandingan'])->result();
-        return $this->reverseValue['3.00'];
-        //return $query->result();
-    }
-
     public function setNilaiPerbandingan($kriteria, $pembanding, $value)
     {
         // update kriteria yang dibandingkan
