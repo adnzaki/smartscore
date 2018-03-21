@@ -19,6 +19,7 @@ class SiswaModel extends CI_Model
      * @var $table
      */
     private $table = 'siswa';
+    private $table2 = 'daftar_alternatif';
 
     public function getSiswa($limit, $start, $search)
     {
@@ -59,6 +60,9 @@ class SiswaModel extends CI_Model
     {
         $data = $this->tableSiswaValue();
         $this->db->insert($this->table, $data);
+        $this->db->insert($this->table2, [
+            'id_siswa' => $this->db->insert_id()
+        ]);
     }
 
     public function updateSiswa($id)
@@ -69,6 +73,7 @@ class SiswaModel extends CI_Model
 
     public function deleteSiswa($id)
     {
+        $this->db->delete($this->table2, ['id_siswa' => $id]);
         $this->db->delete($this->table, ['id_siswa' => $id]);
     }
 
