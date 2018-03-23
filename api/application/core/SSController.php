@@ -47,6 +47,19 @@ class SSController extends CI_Controller
     ];
 
     /**
+     * URLs 
+     * Fungsi yang mempermudah ke beberapa URL dala API Smartscore
+     * 
+     * @return array
+     */
+    protected function urls()
+    {
+        return [
+            'public' => base_url('public/'),
+        ];
+    }
+
+    /**
      * Has Valid Token?
      * Fungsi untuk mengecek apakah sebuah request memiliki token yang valid atau tidak 
      * 

@@ -1,0 +1,121 @@
+body {
+    color: #000 !important;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@page {
+    margin: 15px 20px;
+}
+
+.kop-header {
+    padding-left: 100px;
+}
+
+.kop-title {
+    font-weight: 600;
+    font-size: 2.3em;
+}
+
+.kop-pemkot,
+.kop-disdik,
+.kop-uptd {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.kop-sekolah {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.kop-pemkot,
+.kop-disdik,
+.kop-uptd,
+.kop-sekolah {
+    text-transform: uppercase;
+    margin-bottom: 0 !important;
+}
+
+.kop-alamat {
+    font-size: 0.8em;
+}
+
+.kop-garis-tebal {
+    border: 2px solid #000;
+    margin-top: 10px;
+}
+
+.kop-garis-tipis {
+	border-bottom: 1px solid #000;
+    font-size: 3px;
+    color: rgba(0,0,0,0);
+}
+
+.logo-bekasi {
+    height: 220px;
+    width: 110px;    
+    position: absolute;
+}
+
+.logo-bekasi img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.judul-laporan {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
+p {
+    line-height: 5px;
+}
+
+p, table {
+    font-size: 11px;
+}
+
+table {
+	border: 2px solid #000000;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead {
+	border-bottom: 2px solid #000000;
+}
+
+thead th {
+	padding: 10px;
+}
+
+tbody td {
+	border-top: 0.5px solid #000000;
+    padding: 10px 10px 10px 5px;
+}
+
+.tanda-tangan {
+    margin-top: 30px;
+    text-align: center;
+    margin-left: 55%;
+}
+
+.tanda-tangan p {
+    font-size: 12px;
+}
+
+.nama-lurah {
+    font-weight: bold;
+    margin-top: 100px;
+    text-transform: uppercase;
+}
+
+.center-align {
+    text-align: center;
+}
+
+.no-border {
+    border: none !important;
+}

@@ -130,7 +130,7 @@ export const PerbandinganAlternatif = new Vuex.Store({
                 window.location.href = `${state.shared.apiUrl}AuthController/logout/`
             } else {
                 $.ajax({
-                    url: `${state.shared.apiUrl}admin/PerbandinganAlternatifController/prioritasSolusi/${state.token}`,
+                    url: `${state.shared.apiUrl}admin/PerbandinganAlternatifController/getPrioritasSolusi/${state.token}`,
                     type: 'GET',
                     crossDomain: true,
                     dataType: 'json',

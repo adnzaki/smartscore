@@ -8,6 +8,7 @@ class PerbandinganAlternatifController extends SSController
     {
         parent:: __construct();
         $this->load->model(['AlternatifModel', 'KriteriaModel']);
+        $this->load->library('PDFGenerator');
     }
 
     public function getDaftarAlternatif($token)
@@ -158,104 +159,33 @@ class PerbandinganAlternatifController extends SSController
         }        
     }
 
-    public function prioritasSolusi($token = '')
+    public function cetakPrioritasSolusi()
+    {
+        $data = $this->urls();
+        $data['title'] = 'Laporan Hasil Perbandingan';
+        $prioritas = $this->prioritasSolusi();
+        $data['prioritas'] = $prioritas['nilaiAlternatif'];
+        
+        function sortByScore($a, $b)
+        {
+            $a = $a['jumlah'];
+            $b = $b['jumlah'];
+
+            if ($a === $b) return 0;
+            return ($a > $b) ? -1 : 1;
+        }
+        usort($data['prioritas'], 'sortByScore');
+
+        $html           = $this->load->view('laporan/prioritas-solusi', $data, true);
+        $filename       = 'Laporan Perbandingan_'.time();
+        $this->pdfgenerator->create($html, $filename, true, 'A4', 'portrait');
+    }
+
+    public function getPrioritasSolusi($token = '')
     {
         if($this->hasValidToken($token))
         {
-            $kriteria = $this->KriteriaModel->getKriteria();
-            $alternatif = $this->AlternatifModel->getDaftarAlternatif();
-            $eigenAlternatif = [];
-            $eigenKriteria = [];
-            foreach($kriteria as $res)
-            {
-                $getResult = $this->countResult($res->id_kriteria);
-
-                // mengambil nilai eigen alternatif
-                $eigenAlternatif[$res->id_kriteria] = $getResult['eigen'];
-
-                // ambil nilai eigen dari kriteria yang sedang di-loop
-                $eigenKriteria[$res->id_kriteria] = $res->eigen_value;
-            }
-
-            $eigenXalternatif = [];
-            foreach($kriteria as $res)
-            {
-                // buat empty array dengan index diberi nama sesuai id_kriteria
-                $wrapper = [$res->id_kriteria => []];
-
-                // lakukan loop sebanyak data pada array $alternatif
-                // untuk mengisi empty array $wrapper yang telah dibuat sebelumnya
-                for($i = 0; $i < count($alternatif); $i++)
-                {
-                    $hasil = $eigenAlternatif[$res->id_kriteria][$i] * $eigenKriteria[$res->id_kriteria];
-                    array_push($wrapper[$res->id_kriteria], number_format($hasil, 3));
-                }
-                $eigenXalternatif[] = $wrapper;
-            }
-
-            $nilaiAlternatif = [];
-            $nilaiAkhir = [];
-
-            // loop data alternatif 
-            // untuk mendapatkan perkalian eigen tiap kriteria 
-            for($j = 0; $j < count($alternatif); $j++)
-            {
-                $jumlahWrapper = [];
-                $inc = 0;
-                // jumlahkan hasil perkalian semua eigen pada tiap alternatif 
-                foreach($kriteria as $res)
-                {
-                    array_push($jumlahWrapper, $eigenXalternatif[$inc][$res->id_kriteria][$j]);
-                    $inc++;
-                }
-                // wrapping data...
-                $nilaiAlternatif[$alternatif[$j]->nama_siswa]['nilaiKriteria'] = $jumlahWrapper;
-                $nilaiAlternatif[$alternatif[$j]->nama_siswa]['jumlah'] = number_format(array_sum($nilaiAlternatif[$alternatif[$j]->nama_siswa]['nilaiKriteria']), 3);
-                $nilaiAlternatif[$alternatif[$j]->nama_siswa]['persentase'] = number_format($nilaiAlternatif[$alternatif[$j]->nama_siswa]['jumlah'] * 100, 1);
-                $nilaiAkhir[$j]['nilai'] = number_format(array_sum($nilaiAlternatif[$alternatif[$j]->nama_siswa]['nilaiKriteria']), 3);
-                $nilaiAkhir[$j]['siswa'] = $alternatif[$j]->nama_siswa;
-            }
-
-            $nilaiTertinggi = max($nilaiAkhir);
-
-            $jumlahNilai = [];
-
-            foreach($nilaiAkhir as $nilai)
-            {
-                $jumlahNilai[] = $nilai['nilai'];
-            }
-            
-            $jumlahNilaiAkhir = number_format(array_sum($jumlahNilai), 3);
-
-            $allCR = [];
-            $consistencyLimit = count($alternatif) / 100;
-            foreach($kriteria as $res)
-            {
-                $cr = $this->countResult($res->id_kriteria);
-                $allCR[] = $cr['CR'];
-            }
-
-            $inconsistentCR = array_filter($allCR, function($item) use ($consistencyLimit) {
-                return $item > $consistencyLimit;
-            });
-            
-            (count($inconsistentCR) === 0) 
-                ? $keterangan = 'Semua perbandingan alternatif terhadap kriteria konsisten dan dapat diterima.' 
-                : $keterangan = 'Terdapat '.count($inconsistentCR).' perbandingan alternatif terhadap kriteria yang tidak konsisten dan tidak dapat dijadikan acuan pengambilan keputusan';
-
-            $response = [
-                'eigenAlternatif' => $eigenAlternatif,
-                'eigenKriteria' => $eigenKriteria,
-                'eigenXalternatif' => $eigenXalternatif,
-                'nilaiAlternatif' => $nilaiAlternatif,
-                'nilaiAkhir' => $nilaiAkhir,
-                'nilaiTertinggi' => $nilaiTertinggi,
-                'jumlahNilaiAkhir' => $jumlahNilaiAkhir,
-                'inconsistentCR' => count($inconsistentCR),
-                'keterangan' => $keterangan,
-            ];
-
-            echo json_encode($response);
+            echo json_encode($this->prioritasSolusi());
         }
         else 
         {
@@ -265,7 +195,107 @@ class PerbandinganAlternatifController extends SSController
             ];
             echo json_encode($res);
         }
+    }
+
+    private function prioritasSolusi()
+    {
+        $kriteria = $this->KriteriaModel->getKriteria();
+        $alternatif = $this->AlternatifModel->getDaftarAlternatif();
+        $eigenAlternatif = [];
+        $eigenKriteria = [];
+        foreach($kriteria as $res)
+        {
+            $getResult = $this->countResult($res->id_kriteria);
+
+            // mengambil nilai eigen alternatif
+            $eigenAlternatif[$res->id_kriteria] = $getResult['eigen'];
+
+            // ambil nilai eigen dari kriteria yang sedang di-loop
+            $eigenKriteria[$res->id_kriteria] = $res->eigen_value;
+        }
+
+        $eigenXalternatif = [];
+        foreach($kriteria as $res)
+        {
+            // buat empty array dengan index diberi nama sesuai id_kriteria
+            $wrapper = [$res->id_kriteria => []];
+
+            // lakukan loop sebanyak data pada array $alternatif
+            // untuk mengisi empty array $wrapper yang telah dibuat sebelumnya
+            for($i = 0; $i < count($alternatif); $i++)
+            {
+                $hasil = $eigenAlternatif[$res->id_kriteria][$i] * $eigenKriteria[$res->id_kriteria];
+                array_push($wrapper[$res->id_kriteria], number_format($hasil, 3));
+            }
+            $eigenXalternatif[] = $wrapper;
+        }
+
+        $nilaiAlternatif = [];
+        $nilaiAkhir = [];
+
+        // loop data alternatif 
+        // untuk mendapatkan perkalian eigen tiap kriteria 
+        for($j = 0; $j < count($alternatif); $j++)
+        {
+            $jumlahWrapper = [];
+            $inc = 0;
+            // jumlahkan hasil perkalian semua eigen pada tiap alternatif 
+            foreach($kriteria as $res)
+            {
+                array_push($jumlahWrapper, $eigenXalternatif[$inc][$res->id_kriteria][$j]);
+                $inc++;
+            }
+            // wrapping data...
+            $nilaiAlternatif[$alternatif[$j]->nama_siswa]['namaSiswa'] = $alternatif[$j]->nama_siswa;
+            $nilaiAlternatif[$alternatif[$j]->nama_siswa]['nilaiKriteria'] = $jumlahWrapper;
+            $nilaiAlternatif[$alternatif[$j]->nama_siswa]['jumlah'] = number_format(array_sum($nilaiAlternatif[$alternatif[$j]->nama_siswa]['nilaiKriteria']), 3);
+            $nilaiAlternatif[$alternatif[$j]->nama_siswa]['persentase'] = number_format($nilaiAlternatif[$alternatif[$j]->nama_siswa]['jumlah'] * 100, 1);
+            $nilaiAlternatif[$alternatif[$j]->nama_siswa]['nis'] = $alternatif[$j]->nis;
+            $nilaiAlternatif[$alternatif[$j]->nama_siswa]['nisn'] = $alternatif[$j]->nisn;
+            $nilaiAkhir[$j]['nilai'] = number_format(array_sum($nilaiAlternatif[$alternatif[$j]->nama_siswa]['nilaiKriteria']), 3);
+            $nilaiAkhir[$j]['siswa'] = $alternatif[$j]->nama_siswa;
+        }
+
+        $nilaiTertinggi = max($nilaiAkhir);
+
+        $jumlahNilai = [];
+
+        foreach($nilaiAkhir as $nilai)
+        {
+            $jumlahNilai[] = $nilai['nilai'];
+        }
         
+        $jumlahNilaiAkhir = number_format(array_sum($jumlahNilai), 3);
+
+        $allCR = [];
+        $consistencyLimit = count($alternatif) / 100;
+        foreach($kriteria as $res)
+        {
+            $cr = $this->countResult($res->id_kriteria);
+            $allCR[] = $cr['CR'];
+        }
+
+        $inconsistentCR = array_filter($allCR, function($item) use ($consistencyLimit) {
+            return $item > $consistencyLimit;
+        });
+        
+        (count($inconsistentCR) === 0) 
+            ? $keterangan = 'Semua perbandingan alternatif terhadap kriteria konsisten dan dapat diterima.' 
+            : $keterangan = 'Terdapat '.count($inconsistentCR).' perbandingan alternatif terhadap kriteria yang tidak konsisten dan tidak dapat dijadikan acuan pengambilan keputusan';
+
+        $response = [
+            'eigenAlternatif' => $eigenAlternatif,
+            'eigenKriteria' => $eigenKriteria,
+            'eigenXalternatif' => $eigenXalternatif,
+            'nilaiAlternatif' => $nilaiAlternatif,
+            'nilaiAkhir' => $nilaiAkhir,
+            'nilaiTertinggi' => $nilaiTertinggi,
+            'jumlahNilaiAkhir' => $jumlahNilaiAkhir,
+            'inconsistentCR' => count($inconsistentCR),
+            'keterangan' => $keterangan,
+        ];
+
+        return $response;        
     }
 
     private function countResult($kriteria)

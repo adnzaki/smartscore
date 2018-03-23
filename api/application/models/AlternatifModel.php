@@ -30,7 +30,7 @@ class AlternatifModel extends CI_Model
 
     public function getDaftarAlternatif()
     {
-        return $this->db->select($this->table['daftar'].'.id_siswa, id_daftar_alternatif, nama_siswa')->from($this->table['daftar'])
+        return $this->db->select($this->table['daftar'].'.id_siswa, id_daftar_alternatif, nama_siswa, nis, nisn')->from($this->table['daftar'])
             ->join($this->table['siswa'], $this->table['siswa'].'.id_siswa = '.$this->table['daftar'].'.id_siswa')
             ->order_by('id_daftar_alternatif', 'ASC')->get()->result();
     }
