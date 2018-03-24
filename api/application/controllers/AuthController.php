@@ -13,9 +13,7 @@ class AuthController extends SSController
     }
 
     public function validate()
-    {
-        $user = $this->input->post('username', true);
-        $pass = $this->input->post('password', true);
+    {        
         $rules = [
             [
                 'field' => 'username',
@@ -45,10 +43,10 @@ class AuthController extends SSController
         }
         else 
         {
-            if(AuthModel::isValidUser($user, $pass)) 
+            if(AuthModel::isValidUser()) 
             {            
                 $token = [
-                    'username'      => $user,
+                    'username'      => $this->input->post('username', true),
                     'tahun_ajaran'  => $this->input->post('tahun_ajaran', true)
                 ];
                 $encoded = JWT::encode($token, 'user_key');
@@ -99,5 +97,5 @@ class AuthController extends SSController
         $res = AuthModel::getTahunAjaran();
         echo json_encode($res);
     }
-
+    
 }

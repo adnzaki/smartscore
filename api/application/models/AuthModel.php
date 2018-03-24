@@ -9,20 +9,26 @@ class AuthModel extends CI_Model
         parent:: __construct();
         self::$ci =& get_instance();
     }
-    public static function isValidUser($user, $pass)
+    public static function isValidUser()
     {
+        $user = self::$ci->input->post('username', true);
+        $pass = self::$ci->input->post('password', true);
+
         $query = self::$ci->db->get_where('pengguna', [
             'user_id' => $user,
-            'password_pengguna' => $pass
         ]);
 
         if($query->num_rows() > 0)
         {
-            return true;
-        }
-        else
-        {
-            return false;
+            $query = $query->result();
+            if(password_verify($pass, $query[0]->password_pengguna))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
