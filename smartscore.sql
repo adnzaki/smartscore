@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 21 Mar 2018 pada 03.34
+-- Generation Time: 25 Mar 2018 pada 12.55
 -- Versi Server: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -149,17 +149,19 @@ INSERT INTO `kriteria` (`id_kriteria`, `nama_kriteria`, `eigen_value`) VALUES
 CREATE TABLE `pengguna` (
   `id_pengguna` int(11) NOT NULL,
   `nama_pengguna` varchar(100) DEFAULT NULL,
-  `user_id` varchar(100) DEFAULT NULL,
-  `password_pengguna` varchar(50) DEFAULT NULL,
-  `status_pengguna` varchar(10) DEFAULT NULL
+  `email` varchar(100) NOT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `password_pengguna` varchar(250) DEFAULT NULL,
+  `status_pengguna` varchar(10) DEFAULT NULL,
+  `network_status` varchar(10) NOT NULL DEFAULT 'offline'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pengguna`
 --
 
-INSERT INTO `pengguna` (`id_pengguna`, `nama_pengguna`, `user_id`, `password_pengguna`, `status_pengguna`) VALUES
-(1, 'Administrator', 'admin', 'admin', 'admin');
+INSERT INTO `pengguna` (`id_pengguna`, `nama_pengguna`, `email`, `username`, `password_pengguna`, `status_pengguna`, `network_status`) VALUES
+(1, 'Administrator', 'administrator@smartscore.com', 'admin', '$2y$10$.FfVZyRXsoHHWLPcW51RBeWKT9JpyMw7695/Dxuq/9XslRHozlYWu', 'admin', 'offline');
 
 -- --------------------------------------------------------
 
@@ -777,7 +779,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`idSetting`, `appUrl`, `apiUrl`) VALUES
-(1, '192.168.1.2:8081', 'http://localhost:72/smartscore/api/');
+(1, 'localhost:8080', 'http://localhost:72/smartscore/api/');
 
 -- --------------------------------------------------------
 
