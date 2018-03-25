@@ -15,7 +15,7 @@ class AuthModel extends CI_Model
         $pass = self::$ci->input->post('password', true);
 
         $query = self::$ci->db->get_where('pengguna', [
-            'user_id' => $user,
+            'username' => $user,
         ]);
 
         if($query->num_rows() > 0)
