@@ -34,6 +34,7 @@ import PerbandinganAlternatif from '../template/pages/perbandingan-alternatif/Pe
 import InputPerbandinganAlternatif from '../template/pages/perbandingan-alternatif/InputPerbandinganAlternatif.vue'
 import HasilPerbandinganAlternatif from '../template/pages/perbandingan-alternatif/HasilPerbandinganAlternatif.vue'
 import PrioritasSolusi from '../template/pages/perbandingan-alternatif/PrioritasSolusi.vue'
+import Pengguna from '../template/pages/pengguna/Pengguna.vue'
 import ssalert from '../template/content/alert.vue'
 
 Vue.use(VueRouter)
@@ -60,6 +61,7 @@ const routes = [
     { path: '/alternatif/perbandingan/input/:kriteriaID/:siswaID', component: InputPerbandinganAlternatif },
     { path: '/alternatif/perbandingan/hasil/:kriteriaID', component: HasilPerbandinganAlternatif },
     { path: '/alternatif/prioritas-solusi', component: PrioritasSolusi },
+    { path: '/pengguna', component: Pengguna },
 ]
 
 const router = new VueRouter({
