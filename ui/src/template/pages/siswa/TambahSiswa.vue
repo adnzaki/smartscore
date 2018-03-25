@@ -144,7 +144,6 @@
         </transition>
     </div>
 </template>
-<script src="../../../scripts/siswa.js"></script>
 <script>
 import Vue from 'vue'
 import Vuex from 'vuex'
