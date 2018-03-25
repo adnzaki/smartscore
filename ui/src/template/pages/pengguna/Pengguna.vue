@@ -10,7 +10,7 @@
         <ssalert :alertClass="'alert-success'" :target="updateAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil diperbarui'"></ssalert>
 
 		<!-- Success alert -->
-        <ssalert :alertClass="'alert-success'" :target="insertAndClose" :initMsg="'Sukses!'" :msg="'Data siswa berhasil ditambahkan'"></ssalert>
+        <ssalert :alertClass="'alert-success'" :target="insertAndClose" :initMsg="'Sukses!'" :msg="'Data pengguna baru berhasil disimpan'"></ssalert>
 
 		<!-- TABEL DAFTAR SISWA -->
 		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -128,7 +128,7 @@
 		</transition>
 
 		<!-- FORM TAMBAH PENGGUNA -->
-
+        <TambahPengguna />
 		<!-- #END FORM TAMBAH SISWA -->
 
 		<!-- FORM EDIT NAMA DAN EMAIL -->		
@@ -153,7 +153,7 @@
 		mapActions
 	} from 'vuex'
 	import { Pengguna } from '../../../scripts/store/Pengguna'
-	// import TambahSiswa from './TambahSiswa.vue'
+	import TambahPengguna from './TambahPengguna.vue'
 	// import EditSiswa from './EditSiswa.vue'
 
 	Vue.use(Vuex)
@@ -162,7 +162,7 @@
 		name: 'Pengguna',
 		store: Pengguna,
 		components: {
-			
+			TambahPengguna,
 		},
 		beforeRouteEnter(to, from, next) {
 			next(vm => vm.getPengguna(10, 0, ''))

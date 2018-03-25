@@ -23,4 +23,19 @@ class UserModel extends CI_Model
         $query = $this->db->get($this->table);
         return $query->num_rows();
     }
+
+    public function insert()
+    {
+        $data = [
+            'nama_pengguna' => $this->input->post('nama_pengguna', true),
+            'email' => $this->input->post('email', true),
+            'username' => $this->input->post('username', true),
+            'password_pengguna' => password_hash($this->input->post('password_pengguna', true), PASSWORD_BCRYPT),
+            'status_pengguna' => 'user',
+            'network_status' => 'offline',
+        ];
+
+        $this->db->insert($this->table, $data);
+    }
+    
 }

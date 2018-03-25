@@ -35,14 +35,30 @@ export const Pengguna = new Vuex.Store({
         closeDeleteConfirm() {
 
         },
-        showForm() {
-
+        showForm(state, form) {
+            state.showDaftarPengguna = false
+            setTimeout(() => {
+                state[form] = true
+            }, 400)
         },
         closeImportDialog() {
 
         },
         selectAll() {
 
+        },
+        clearMessages(state) {
+            state.error.nama = ''
+            state.error.email = ''
+            state.error.username = ''
+            state.error.password = ''
+            state.error.konfirmasiPassword = ''
+        },
+        showAlert(state, alert) {
+            state[alert] = true
+            setTimeout(() => {
+                state[alert] = false
+            }, 4000)
         },
     },
     actions: {
@@ -79,6 +95,37 @@ export const Pengguna = new Vuex.Store({
                 })
             }
         },
+        insertPengguna({ state, commit, dispatch }, closeForm) {
+            let form = $("#formTambahPengguna"),
+                dataForm = form.serialize()
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/UserController/insert/${state.token}`,
+                type: 'POST',
+                dataType: 'json',
+                data: dataForm,
+                success: msg => {
+                    if (msg !== 'success') {
+                        state.insertAndClose = false
+                        commit('showAlert', 'errorInsert')
+                        state.error.nama = msg.nama_pengguna
+                        state.error.email = msg.email
+                        state.error.username = msg.username
+                        state.error.password = msg.password_pengguna
+                        state.error.konfirmasiPassword = msg.konfirmasi_password
+                    } else {
+                        commit('clearMessages')
+                        form.trigger("reset")
+                        state.errorInsert = false
+                        if (closeForm) {
+                            dispatch('closeForm', 'showFormAdd')
+                            commit('showAlert', 'insertAndClose')
+                        } else {
+                            commit('showAlert', 'insertAlert')
+                        }
+                    }
+                }
+            })
+        },
         multipleDeletePengguna() {
 
         },
@@ -91,8 +138,33 @@ export const Pengguna = new Vuex.Store({
         resetPassword() {
 
         },
-        showPerPage() {
-
-        }
+        closeForm({ state, commit, dispatch }, form) {
+            state[form] = false
+            commit('clearMessages')
+            state.insertAndClose = false
+            state.update = false
+            state.errorInsert = false
+            state.errorUpdate = false
+            setTimeout(() => {
+                dispatch('runGetPengguna')
+                state.showDaftarPengguna = true
+            }, 400)
+        },
+        runGetPengguna({ state, dispatch }) {
+            let start = state.paging.offset / state.localLimit
+            dispatch('getPengguna', {
+                limit: state.localLimit,
+                offset: start,
+                search: state.cariPengguna
+            })
+        },  
+        showPerPage({ state, commit, dispatch }) {
+            state.localLimit = parseInt(state.jmlBaris)
+            dispatch('getPengguna', {
+                limit: state.localLimit,
+                offset: 0,
+                search: state.cariPengguna
+            })
+        },  
     }
 })
