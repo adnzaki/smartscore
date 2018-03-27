@@ -53,7 +53,7 @@ class AuthController extends SSController
                 $res = [
                     'code'      => 1,
                     'msg'       => 'Login berhasil, mengalihkan halaman...',
-                    'cookie'    => $encoded
+                    'cookie'    => $encoded,
                 ];
             }
             else 
@@ -66,6 +66,12 @@ class AuthController extends SSController
         }        
 
         echo json_encode($res);
+    }
+
+    public function getStatus($token)
+    {
+        $decoded = JWT::decode($token, 'user_key');
+        echo ($decoded->username === 'admin') ? 1 : 0;
     }
     
     public function logout() 

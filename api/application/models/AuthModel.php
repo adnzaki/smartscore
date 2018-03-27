@@ -32,6 +32,12 @@ class AuthModel extends CI_Model
         }
     }
 
+    public static function getStatus($username)
+    {
+        return self::$ci->db->select('status_pengguna')->from('pengguna')
+                ->where('username', $username)->get()->result();
+    }
+
     public static function getTahunAjaran()
     {
         $query = self::$ci->db->get('tahun_ajaran');

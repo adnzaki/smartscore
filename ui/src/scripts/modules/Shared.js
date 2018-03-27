@@ -25,10 +25,10 @@ export const shared = {
         getCookie(state, name) {
             var allToken = document.cookie
             allToken = allToken.split(';')
-            for(let i = 0; i < allToken.length; i++) {
+            for (let i = 0; i < allToken.length; i++) {
                 let cookieItem = allToken[i].split('='),
                     key = cookieItem[0].replace(/ /g, '')
-                if(key === name) {
+                if (key === name) {
                     state.cookieName = cookieItem[1]
                 }
             }
@@ -38,3 +38,17 @@ export const shared = {
         
     },
 }
+
+var loadCookie = (name) => {
+    var allToken = document.cookie
+    allToken = allToken.split(';')
+    for (let i = 0; i < allToken.length; i++) {
+        let cookieItem = allToken[i].split('='),
+            key = cookieItem[0].replace(/ /g, '')
+        if (key === name) {
+            return cookieItem[1]
+        }
+    }
+}
+
+export var getToken = loadCookie(ssconfig.cookieName)

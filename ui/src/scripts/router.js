@@ -36,6 +36,7 @@ import HasilPerbandinganAlternatif from '../template/pages/perbandingan-alternat
 import PrioritasSolusi from '../template/pages/perbandingan-alternatif/PrioritasSolusi.vue'
 import Pengguna from '../template/pages/pengguna/Pengguna.vue'
 import ssalert from '../template/content/alert.vue'
+import { getToken } from './modules/Shared'
 
 Vue.use(VueRouter)
 
@@ -73,7 +74,21 @@ export const AppRouter = new Vue({
     router,
     data() {
         return {
-            config: ssconfig
+            config: ssconfig,
+            code: '',
+        }
+    },
+    computed: {
+        jkdsas() {            
+            $.ajax({
+                url: `${ssconfig.apiUrl}AuthController/getStatus/${getToken}`,
+                type: 'GET',
+                crossDomain: true,
+                success: msg => {
+                    this.code = msg
+                }
+            })
+            return (this.code === '1') ? true : false
         }
     }
 }).$mount('#app')
