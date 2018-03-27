@@ -37,5 +37,21 @@ class UserModel extends CI_Model
 
         $this->db->insert($this->table, $data);
     }
+
+    public function update($id)
+    {
+        $data = [
+            'nama_pengguna' => $this->input->post('nama_pengguna', true),
+            'email' => $this->input->post('email', true),
+        ];
+        
+        $this->db->update($this->table, $data, ['id_pengguna' => $id]);
+    }
+
+    public function editPengguna($id)
+    {
+        $select = 'id_pengguna, nama_pengguna, email';
+        return $this->db->select($select)->from($this->table)->where('id_pengguna', $id)->get()->result();
+    }
     
 }

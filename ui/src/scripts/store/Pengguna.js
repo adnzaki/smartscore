@@ -126,14 +126,48 @@ export const Pengguna = new Vuex.Store({
                 }
             })
         },
+        updatePengguna({ state, commit, dispatch }, payload) {
+            let form = $("#formEditPengguna"),
+                dataForm = form.serialize()
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/UserController/update/${payload.id}/${state.token}`,
+                type: 'POST',
+                dataType: 'json',
+                data: dataForm,
+                success: msg => {
+                    if (msg !== 'success') {
+                        state.updateAndClose = false
+                        commit('showAlert', 'errorUpdate')
+                        state.error.nama = msg.nama_pengguna
+                        state.error.email = msg.email
+                    } else {
+                        commit('clearMessages')
+                        state.errorUpdate = false
+                        if (payload.closeForm) {
+                            dispatch('closeForm', 'showFormEdit')
+                        }
+                        commit('showAlert', 'updateAlert')
+                    }
+                }
+            })
+        },
         multipleDeletePengguna() {
 
         },
         deletePengguna() {
 
         },
-        editPengguna() {
-
+        editPengguna({ state, commit }, id) {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/UserController/editPengguna/${id}/${state.token}`,
+                type: 'GET',
+                crossDomain: true,
+                dataType: 'json',
+                success: data => {
+                    state.detail.user = data[0]
+                    commit('showForm', 'showFormEdit')            
+                }
+            })
         },
         resetPassword() {
 

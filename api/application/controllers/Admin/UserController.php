@@ -99,8 +99,64 @@ class UserController extends SSController
                 'msg'   => lang('invalidCredential')
             ];
             echo json_encode($res);
-        }  
-        
+        }          
+    }
+
+    public function update($id, $token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            $rules = [
+                [
+                    'field' => 'nama_pengguna',
+                    'label' => 'Nama pengguna',
+                    'rules' => 'required|min_length[3]|max_length[200]'
+                ],
+                [
+                    'field' => 'email',
+                    'label' => 'Alamat email',
+                    'rules' => 'required|valid_email'
+                ],
+            ];     
+            $this->form_validation->set_rules($rules);
+            if($this->form_validation->run() === false)
+            {
+                $error = [
+                    'nama_pengguna'         => form_error('nama_pengguna'),
+                    'email'                 => form_error('email')
+                ];
+                echo json_encode($error);
+            }
+            else 
+            {
+                $this->UserModel->update($id);
+                echo json_encode('success');
+            }
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }          
+    }
+
+    public function editPengguna($id, $token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            echo json_encode($this->UserModel->editPengguna($id));
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
     }
 
 }

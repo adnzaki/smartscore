@@ -9,8 +9,11 @@
 		<!-- Success alert -->
         <ssalert :alertClass="'alert-success'" :target="updateAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil diperbarui'"></ssalert>
 
-		<!-- Success alert -->
+		<!-- Insert Success alert -->
         <ssalert :alertClass="'alert-success'" :target="insertAndClose" :initMsg="'Sukses!'" :msg="'Data pengguna baru berhasil disimpan'"></ssalert>
+
+		<!-- Update Success alert -->
+        <ssalert :alertClass="'alert-success'" :target="updateAlert" :initMsg="'Sukses!'" :msg="'Data pengguna berhasil diubah'"></ssalert>
 
 		<!-- TABEL DAFTAR SISWA -->
 		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -71,7 +74,7 @@
 										<td>{{ list.nama_pengguna }}</td>
 										<td>{{ list.username }}</td>
 										<td>{{ list.email }}</td>
-										<td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">edit</i></td>
+										<td class="text-center ss-cursor-pointer" @click="editPengguna(list.id_pengguna)"><i class="material-icons">edit</i></td>
 										<td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">replay</i></td>
                                         <td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">delete</i></td>
 									</tr>
@@ -132,7 +135,7 @@
 		<!-- #END FORM TAMBAH SISWA -->
 
 		<!-- FORM EDIT NAMA DAN EMAIL -->		
-
+		<EditPengguna />
 		<!-- #END FORM EDIT NAMA DAN EMAIL -->
 
         <!-- FORM RESET PASSWORD -->		
@@ -154,7 +157,7 @@
 	} from 'vuex'
 	import { Pengguna } from '../../../scripts/store/Pengguna'
 	import TambahPengguna from './TambahPengguna.vue'
-	// import EditSiswa from './EditSiswa.vue'
+	import EditPengguna from './EditPengguna.vue'
 
 	Vue.use(Vuex)
 
@@ -163,9 +166,10 @@
 		store: Pengguna,
 		components: {
 			TambahPengguna,
+			EditPengguna,
 		},
 		beforeRouteEnter(to, from, next) {
-			next(vm => vm.getPengguna(10, 0, ''))
+			next(vm => vm.getPengguna())
 		},
 		beforeRouteUpdate(to, from, next) {
 			next()
@@ -192,11 +196,11 @@
 				'editPengguna',
 				'showPerPage',
 			]),
-			getPengguna(limit, offset, search) {
+			getPengguna() {
 				this.$store.dispatch('getPengguna', {
-					limit,
-					offset,
-					search
+					limit: this.localLimit,
+					offset: 0,
+					search: ''
 				})
 			},
 			paging(param) {
@@ -207,7 +211,7 @@
 			...mapState([
 				'deleteAlert', 'unableToDelete', 'showDaftarPengguna',
 				'deleteConfirm', 'jmlBaris', 'cariPengguna', 'daftarPengguna', 'selectedID',
-				'localLimit', 'updateAlert', 'insertAndClose'
+				'localLimit', 'updateAlert', 'insertAndClose', 'updateAlert'
 			]),
 		}
 	}
