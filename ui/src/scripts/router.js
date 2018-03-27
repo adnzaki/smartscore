@@ -76,6 +76,7 @@ export const AppRouter = new Vue({
         return {
             config: ssconfig,
             code: '',
+            token: getToken,
         }
     },
     computed: {
