@@ -4,6 +4,8 @@ class AuthModel extends CI_Model
 {
     static protected $ci;
 
+    static protected $table = 'pengguna';
+
     public function __construct()
     {
         parent:: __construct();
@@ -14,7 +16,7 @@ class AuthModel extends CI_Model
         $user = self::$ci->input->post('username', true);
         $pass = self::$ci->input->post('password', true);
 
-        $query = self::$ci->db->get_where('pengguna', [
+        $query = self::$ci->db->get_where(self::$table, [
             'username' => $user,
         ]);
 
@@ -32,9 +34,18 @@ class AuthModel extends CI_Model
         }
     }
 
+    public static function setStatus($mode, $username)
+    {
+        ($mode === 'login') ? $status = 'online' : $status = 'offline';
+        
+        self::$ci->db->update(self::$table, [
+            'network_status' => $status
+        ], ['username' => $username]);
+    }
+
     public static function getStatus($username)
     {
-        return self::$ci->db->select('status_pengguna')->from('pengguna')
+        return self::$ci->db->select('status_pengguna')->from(self::$table)
                 ->where('username', $username)->get()->result();
     }
 

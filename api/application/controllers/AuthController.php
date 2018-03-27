@@ -50,6 +50,7 @@ class AuthController extends SSController
                     'tahun_ajaran'  => $this->input->post('tahun_ajaran', true)
                 ];
                 $encoded = JWT::encode($token, 'user_key');
+                AuthModel::setStatus('login', $token['username']);
                 $res = [
                     'code'      => 1,
                     'msg'       => 'Login berhasil, mengalihkan halaman...',
@@ -74,9 +75,11 @@ class AuthController extends SSController
         echo ($decoded->username === 'admin') ? 1 : 0;
     }
     
-    public function logout() 
+    public function logout($token) 
     {
         delete_cookie('ss_session');
+        $decoded = JWT::decode($token, 'user_key');
+        AuthModel::setStatus('logout', $decoded->username);
         header('Location: http://'.$this->setting[0]->settingValue.'/');
     }
 
