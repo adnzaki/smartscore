@@ -17,11 +17,12 @@ export const Pengguna = new Vuex.Store({
         selectedID: [], localLimit: 10,
         showDaftarPengguna: false, allSelected: false,
         jmlBaris: 10, cariPengguna: '',
-        showFormAdd: false, showFormEdit: false,
+        showFormAdd: false, showFormEdit: false, showFormReset: false,
         
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false, insertAndClose: false,
         errorInsert: false, errorUpdate: false, unableToDelete: false,
+        resetAlert: false, errorReset: false,
 
         // error messages
         error: {
@@ -136,7 +137,7 @@ export const Pengguna = new Vuex.Store({
                 data: dataForm,
                 success: msg => {
                     if (msg !== 'success') {
-                        state.updateAndClose = false
+                        state.updateAlert = false
                         commit('showAlert', 'errorUpdate')
                         state.error.nama = msg.nama_pengguna
                         state.error.email = msg.email
@@ -151,26 +152,52 @@ export const Pengguna = new Vuex.Store({
                 }
             })
         },
+        resetPassword({ state, commit, dispatch }, payload) {
+            let form = $("#formResetPassword"),
+                dataForm = form.serialize()
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/UserController/resetPassword/${payload.id}/${state.token}`,
+                type: 'POST',
+                dataType: 'json',
+                data: dataForm,
+                success: msg => {
+                    if (msg !== 'success') {
+                        state.resetAlert = false
+                        commit('showAlert', 'errorReset')
+                        state.error.password = msg.password_pengguna
+                        state.error.konfirmasiPassword = msg.konfirmasi_password
+                    } else {
+                        commit('clearMessages')
+                        state.errorReset = false
+                        if (payload.closeForm) {
+                            dispatch('closeForm', 'showFormReset')
+                        }
+                        commit('showAlert', 'resetAlert')
+                    }
+                }
+            })
+        },
         multipleDeletePengguna() {
 
         },
         deletePengguna() {
 
         },
-        editPengguna({ state, commit }, id) {
+        editPengguna({ state, commit }, payload) {
             $.ajax({
-                url: `${state.shared.apiUrl}admin/UserController/editPengguna/${id}/${state.token}`,
+                url: `${state.shared.apiUrl}admin/UserController/editPengguna/${payload.id}/${state.token}`,
                 type: 'GET',
                 crossDomain: true,
                 dataType: 'json',
                 success: data => {
                     state.detail.user = data[0]
-                    commit('showForm', 'showFormEdit')            
+                    if(payload.type === 'edit') {
+                        commit('showForm', 'showFormEdit')            
+                    } else {
+                        commit('showForm', 'showFormReset')
+                    }
                 }
             })
-        },
-        resetPassword() {
-
         },
         closeForm({ state, commit, dispatch }, form) {
             state[form] = false

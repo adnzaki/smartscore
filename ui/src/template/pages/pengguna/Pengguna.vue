@@ -15,6 +15,9 @@
 		<!-- Update Success alert -->
         <ssalert :alertClass="'alert-success'" :target="updateAlert" :initMsg="'Sukses!'" :msg="'Data pengguna berhasil diubah'"></ssalert>
 
+		<!-- Reset alert -->
+        <ssalert :alertClass="'alert-success'" :target="resetAlert" :initMsg="'Sukses!'" :msg="'Password berhasil direset!'"></ssalert>
+
 		<!-- TABEL DAFTAR SISWA -->
 		<transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 			<div class="padding" v-if="showDaftarPengguna">
@@ -74,8 +77,8 @@
 										<td>{{ list.nama_pengguna }}</td>
 										<td>{{ list.username }}</td>
 										<td>{{ list.email }}</td>
-										<td class="text-center ss-cursor-pointer" @click="editPengguna(list.id_pengguna)"><i class="material-icons">edit</i></td>
-										<td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">replay</i></td>
+										<td class="text-center ss-cursor-pointer" @click="editPengguna({id: list.id_pengguna, type: 'edit'})"><i class="material-icons">edit</i></td>
+										<td class="text-center ss-cursor-pointer" @click="editPengguna({id: list.id_pengguna, type: 'reset'})"><i class="material-icons">replay</i></td>
                                         <td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">delete</i></td>
 									</tr>
 								</tbody>
@@ -139,7 +142,7 @@
 		<!-- #END FORM EDIT NAMA DAN EMAIL -->
 
         <!-- FORM RESET PASSWORD -->		
-
+		<ResetPassword />
 		<!-- #END FORM RESET PASSWORD-->
 	</div>
 
@@ -158,6 +161,7 @@
 	import { Pengguna } from '../../../scripts/store/Pengguna'
 	import TambahPengguna from './TambahPengguna.vue'
 	import EditPengguna from './EditPengguna.vue'
+	import ResetPassword from './ResetPassword.vue'
 
 	Vue.use(Vuex)
 
@@ -167,6 +171,7 @@
 		components: {
 			TambahPengguna,
 			EditPengguna,
+			ResetPassword,
 		},
 		beforeRouteEnter(to, from, next) {
 			next(vm => vm.getPengguna(10, 0, ''))
@@ -211,7 +216,7 @@
 			...mapState([
 				'deleteAlert', 'unableToDelete', 'showDaftarPengguna',
 				'deleteConfirm', 'jmlBaris', 'cariPengguna', 'daftarPengguna', 'selectedID',
-				'localLimit', 'updateAlert', 'insertAndClose', 'updateAlert'
+				'localLimit', 'updateAlert', 'insertAndClose', 'updateAlert', 'resetAlert'
 			]),
 		}
 	}

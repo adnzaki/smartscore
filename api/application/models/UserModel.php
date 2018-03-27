@@ -44,7 +44,7 @@ class UserModel extends CI_Model
             'nama_pengguna' => $this->input->post('nama_pengguna', true),
             'email' => $this->input->post('email', true),
         ];
-        
+
         $this->db->update($this->table, $data, ['id_pengguna' => $id]);
     }
 
@@ -52,6 +52,15 @@ class UserModel extends CI_Model
     {
         $select = 'id_pengguna, nama_pengguna, email';
         return $this->db->select($select)->from($this->table)->where('id_pengguna', $id)->get()->result();
+    }
+
+    public function resetPassword($id)
+    {
+        $data = [
+            'password_pengguna' => password_hash($this->input->post('password_pengguna', true), PASSWORD_BCRYPT),
+        ];
+
+        $this->db->update($this->table, $data, ['id_pengguna' => $id]);
     }
     
 }

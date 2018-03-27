@@ -102,6 +102,47 @@ class UserController extends SSController
         }          
     }
 
+    public function resetPassword($id, $token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            $rules = [
+                [
+                    'field' => 'password_pengguna',
+                    'label' => 'Password',
+                    'rules' => 'required|min_length[6]|max_length[50]'
+                ],
+                [
+                    'field' => 'konfirmasi_password',
+                    'label' => 'Password',
+                    'rules' => 'required|min_length[6]|max_length[50]|matches[password_pengguna]'
+                ],
+            ];     
+            $this->form_validation->set_rules($rules);
+            if($this->form_validation->run() === false)
+            {
+                $error = [
+                    'password_pengguna'     => form_error('password_pengguna'),
+                    'konfirmasi_password'   => form_error('konfirmasi_password'),
+                ];
+                echo json_encode($error);
+            }
+            else 
+            {
+                $this->UserModel->resetPassword($id);
+                echo json_encode('success');
+            }
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }          
+    }
+
     public function update($id, $token = '')
     {
         if($this->hasValidToken($token))
