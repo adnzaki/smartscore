@@ -169,7 +169,7 @@
 			EditPengguna,
 		},
 		beforeRouteEnter(to, from, next) {
-			next(vm => vm.getPengguna())
+			next(vm => vm.getPengguna(10, 0, ''))
 		},
 		beforeRouteUpdate(to, from, next) {
 			next()
@@ -196,11 +196,11 @@
 				'editPengguna',
 				'showPerPage',
 			]),
-			getPengguna() {
+			getPengguna(limit, offset, search) {
 				this.$store.dispatch('getPengguna', {
-					limit: this.localLimit,
-					offset: 0,
-					search: ''
+					limit,
+					offset,
+					search
 				})
 			},
 			paging(param) {
