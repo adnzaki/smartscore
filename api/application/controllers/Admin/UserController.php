@@ -184,6 +184,49 @@ class UserController extends SSController
         }          
     }
 
+    public function delete($id, $token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            $arrID = explode("-", $id);
+            for($i = 0; $i < count($arrID); $i++)
+            {
+                $this->UserModel->delete($arrID[$i]);
+            }
+            echo json_encode(0);
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
+    }
+
+    public function getAllUserID($token = '')
+    {      
+        if($this->hasValidToken($token))
+        {
+            $data = $this->UserModel->getAllUserID();
+            $formatted = [];
+            foreach($data as $res)
+            {
+                $formatted[] = $res->id_pengguna;
+            }
+            echo json_encode($formatted);
+        }  
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('invalidCredential')
+            ];
+            echo json_encode($res);
+        }
+    }
+
     public function editPengguna($id, $token = '')
     {
         if($this->hasValidToken($token))

@@ -62,5 +62,15 @@ class UserModel extends CI_Model
 
         $this->db->update($this->table, $data, ['id_pengguna' => $id]);
     }
+
+    public function delete($id)
+    {
+        $this->db->delete($this->table, ['id_pengguna' => $id]);
+    }
+
+    public function getAllUserID()
+    {
+        return $this->db->select('id_pengguna')->from($this->table)->get()->result();
+    }
     
 }

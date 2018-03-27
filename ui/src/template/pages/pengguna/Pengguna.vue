@@ -1,10 +1,10 @@
 <template lang="html">
 	<div id="dataSiswa">
 		<!-- Delete alert -->
-		<ssalert :alertClass="'alert-success'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil dihapus.'" />
+		<ssalert :alertClass="'alert-success'" :target="deleteAlert" :initMsg="'Sukses!'" :msg="'Data pengguna berhasil dihapus.'" />
 
 		<!-- Unable to delete -->
-		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih siswa yang ingin dihapus.'" />
+		<ssalert :alertClass="'alert-danger'" :target="unableToDelete" :initMsg="'Error!'" :msg="'Silakan pilih pengguna yang ingin dihapus.'" />
 
 		<!-- Success alert -->
         <ssalert :alertClass="'alert-success'" :target="updateAlert" :initMsg="'Sukses!'" :msg="'Data siswa berhasil diperbarui'"></ssalert>
@@ -79,7 +79,7 @@
 										<td>{{ list.email }}</td>
 										<td class="text-center ss-cursor-pointer" @click="editPengguna({id: list.id_pengguna, type: 'edit'})"><i class="material-icons">edit</i></td>
 										<td class="text-center ss-cursor-pointer" @click="editPengguna({id: list.id_pengguna, type: 'reset'})"><i class="material-icons">replay</i></td>
-                                        <td class="text-center ss-cursor-pointer" @click=""><i class="material-icons">delete</i></td>
+                                        <td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_pengguna)"><i class="material-icons">delete</i></td>
 									</tr>
 								</tbody>
 								<tfoot>

@@ -16,7 +16,7 @@ export const Pengguna = new Vuex.Store({
         },
         selectedID: [], localLimit: 10,
         showDaftarPengguna: false, allSelected: false,
-        jmlBaris: 10, cariPengguna: '',
+        jmlBaris: 10, cariPengguna: '', deleteConfirm: false,
         showFormAdd: false, showFormEdit: false, showFormReset: false,
         
         // alert
@@ -30,11 +30,15 @@ export const Pengguna = new Vuex.Store({
         },
     },
     mutations: {        
-        showDeleteConfirm() {
-
+        showDeleteConfirm(state, id) {
+            state.selectedID = []
+            state.unableToDelete = false
+            state.selectedID.push(id)
+            state.deleteConfirm = true
         },
-        closeDeleteConfirm() {
-
+        closeDeleteConfirm(state) {
+            state.selectedID = []
+            state.deleteConfirm = false
         },
         showForm(state, form) {
             state.showDaftarPengguna = false
@@ -42,12 +46,19 @@ export const Pengguna = new Vuex.Store({
                 state[form] = true
             }, 400)
         },
-        closeImportDialog() {
-
-        },
-        selectAll() {
-
-        },
+        selectAll(state) {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/UserController/getAllUserID/${state.token}`,
+                type: 'get',
+                dataType: 'json',
+                success: data => {
+                    state.selectedID = []
+                    if (state.allSelected) {
+                        state.selectedID = data
+                    }
+                }
+            })
+        },   
         clearMessages(state) {
             state.error.nama = ''
             state.error.email = ''
@@ -177,11 +188,40 @@ export const Pengguna = new Vuex.Store({
                 }
             })
         },
-        multipleDeletePengguna() {
-
+        multipleDeletePengguna({ state, commit }) {
+            if (state.selectedID.length < 1) {
+                commit('showAlert', 'unableToDelete')
+            } else {
+                state.unableToDelete = false
+                state.deleteConfirm = true
+            }
         },
-        deletePengguna() {
+        deletePengguna({ state, commit, dispatch }) {
+            var idString = state.selectedID.join("-")
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/UserController/delete/${idString}/${state.token}`,
+                type: 'POST',
+                dataType: 'json',
+                success: () => {
+                    state.deleteConfirm = false
+                    state.selectedID = []
 
+                    // lakukan pengecekan total baris dalam satu halaman tabel siswa
+                    // jika data hanya satu baris, maka offset akan diatur ke halaman sebelumnya
+                    // contoh: jika total data pada hal. 3 hanya 1 baris, maka offset akan diatur ke hal. 2
+                    let diff = state.paging.totalRows - state.paging.offset
+                    if (diff === 1 && state.paging.offset > 0) {
+                        state.paging.offset -= state.paging.limit
+                    }
+
+                    dispatch('runGetPengguna')
+                    commit('showAlert', 'deleteAlert')
+
+                    if (state.allSelected) {
+                        state.allSelected = false
+                    }
+                }
+            })
         },
         editPengguna({ state, commit }, payload) {
             $.ajax({
