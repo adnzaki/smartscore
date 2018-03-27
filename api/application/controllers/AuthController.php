@@ -71,7 +71,7 @@ class AuthController extends SSController
     public function logout() 
     {
         delete_cookie('ss_session');
-        header('Location: http://'.$this->setting[0]->appUrl.'/');
+        header('Location: http://'.$this->setting[0]->settingValue.'/');
     }
 
     public function getSettingJSON()
@@ -79,11 +79,11 @@ class AuthController extends SSController
         echo json_encode($this->getSetting());
     }
 
-    public function setAppUrl($url)
+    public function updateSetting($url)
     {
         // update App URL
-        $this->db->set('appUrl', $url);
-        $this->db->where('appUrl', $this->setting[0]->appUrl);
+        $this->db->set('settingValue', $url);
+        $this->db->where('settingName', 'appUrl');
         $this->db->update('settings');
     }
 

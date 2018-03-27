@@ -45,10 +45,10 @@ export const ssconfig = {
 
 // update url aplikasi...
 $.ajax({
-    url: `${ssconfig.apiUrl}AuthController/setAppUrl/${window.location.host}`,
+    url: `${ssconfig.apiUrl}AuthController/updateSetting/${window.location.host}`,
     type: 'POST',
     data: window.location.host,
     success: () => {
-        console.info('Smartscore App URL updated.')
+        console.info('Smartscore App settings updated.')
     }
 })
