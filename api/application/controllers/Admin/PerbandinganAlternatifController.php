@@ -181,6 +181,33 @@ class PerbandinganAlternatifController extends SSController
         $this->pdfgenerator->create($html, $filename, true, 'A4', 'portrait');
     }
 
+    public function getTigaBesar($token = '')
+    {
+        if($this->hasValidToken($token))
+        {
+            $prioritas = $this->prioritasSolusi();
+            $data['prioritas'] = $prioritas['nilaiAlternatif'];
+            function sortByScore($a, $b)
+            {
+                $a = $a['jumlah'];
+                $b = $b['jumlah'];
+
+                if ($a === $b) return 0;
+                return ($a > $b) ? -1 : 1;
+            }
+            usort($data['prioritas'], 'sortByScore');
+            echo json_encode($data['prioritas']);
+        }
+        else 
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('unableToGetData')
+            ];
+            echo json_encode($res);
+        }
+    }
+
     public function getPrioritasSolusi($token = '')
     {
         if($this->hasValidToken($token))

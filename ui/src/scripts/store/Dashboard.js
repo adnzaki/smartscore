@@ -20,16 +20,41 @@ export const Dashboard = new Vuex.Store({
         shared
     },
     state: {
-        pesan: 'testtt',
+        ringkasan: '', token: '', tigaBesar: [],
     },
     actions: {
-        hello({state, commit}) {
+        getData({ state, commit, dispatch }) {
             commit('getCookie', 'ss_session')
             let token = state.shared.cookieName
+            state.token = token
             if (token === '') {
                 window.location.href = `${state.shared.apiUrl}AuthController/logout/`
             } else {
-                state.pesan = 'Selamat Datang'
+                $.ajax({
+                    url: `${state.shared.apiUrl}admin/DashboardController/getData/${token}`,
+                    type: 'GET',
+                    crossDomain: true,
+                    dataType: 'json',
+                    success: data => {
+                        state.ringkasan = data
+                        dispatch('getTigaBesar')
+                    }
+                })
+            }
+        },
+        getTigaBesar({ state, commit }) {
+            if (state.token === '') {
+                window.location.href = `${state.shared.apiUrl}AuthController/logout/`
+            } else {
+                $.ajax({
+                    url: `${state.shared.apiUrl}admin/PerbandinganAlternatifController/getTigaBesar/${state.token}`,
+                    type: 'GET',
+                    crossDomain: true,
+                    dataType: 'json',
+                    success: data => {
+                        state.tigaBesar = data
+                    }
+                })
             }
         }
     }

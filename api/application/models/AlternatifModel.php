@@ -50,6 +50,11 @@ class AlternatifModel extends CI_Model
             ->where($this->table['daftar'].'.id_siswa !=' ,$idSiswa)->order_by('id_daftar_alternatif', 'ASC')->get()->result();
     }
 
+    public function getAlternatifRows()
+    {
+        return $this->db->get($this->table['daftar'])->num_rows();
+    }
+
     public function getAlternatifName($id)
     {
         return $this->db->select('nama_siswa')->from($this->table['siswa'])

@@ -72,5 +72,10 @@ class UserModel extends CI_Model
     {
         return $this->db->select('id_pengguna')->from($this->table)->get()->result();
     }
+
+    public function getOnlineUser()
+    {
+        return $this->db->get_where($this->table, ['network_status' => 'online'])->num_rows();
+    }
     
 }
