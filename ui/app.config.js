@@ -41,6 +41,12 @@ export const ssconfig = {
     // digunakan oleh modul autentikasi ketika login berhasil
     // nilai ini diambil dari bagian URL setelah ... smartscore.html#/
     mainPage: 'dashboard',
+
+    // theme switcher adalah tombol untuk menampilkan
+    // pilihan tema bagi pengguna 
+    // set nilai ke true apabila ingin menampilkan
+    // atau false jika ingin menyembunyikan
+    themeSwitcher: false,
 }
 
 // update url aplikasi...
