@@ -31,8 +31,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 application/controllers/Test.php
 application/views/tests/vue1.php
 application/third_party/vendor/
-application/libraries/PHPExcel/
-application/libraries/PHPExcel.php
 public/css/test.css
 public/script/app.js
 public/script/vue.js
