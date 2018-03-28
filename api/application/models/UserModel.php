@@ -11,7 +11,7 @@ class UserModel extends CI_Model
             $this->db->like('nama_pengguna', $search);
         }
         $select = 'id_pengguna, nama_pengguna, email, username';
-        return $this->db->select($select)->from($this->table)->limit($limit, $start)->get()->result();
+        return $this->db->select($select)->from($this->table)->where('status_pengguna !=', 'admin')->limit($limit, $start)->get()->result();
     }
 
     public function getTotalRows($search)
