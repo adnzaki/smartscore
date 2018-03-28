@@ -1,12 +1,11 @@
 {
-  "name": "Smartscore",
-  "description": "Aplikasi Pengolahan Nilai Siswa berbasis Kurikulum 2013 untuk tingkat Sekolah Dasar",
+  "name": "smartscore",
+  "description": "Sistem Pendukung Keputusan Pemilihan Siswa Terbaik untuk Sekolah Dasar",
   "version": "1.0.0",
   "author": "Adnan Zaki",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "ss-start": "cross-env NODE_ENV=production webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
