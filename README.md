@@ -12,6 +12,15 @@ Smartscore adalah aplikasi yang menggunakan teknologi web terbaru sehingga membu
 ## API Framework
 Smartscore menggunakan CodeIgniter sebagai framework untuk membangun *Application Programming Interface* (API) yang menghubungkan User Interface dengan database MySQL. CodeIgniter digunakan karena memiliki dukungan yang baik untuk database MySQL serta sudah dilengkapi fitur-fitur yang lengkap untuk kebutuhan aplikasi berbasis database MySQL.
 
+## CodeIgniter Dependency
+API Smartscore menggunakan beberapa library sebagai berikut:
+### [PHPExcel](https://github.com/PHPOffice/PHPExcel/archive/1.8.1.zip)
+### DOMPDF<br>
+- Buka folder `api/application/third_party/`
+- Pada command prompt, ketik perintah `composer install`
+- Tunggu sampai DOMPDF terinstall.
+- Selesai
+
 ## User Interface Framework
 Smartscore menggunakan Vue.js sebagai framework untuk membangun antarmuka penggunanya. UI Smartscore dijalankan melalui server Node.js untuk proses kompilasi kode Javascript yang di-bundle dengan Webpack. Seluruh template Smartscore menggunakan Vue Component untuk mendukung plugin vue-router sebagai engine Single-Page Application.
 
