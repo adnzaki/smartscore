@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27 Mar 2018 pada 07.33
+-- Generation Time: 28 Mar 2018 pada 18.40
 -- Versi Server: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -161,14 +161,10 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_pengguna`, `email`, `username`, `password_pengguna`, `status_pengguna`, `network_status`) VALUES
-(1, 'Administrator', 'administrator@smartscore.com', 'admin', '$2y$10$.FfVZyRXsoHHWLPcW51RBeWKT9JpyMw7695/Dxuq/9XslRHozlYWu', 'admin', 'offline'),
-(2, 'Adnan Zaki', 'adnanzaki@wolestech.com', 'adnzaki', '$2y$10$2Cget7xT7pO3wqMBxkmofO/iqAL9MRaa6N/ZnMzFajpND3CganJ.W', 'user', 'offline'),
+(1, 'Administrator', 'administrator@smartscore.com', 'admin', '$2y$10$.FfVZyRXsoHHWLPcW51RBeWKT9JpyMw7695/Dxuq/9XslRHozlYWu', 'admin', 'online'),
+(2, 'Adnan Zaki', 'adnanzaki@wolestech.com', 'adnzaki', '$2y$10$RKXf4AI/dxdUppzxoESbvONb6X9LJmLeoSX2tpIpuvP0L2N3YAdsi', 'user', 'offline'),
 (3, 'Dani Rusmawana', 'danirusmawan@wolestech.com', 'danirus', '$2y$10$160kvkaHjo6l0NrbMgCZpuEfdY.Eysz65SAps5ku9pMhswjdjIHlC', 'user', 'offline'),
-(4, 'Mukhlisin', 'mukhlis@gmail.com', 'mukhlis', '$2y$10$qWWAYseQ/CLhlVZqcncb9.pcXIzS8gBjOl2FL0Dvubf1GPI7aOevS', 'user', 'offline'),
-(5, 'Rino Swastika', 'rinouhuy@gmail.com', 'rinohs', '$2y$10$/jRwJ466oPciipkE1vp.qeWAl/qEwGJ.b/KQCdFckCmWrIUtW1yGy', 'user', 'offline'),
-(6, 'kampret', 'kampret@sda.com', 'uhuy12', '$2y$10$LMxRYKeuEyHSIcYm4Zqhruh6SFH338S9RrpmRCTRrmUze9HxA7Bhi', 'user', 'offline'),
-(7, 'Uswatun Hasanah', 'uswatun@gmail.com', 'dasnd', '$2y$10$y6yyD8cY0TuFlcK4Ut9zZeSI/KT0ywB8ecat/2Av3h1myX5kaODK2', 'user', 'offline'),
-(8, 'abdulid', 'aaaaaaas@sdkjfbs.co', 'dsajdsa', '$2y$10$E/Hqxk5hrQrBGfja25feoOGwXFmWVBcoflCsuX2SVcoxOP4nc/Dwq', 'user', 'offline');
+(4, 'Mukhlisin', 'mukhlis@gmail.com', 'mukhlis', '$2y$10$qWWAYseQ/CLhlVZqcncb9.pcXIzS8gBjOl2FL0Dvubf1GPI7aOevS', 'user', 'offline');
 
 -- --------------------------------------------------------
 
@@ -815,7 +811,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id_siswa`, `nis`, `nisn`, `nama_siswa`, `j_kelamin_siswa`, `tempat_lahir_siswa`, `tgl_lahir_siswa`, `alamat_siswa`, `nama_ayah`, `nama_ibu`, `id_rombel`, `status`) VALUES
-(318, '098209238', '0928301481', 'Al Azza Herfa Akbarrr', 'L', 'Jakarta', '2006-05-06', 'Jl. jalan', 'heheh', 'hehehe', 6, 'aktif'),
+(318, '098209238', '0928301481', 'Al Azza Herfa Akbar', 'L', 'Jakarta', '2006-05-06', 'Jl. jalan', 'heheh', 'hehehe', 6, 'aktif'),
 (320, '518131351', '3581381463', 'Desi Asca Safitri', 'P', 'Ciamis', '1906-01-12', 'Jl.Pariwisata 2 No.12A', 'Asep Adang Rustiawan', 'Elis Faridah', 8, 'aktif'),
 (321, '248218413', '3513814381', 'Dimaz Aryo Wicaksono', 'L', 'Bekasi', '2004-02-15', 'Jl.Borobudur Blok 6 No.11', 'Tony Hamidi', 'Sri Mulyati', 6, 'aktif'),
 (322, '248218414', '3446247299', 'Tsalisa Laila Hazna ', 'L', 'Bekasi', '2004-08-04', 'Jl. Bambu Kuning No. 162', 'parano', 'Asiah', 8, 'aktif'),
@@ -994,7 +990,7 @@ ALTER TABLE `kriteria`
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `perbandingan_alternatif`
