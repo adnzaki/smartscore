@@ -156,16 +156,16 @@
 
 							<!-- Pengaturan -->
 							<li class="nav-header hidden-folded">
-								<small class="text-muted">Pengaturan</small>
+								<small class="text-muted">Utility</small>
 							</li>
-							<li>
-								<a href="javascript:void(0)">
+							<router-link to="/skala-ahp" tag="li">
+								<a>
 									<span class="nav-icon">
-										<i class="material-icons">settings_applications</i>
+										<i class="material-icons">info</i>
 									</span>
-									<span class="nav-text">Aplikasi</span>
+									<span class="nav-text">Skala Dasar AHP</span>
 								</a>
-							</li>
+							</router-link>
 							<router-link to="/pengguna" tag="li" v-if="jkdsas">
 								<a>
 									<span class="nav-icon">

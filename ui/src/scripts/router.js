@@ -35,6 +35,7 @@ import InputPerbandinganAlternatif from '../template/pages/perbandingan-alternat
 import HasilPerbandinganAlternatif from '../template/pages/perbandingan-alternatif/HasilPerbandinganAlternatif.vue'
 import PrioritasSolusi from '../template/pages/perbandingan-alternatif/PrioritasSolusi.vue'
 import Pengguna from '../template/pages/pengguna/Pengguna.vue'
+import SkalaDasarAHP from '../template/pages/skala-ahp/SkalaDasarAHP.vue'
 import ssalert from '../template/content/alert.vue'
 import { getToken } from './modules/Shared'
 
@@ -63,6 +64,7 @@ const routes = [
     { path: '/alternatif/perbandingan/hasil/:kriteriaID', component: HasilPerbandinganAlternatif },
     { path: '/alternatif/prioritas-solusi', component: PrioritasSolusi },
     { path: '/pengguna', component: Pengguna },
+    { path: '/skala-ahp', component: SkalaDasarAHP },
 ]
 
 const router = new VueRouter({
