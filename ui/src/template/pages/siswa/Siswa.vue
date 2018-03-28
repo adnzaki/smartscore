@@ -26,7 +26,7 @@
 									<div class="col-sm-6 col-xs-12">
 										<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 										<button class="btn btn-fw white" @click="multipleDeleteSiswa"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
-										<div class="dropdown inline">
+										<!--<div class="dropdown inline">
 											<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
 											<div class="dropdown-menu">
 												<a class="dropdown-item" v-bind:href="$store.state.shared.apiUrl + 'public/docs/FormatDataSiswa.xlsx'">
@@ -38,7 +38,7 @@
 	    											Upload Data Siswa
 	    										</a>
 											</div>
-										</div>
+										</div>-->
 									</div>
 									<div class="col-sm-3 col-xs-12">
 										<div class="form-group row">
