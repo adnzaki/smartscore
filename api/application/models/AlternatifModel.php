@@ -105,6 +105,11 @@ class AlternatifModel extends CI_Model
         }
     }
 
+    public function perbandinganAlternatifRows()
+    {
+        return $this->db->get($this->table['perbandingan'])->num_rows();
+    }
+
     private function kebalikanExists($kriteria, $siswa)
     {
         $query = $this->db->get_where($this->table['perbandingan'], [

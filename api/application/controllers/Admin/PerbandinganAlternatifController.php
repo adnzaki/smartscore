@@ -329,6 +329,7 @@ class PerbandinganAlternatifController extends SSController
     {
         $column = $this->sumColumn($kriteria);
         $alternatif = $this->AlternatifModel->getDaftarAlternatif();
+        $dataLength = $this->AlternatifModel->perbandinganAlternatifRows();
         $idSiswa = [];
         $eigen = [];
         $normalize = [];
@@ -364,42 +365,56 @@ class PerbandinganAlternatifController extends SSController
 
         $wrapperLength = count($wrapper);
 
-        for($x = 0; $x < $wrapperLength; $x++)
+        if($dataLength === 0)
         {
-            $eigen[] = number_format((array_sum($wrapper[$x]) / $wrapperLength), 2);
-        }
+            $response = [
+                'normalize' => $normalize,
+                'sumColumn' => $column,
+                'alternatif' => $alternatif,
+                'dataLength' => $dataLength,
+            ];
 
-        $eigenXcolumn = [];
-        for($y = 0; $y < count($idSiswa); $y++)
+        }
+        else 
         {
-            $eigenXcolumn[] = number_format(($column[$idSiswa[$y]] * $eigen[$y]), 3);
-        }
+            for($x = 0; $x < $wrapperLength; $x++)
+            {
+                $eigen[] = number_format((array_sum($wrapper[$x]) / $wrapperLength), 2);
+            }
 
-        $maxEigen = array_sum($eigenXcolumn);
+            $eigenXcolumn = [];
+            for($y = 0; $y < count($idSiswa); $y++)
+            {
+                $eigenXcolumn[] = number_format(($column[$idSiswa[$y]] * $eigen[$y]), 3);
+            }
 
-        $consistencyIndex = ($maxEigen - count($alternatif)) / (count($alternatif) - 1);
+            $maxEigen = array_sum($eigenXcolumn);
 
-        $consistencyRatio = $consistencyIndex / $this->randomIndex[count($alternatif)];
+            $consistencyIndex = ($maxEigen - count($alternatif)) / (count($alternatif) - 1);
 
-        $consistencyLimit = count($alternatif) / 100;
+            $consistencyRatio = $consistencyIndex / $this->randomIndex[count($alternatif)];
 
-        $isConsistent = '';
-        ($consistencyRatio < $consistencyLimit) ? $isConsistent = 'Konsistensi dapat diterima' 
-                                                : $isConsistent = 'Perbandingan tidak konsisten.';
+            $consistencyLimit = count($alternatif) / 100;
 
-        $response = [
-            'normalize' => $normalize,
-            'sumResult' => $wrapper,
-            'sumColumn' => $column,
-            'eigen' => $eigen,
-            'maxEigen' => $maxEigen,
-            'eigenXcolumn' => $eigenXcolumn,
-            'CI' => number_format($consistencyIndex, 3),
-            'CR' => number_format($consistencyRatio, 3),
-            'konsistensi' => $isConsistent,
-            'alternatif'=> $alternatif,
-        ];
-        
+            $isConsistent = '';
+            ($consistencyRatio < $consistencyLimit) ? $isConsistent = 'Konsistensi dapat diterima' 
+                                                    : $isConsistent = 'Perbandingan tidak konsisten.';
+
+            $response = [
+                'normalize' => $normalize,
+                'sumResult' => $wrapper,
+                'sumColumn' => $column,
+                'eigen' => $eigen,
+                'maxEigen' => $maxEigen,
+                'eigenXcolumn' => $eigenXcolumn,
+                'CI' => number_format($consistencyIndex, 3),
+                'CR' => number_format($consistencyRatio, 3),
+                'konsistensi' => $isConsistent,
+                'alternatif'=> $alternatif,
+                'dataLength' => $wrapperLength,
+            ];
+        }        
+
         return $response;
     }   
 
