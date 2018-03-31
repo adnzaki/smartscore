@@ -39,7 +39,7 @@
                             <div class="box-body">
 								<div class="row">
 									<div class="col-xs-12">
-                                        <p>Siswa yang direkomendasikan menjadi siswa terbaik: <b class="text-yellow">{{ siswaTertinggi }}</b> dengan nilai <b class="text-yellow">{{ nilaiTertinggi }}</b></p>
+                                        <p v-if="prioritasSolusi['jumlahNilaiAkhir'] !== '0.000'">Siswa yang direkomendasikan menjadi siswa terbaik: <b class="text-yellow">{{ siswaTertinggi }}</b> dengan nilai <b class="text-yellow">{{ nilaiTertinggi }}</b></p>
 										<p :class="noteClass">Keterangan:<br>{{ prioritasSolusi['keterangan'] }}</p>
 									</div>
 								</div>
@@ -102,7 +102,7 @@ export default {
 			}
 		},
 		noteClass() {
-			if(this.prioritasSolusi['inconsistentCR'] > 0) {
+			if(this.prioritasSolusi['inconsistentCR'] > 0 || this.prioritasSolusi['jumlahNilaiAkhir'] === '0.000') {
 				return 'text-red'
 			} else {
 				return 'text-green'

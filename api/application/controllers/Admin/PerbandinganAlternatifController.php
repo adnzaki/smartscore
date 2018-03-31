@@ -306,9 +306,19 @@ class PerbandinganAlternatifController extends SSController
             return $item > $consistencyLimit;
         });
         
-        (count($inconsistentCR) === 0) 
-            ? $keterangan = 'Semua perbandingan alternatif terhadap kriteria konsisten dan dapat diterima.' 
-            : $keterangan = 'Terdapat '.count($inconsistentCR).' perbandingan alternatif terhadap kriteria yang tidak konsisten dan tidak dapat dijadikan acuan pengambilan keputusan';
+        if(count($inconsistentCR) === 0 && $jumlahNilaiAkhir > 0)
+        {
+            $keterangan = 'Semua perbandingan alternatif terhadap kriteria konsisten dan dapat diterima.';
+        }
+        elseif(count($inconsistentCR) === 0 && (string)$jumlahNilaiAkhir === "0.000")
+        {
+            $keterangan = 'Jumlah nilai perbandingan belum dihitung, silakan lengkapi perbandingan terlebih dahulu';
+        }
+        elseif(count($inconsistentCR) > 0)
+        {
+            $keterangan = 'Terdapat '.count($inconsistentCR).' perbandingan alternatif terhadap kriteria 
+            yang tidak konsisten dan tidak dapat dijadikan acuan pengambilan keputusan';
+        }
 
         $response = [
             'eigenAlternatif' => $eigenAlternatif,
