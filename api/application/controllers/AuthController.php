@@ -75,11 +75,15 @@ class AuthController extends SSController
         echo ($decoded->username === 'admin') ? 1 : 0;
     }
     
-    public function logout($token) 
+    public function logout() 
     {
-        delete_cookie('ss_session');
-        $decoded = JWT::decode($token, 'user_key');
-        AuthModel::setStatus('logout', $decoded->username);
+        $token = get_cookie('ss_session');
+        if(! empty($token))
+        {
+            $decoded = JWT::decode($token, 'user_key');
+            AuthModel::setStatus('logout', $decoded->username);
+            delete_cookie('ss_session');
+        }
         header('Location: http://'.$this->setting[0]->settingValue.'/');
     }
 
