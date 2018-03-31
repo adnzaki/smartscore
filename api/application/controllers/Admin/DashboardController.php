@@ -14,9 +14,10 @@ class DashboardController extends SSController
     {
         if($this->hasValidToken($token))
         {
+            $decoded = JWT::decode($token, 'user_key');
             $response = [
                 'alternatif' => $this->AlternatifModel->getAlternatifRows(),
-                'onlineUser' => $this->UserModel->getOnlineUser(),
+                'onlineUser' => $this->UserModel->getOnlineUser($decoded->username),
             ];
             echo json_encode($response);
         }

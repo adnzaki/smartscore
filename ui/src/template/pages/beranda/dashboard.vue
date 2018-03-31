@@ -36,8 +36,8 @@
 						</span>
 					</div>
 					<div class="clear">
-						<h4 class="m-a-0 text-lg _300"><a href>{{ ringkasan.onlineUser }} <span class="text-sm">Pengguna</span></a></h4>
-						<small class="text-muted">Sedang masuk ke dalam sistem aplikasi</small>
+						<h4 class="m-a-0 text-lg _300"><a href>{{ ringkasan.onlineUser }} <span class="text-sm">Online</span></a></h4>
+						<small class="text-muted">Pengguna lain yang sedang masuk aplikasi</small>
 					</div>
 				</div>
 			</div>
