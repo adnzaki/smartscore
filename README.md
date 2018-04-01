@@ -16,6 +16,7 @@ Smartscore menggunakan CodeIgniter sebagai framework untuk membangun *Applicatio
 API Smartscore menggunakan beberapa library sebagai berikut:
 ### [PHPExcel](https://github.com/PHPOffice/PHPExcel/archive/1.8.1.zip)
 ### DOMPDF<br>
+- Pastikan anda telah menginstall Composer di komputer anda
 - Buka folder `api/application/third_party/`
 - Pada command prompt, ketik perintah `composer install`
 - Tunggu sampai DOMPDF terinstall.

@@ -22,10 +22,4 @@ npm install
 > npm run dev
 # untuk melakukan build aplikasi dengan minifikasi kode, ketikkan perintah:
 > npm run build
-# untuk menjalankan aplikasi dalam mode production dengan minifikasi kode:
-> npm run ss-start
 ```
-
-Catatan:<br>
-Saat ini aplikasi belum mendapatkan berjalan pada mode production via `npm run ss-start` karena perbedaan konfigurasi
-pada versi Node.js dan NPM saat ini, silakan gunakan mode development.
