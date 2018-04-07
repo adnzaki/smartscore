@@ -73,6 +73,11 @@
     min-width: 200px;
 }
 
+.navbar-brand img {
+    max-height: 50px;
+    vertical-align: -15px;
+}
+
 .decrease-td-padding {
     padding-top: .4rem !important;
     padding-bottom: .2rem !important;

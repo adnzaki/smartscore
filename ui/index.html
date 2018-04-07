@@ -33,11 +33,16 @@
 
 <!-- ############ LAYOUT START-->
   <div class="center-block w-xxl w-auto-xs p-y-md">
-    <!-- <div class="navbar">
+    <div class="navbar">
       <div class="pull-center">
-        <div ui-include="'../views/blocks/navbar.brand.html'"></div>
+        <!-- brand -->
+        <a class="navbar-brand">
+          <!--<img src="./src/assets/images/smartscore-small.png">-->
+          <span class="hidden-folded inline">Smartscore</span>
+        </a>
+        <!-- / brand -->
       </div>
-    </div> -->
+    </div>
     <div class="p-a-md box-color r box-shadow-z1 text-color m-a">
       <div class="m-b text-sm text-center">
         {{ title }}
@@ -63,6 +68,13 @@
         <strong class="ss-error">{{ msg }}</strong>
         <button type="button" class="btn primary btn-block p-x-md" v-on:click="login">Sign in</button>
       </form>
+    </div>
+    <div class="p-v-lg text-center">
+      <div class="m-b">
+        <div>Developed with  <i class="fa fa-heart"></i>  by <a href="https://wolestech.com" target="_blank" class="text-primary _600">Wolestech</a>
+        </div>
+      </div>
+
     </div>
 
   </div>
