@@ -1,11 +1,11 @@
 /**
  * Smartscore
- * Aplikasi Pengolahan Nilai Siswa berbasis Kurikulum 2013 untuk tingkat Sekolah Dasar (SD)
+ * Sistem Pendukung Keputusan Pemilihan Siswa Terbaik
  *
  * @copyright   Copyright (c) 2017, Adnan Zaki
  * @license     Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License | https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
  * @author      Adnan Zaki
- * @link        http://wolestech.com
+ * @link        https://wolestech.com
  * @version     1.0.0
  */
 
@@ -33,8 +33,6 @@ export const ssconfig = {
     cookieName: 'ss_session',
 
     // masa kadaluarsa cookie dalam satuan menit
-    // hanya berlaku jika user tidak melakukan aktifitas apapun
-    // dalam rentang waktu tersebut
     cookieExp: 120,
 
     // halaman utama aplikasi
