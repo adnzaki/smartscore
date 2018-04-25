@@ -20,6 +20,7 @@ class SiswaModel extends CI_Model
      */
     private $table = 'siswa';
     private $table2 = 'daftar_alternatif';
+    private $table3 = 'perbandingan_alternatif';
 
     public function getSiswa($limit, $start, $search)
     {

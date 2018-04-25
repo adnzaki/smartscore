@@ -156,4 +156,18 @@ class AlternatifModel extends CI_Model
             $key => $pembanding, 'id_kriteria' => $kriteria,
         ])->result();
     }
+
+    public function hasComparison($siswa)
+    {
+        $this->db->where('id_siswa', $siswa)->or_where('pembanding', $siswa);
+        $query = $this->db->get($this->table['perbandingan'])->num_rows();
+        if($query > 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
 }

@@ -156,6 +156,11 @@ class KriteriaModel extends CI_Model
         ])->result();
     }
 
+    public function getPerbandinganRows()
+    {
+        return $this->db->get($this->table['perbandingan'])->num_rows();
+    }
+
     public function getSelectedKriteria($id)
     {
         return $this->db->get_where($this->table['kriteria'], [

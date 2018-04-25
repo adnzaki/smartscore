@@ -146,6 +146,9 @@ export default {
 				wrapper.push(str)
 			}
 			this.dataQuery = wrapper.join('-')
+			if(len === 1) {
+				this.dataQuery = this.dataQuery + '-'
+			}
 		},
 		isActive(kriteria, value) {
 			var data = this.dataToSend

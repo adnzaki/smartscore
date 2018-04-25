@@ -115,6 +115,7 @@ export default {
         getKriteria() {
             this.$store.dispatch('getKriteria')	
 			this.$store.dispatch('getDaftarAlternatif')		
+			this.$store.dispatch('getPerbandinganAlternatif')	
         },
 		lihatHasil() {
 			if(this.pilihKriteria === '') {

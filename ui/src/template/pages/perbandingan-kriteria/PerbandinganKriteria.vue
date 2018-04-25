@@ -24,12 +24,19 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr v-for="(value, key, index) in kriteria" v-bind:key="key">										
+										<tr v-for="(value, key, index) in kriteria" v-bind:key="key" v-if="hasData">										
 											<td class="nama-kriteria">
 												<router-link :to="'/kriteria/perbandingan/input/'+ kriteria[key][0].id_kriteria" tag="a">{{ key }} (K{{ index + 1 }})</router-link>
 											</td>
 											<td v-for="value in kriteria[key]">
 												{{ value.nilai_perbandingan }}
+											</td>
+										</tr>
+										<tr v-for="(item, index) in daftarKriteria" v-if="hasData === false">										
+											<td class="nama-kriteria">
+												<router-link :to="'/kriteria/perbandingan/input/'+ item.id_kriteria" tag="a">
+													{{ item.nama_kriteria }}
+												</router-link>
 											</td>
 										</tr>
 										<tr>
@@ -77,6 +84,7 @@ export default {
     methods: {
         getPerbandinganKriteria() {
             this.$store.dispatch('getPerbandinganKriteria')
+			this.$store.dispatch('getDaftarKriteria')
         },
         ...mapActions([
             
@@ -87,7 +95,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'kriteria', 'jumlahKolom',
+            'kriteria', 'jumlahKolom', 'hasData', 'daftarKriteria',
         ])
     }
 }

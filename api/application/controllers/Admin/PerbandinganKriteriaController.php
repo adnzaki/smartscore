@@ -10,23 +10,49 @@ class PerbandinganKriteriaController extends SSController
         $this->load->model('KriteriaModel');
     }
 
+    public function getDaftarKriteria($token)
+    {
+        if($this->hasValidToken($token))
+        {
+            $kriteria = $this->KriteriaModel->getKriteria();
+            echo json_encode($kriteria);
+        }
+        else
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('unableToGetData')
+            ];
+            echo json_encode($res);
+        }
+    }
+
     public function getPerbandingan($token)
     {
         if($this->hasValidToken($token))
         {
             $kriteria = $this->KriteriaModel->getKriteria();
             $data = [];
-            $result = $this->countResult();
+            $result = $this->countKriteriaResult();
             foreach($kriteria as $res)
             {
                 $data[$res->nama_kriteria] = $this->KriteriaModel->getPerbandingan($res->id_kriteria);
             }
 
+            $dataLengthWrapper = [];
+            foreach($kriteria as $res)
+            {
+                $dataLengthWrapper[] = count($data[$res->nama_kriteria]);
+            }
+
+            $filled = array_filter($dataLengthWrapper, function($item) {
+                return $item > 0;
+            });
+
             $res = [
                 'kriteria' => $data,
                 'rows' => $this->KriteriaModel->getKriteriaRows(),
-                'CR' => $result['CR'],
-                'konsistensi' => $result['konsistensi'],
+                'filled' => count($filled),
                 'jumlahKolom' => $result['sumColumn'],
             ];
     
@@ -64,7 +90,7 @@ class PerbandinganKriteriaController extends SSController
         if($this->hasValidToken($token))
         {
             $kriteria = $this->KriteriaModel->getKriteria();
-            $result = $this->countResult();
+            $result = $this->countKriteriaResult();
             $data = [];
             for($i = 0; $i < count($kriteria); $i++)
             {
@@ -113,11 +139,18 @@ class PerbandinganKriteriaController extends SSController
             $arr = explode('-', $data);
             for($i = 0; $i < count($arr); $i++)
             {
-                $value = explode('+', $arr[$i]);
-                $this->KriteriaModel->setNilaiPerbandingan($value[0], $value[1], $value[2]);
+                if(empty($arr[$i]))
+                {
+                    break;
+                }
+                else 
+                {
+                    $value = explode('+', $arr[$i]);
+                    $this->KriteriaModel->setNilaiPerbandingan($value[0], $value[1], $value[2]);
+                }
             }
             
-            $getEigen = $this->countResult();
+            $getEigen = $this->countKriteriaResult();
             foreach($getEigen['kriteria'] as $res)
             {
                 $this->KriteriaModel->setEigenValue($res->eigen_value, $res->id_kriteria);
@@ -134,11 +167,12 @@ class PerbandinganKriteriaController extends SSController
         }
     }
 
-    private function countResult()
+    private function countKriteriaResult()
     {
-        $column = $this->sumColumn();
+        $column = $this->sumKriteriaColumn();
         $kriteria = $this->KriteriaModel->getKriteria();
         $kriteriaLength = count($kriteria);
+        $perbandinganLength = $this->KriteriaModel->getPerbandinganRows();
         $idKriteria = [];
         $eigen = [];
         $normalize = [];
@@ -174,47 +208,67 @@ class PerbandinganKriteriaController extends SSController
 
         $wrapperLength = count($wrapper);
 
-        for($x = 0; $x < $wrapperLength; $x++)
+        if($perbandinganLength === 0)
         {
-            $eigen[] = number_format((array_sum($wrapper[$x]) / $wrapperLength), 3);
-            $kriteria[$x]->eigen_value = $eigen[$x];
-        }
+            $response = [
+                'normalize' => $normalize,
+                'sumColumn' => $column,
+                'kriteria' => $kriteria,
+                'perbandinganLength' => $perbandinganLength,
+            ];
 
-        $eigenXcolumn = [];
-        for($y = 0; $y < count($idKriteria); $y++)
+        }
+        else 
         {
-            $eigenXcolumn[] = number_format(($column[$idKriteria[$y]] * $eigen[$y]), 3);
-        }
+            for($x = 0; $x < $wrapperLength; $x++)
+            {
+                $eigen[] = number_format((array_sum($wrapper[$x]) / $wrapperLength), 3);
+                $kriteria[$x]->eigen_value = $eigen[$x];
+            }
 
-        $maxEigen = array_sum($eigenXcolumn);
+            $eigenXcolumn = [];
+            for($y = 0; $y < count($idKriteria); $y++)
+            {
+                $eigenXcolumn[] = number_format(($column[$idKriteria[$y]] * $eigen[$y]), 3);
+            }
 
-        $consistencyIndex = ($maxEigen - $kriteriaLength) / ($kriteriaLength - 1);
+            $maxEigen = array_sum($eigenXcolumn);
 
-        $consistencyRatio = $consistencyIndex / $this->randomIndex[$kriteriaLength];
+            $consistencyIndex = ($maxEigen - $kriteriaLength) / ($kriteriaLength - 1);
 
-        $consistencyLimit = $kriteriaLength / 100;
+            if($this->randomIndex[$kriteriaLength] === 0)
+            {
+                $consistencyRatio = 0;
+            }
+            else 
+            {
+                $consistencyRatio = $consistencyIndex / $this->randomIndex[$kriteriaLength];
+            }
 
-        $isConsistent = '';
-        ($consistencyRatio < $consistencyLimit) ? $isConsistent = 'Konsistensi dapat diterima' 
-                                                : $isConsistent = 'Perbandingan tidak konsisten.';
+            $consistencyLimit = $kriteriaLength / 100;
 
-        $response = [
-            'normalize' => $normalize,
-            'sumResult' => $wrapper,
-            'sumColumn' => $column,
-            'eigen' => $eigen,
-            'maxEigen' => $maxEigen,
-            'eigenXcolumn' => $eigenXcolumn,
-            'CI' => number_format($consistencyIndex, 3),
-            'CR' => number_format($consistencyRatio, 3),
-            'konsistensi' => $isConsistent,
-            'kriteria' => $kriteria,
-        ];
+            $isConsistent = '';
+            ($consistencyRatio < $consistencyLimit) ? $isConsistent = 'Konsistensi dapat diterima' 
+                                                    : $isConsistent = 'Perbandingan tidak konsisten.';
+
+            $response = [
+                'normalize' => $normalize,
+                'sumResult' => $wrapper,
+                'sumColumn' => $column,
+                'eigen' => $eigen,
+                'maxEigen' => $maxEigen,
+                'eigenXcolumn' => $eigenXcolumn,
+                'CI' => number_format($consistencyIndex, 3),
+                'CR' => number_format($consistencyRatio, 3),
+                'konsistensi' => $isConsistent,
+                'kriteria' => $kriteria,
+            ];
+        }        
 
         return $response;
     }
 
-    private function sumColumn()
+    private function sumKriteriaColumn()
     {
         $kriteria = $this->KriteriaModel->getKriteria();
         $result = [];

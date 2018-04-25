@@ -85,7 +85,7 @@
 									</span>
 									<span class="nav-text">Guru</span>
 								</a>
-							</router-link>
+							</router-link> -->
 							<router-link to="/rombel" tag="li">
 								<a href="javascript:void(0)">
 									<span class="nav-icon">
@@ -93,7 +93,7 @@
 									</span>
 									<span class="nav-text">Rombel</span>
 								</a>
-							</router-link> -->
+							</router-link>
 
 							<li class="nav-header hidden-folded">
 								<small class="text-muted">SPK</small>
@@ -157,7 +157,23 @@
 							<!-- Pengaturan -->
 							<li class="nav-header hidden-folded">
 								<small class="text-muted">Utility</small>
-							</li>
+							</li>							
+							<router-link to="/pengguna" tag="li" v-if="jkdsas">
+								<a>
+									<span class="nav-icon">
+										<i class="material-icons">settings</i>
+									</span>
+									<span class="nav-text">Pengaturan</span>
+								</a>
+							</router-link>
+							<router-link to="/pengguna" tag="li" v-if="jkdsas">
+								<a>
+									<span class="nav-icon">
+										<i class="material-icons">account_circle</i>
+									</span>
+									<span class="nav-text">Pengguna</span>
+								</a>
+							</router-link>	
 							<router-link to="/skala-ahp" tag="li">
 								<a>
 									<span class="nav-icon">
@@ -169,9 +185,9 @@
 							<router-link to="/pengguna" tag="li" v-if="jkdsas">
 								<a>
 									<span class="nav-icon">
-										<i class="material-icons">account_circle</i>
+										<i class="material-icons">archive</i>
 									</span>
-									<span class="nav-text">Pengguna</span>
+									<span class="nav-text">Arsip</span>
 								</a>
 							</router-link>
 							<li class="ss-logout-btn">

@@ -147,8 +147,6 @@ export const Kriteria = new Vuex.Store({
                         }
                         state.error.namaKriteria = msg.nama_kriteria
                     } else {
-                        // jika event nya adalah insert data rombel
-                        // maka bersihkan form, lalu tampilkan alert dan ambil id_siswa
                         if (payload.event === 'insert') {
                             form.trigger("reset")
                             state.alert.errorInsert = false

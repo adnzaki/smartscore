@@ -26,7 +26,7 @@ export const PerbandinganAlternatif = new Vuex.Store({
         CR: '', konsistensi: '', jumlahKolom: {},
         hasilPerbandingan: [], eigen: [],
         pilihKriteria: '', namaAlternatif: '', saveProgress: false,
-        prioritasSolusi: {}, hasData: null, loadProgress: false,
+        prioritasSolusi: {}, hasData: false, loadProgress: false,
         alert: { successSave: false, errorSave: false, unableToGetResult: false, }
     },
     mutations: {

@@ -22,8 +22,9 @@ export const PerbandinganKriteria = new Vuex.Store({
     },
     state: {
         kriteria: [], token: '', kriteriaToCompare: [],
+        daftarKriteria: [],
         CR: '', konsistensi: '', jumlahKolom: {},
-        hasilPerbandingan: [], eigen: [],
+        hasilPerbandingan: [], eigen: [], hasData: false,
         namaKriteria: '', saveProgress: false, 
         alert: { successSave: false, errorSave: false, }
     },
@@ -36,6 +37,23 @@ export const PerbandinganKriteria = new Vuex.Store({
         },
     },
     actions: {
+        getDaftarKriteria({ state, commit, dispatch }) {
+            commit('getCookie', 'ss_session')
+            state.token = state.shared.cookieName
+            if (state.token === '') {
+                window.location.href = `${state.shared.apiUrl}AuthController/logout/`
+            } else {
+                $.ajax({
+                    url: `${state.shared.apiUrl}admin/PerbandinganKriteriaController/getDaftarKriteria/${state.token}`,
+                    type: 'GET',
+                    crossDomain: true,
+                    dataType: 'json',
+                    success: data => {
+                        state.daftarKriteria = data
+                    }
+                })
+            }
+        },
         getPerbandinganKriteria({ state, commit, dispatch }) {
             commit('getCookie', 'ss_session')
             state.token = state.shared.cookieName
@@ -49,9 +67,12 @@ export const PerbandinganKriteria = new Vuex.Store({
                     dataType: 'json',
                     success: data => {
                         state.kriteria = data['kriteria']
-                        state.CR = data['CR']
-                        state.konsistensi = data['konsistensi']
                         state.jumlahKolom = data['jumlahKolom']
+                        if (data['filled'] > 0) {
+                            state.hasData = true
+                        } else if (data['filled'] === 0) {
+                            state.hasData = false
+                        }
                     }
                 })
             }

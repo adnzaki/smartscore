@@ -29,7 +29,13 @@
 											<td class="nama-kriteria">
 												{{ key }} (K{{ index + 1 }})
 											</td>
-											<td v-for="value in hasilPerbandingan[key]['angka']">
+											<td v-if="hasilPerbandingan[key]['angka'].length === panjangHasil"
+											 v-for="value in hasilPerbandingan[key]['angka']">
+												{{ value }}
+											</td> 
+											<td v-else 
+											 v-for="value in hasilPerbandingan[key]['angka']"
+											 :colspan="(panjangHasil - hasilPerbandingan[key]['angka'].length) + hasilPerbandingan[key]['angka'].length">
 												{{ value }}
 											</td> 
                                             <td><strong>{{ value['eigen'] }}</strong></td>
@@ -96,7 +102,11 @@ export default {
     computed: {
         ...mapState([
             'eigen', 'hasilPerbandingan', 'CR', 'konsistensi',
-        ])
+        ]),
+		panjangHasil() {
+			let arr = Object.keys(this.hasilPerbandingan)
+			return arr.length
+		}
     }
 }
 </script>
