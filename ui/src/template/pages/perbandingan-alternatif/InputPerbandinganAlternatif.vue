@@ -15,7 +15,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<button class="btn btn-fw white" @click="save"><i class="fa fa-save"></i>&nbsp; Simpan</button>
-									<router-link :to="'/alternatif/perbandingan/hasil/'+ $route.params.kriteriaID" tag="a" class="btn btn-fw white"><i class="fa fa-search"></i>&nbsp; Lihat Hasil</router-link>
+									<router-link :to="'/alternatif/perbandingan/hasil/'+ $route.params.kriteriaID" tag="a" class="btn btn-fw white" v-if="hasData"><i class="fa fa-search"></i>&nbsp; Lihat Hasil</router-link>
 									<button class="btn btn-fw white" @click="close"><i class="fa fa-close"></i>&nbsp; Tutup</button>
 								</div>
 							</div>
@@ -158,7 +158,7 @@ export default {
 			}
 		},
 		close() {
-			this.$router.push('/alternatif/perbandingan')
+			this.$router.push('/alternatif')
 		},
         ...mapActions([
             
@@ -170,6 +170,7 @@ export default {
     computed: {
         ...mapState([
             'alternatifToCompare', 'saveProgress', 'alert', 'namaAlternatif',
+			'hasData'
         ])
     }
 }

@@ -11,7 +11,7 @@
                             <div class="box-body">
 								<div class="row">
 									<div class="col-xs-12">
-										<router-link to="/alternatif/perbandingan" tag="a" class="btn btn-fw white"><i class="material-icons">compare</i>&nbsp; Perbandingan</router-link>
+										<button class="btn btn-fw white" @click="close"><i class="material-icons">compare</i>&nbsp; Perbandingan</button>
 										<a class="btn btn-fw white" :href="$store.state.shared.apiUrl+'cetak-hasil'" target="_blank"><i class="fa fa-print"></i>&nbsp; Cetak</a>
 									</div>
 								</div>
@@ -85,6 +85,9 @@ export default {
 		getPrioritasSolusi() {
 			this.$store.dispatch('getPrioritasSolusi')
 		},  
+		close() {
+			this.$router.push('/alternatif')
+		},
         ...mapActions([
             
 		]),

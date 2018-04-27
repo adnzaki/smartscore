@@ -90,7 +90,7 @@ export default {
             this.$store.dispatch('getComparisonResult', this.$route.params.kriteriaID)
         },
 		close() {
-			this.$router.push('/alternatif/perbandingan')
+			this.$router.push('/alternatif')
 		},
         ...mapActions([
             

@@ -123,42 +123,20 @@
 									</router-link>
 								</ul>
 							</li>
-							<li>
-								<a>
-									<span class="nav-caret">
-										<i class="fa fa-caret-down"></i>
-									</span>
+							<router-link to="/alternatif" tag="li">
+								<a href="javascript:void(0)">
 									<span class="nav-icon">
-										<i class="material-icons">assessment
-											<span ui-include="'../assets/images/i_2.svg'"></span>
-										</i>
+										<i class="material-icons">assessment</i>
 									</span>
 									<span class="nav-text">Alternatif</span>
 								</a>
-								<ul class="nav-sub">
-									<!-- <router-link to="/alternatif/daftar-siswa" tag="li">
-										<a>
-											<span class="nav-text">Daftar Alternatif</span>
-										</a>
-									</router-link> -->
-									<router-link to="/alternatif/perbandingan" tag="li">
-										<a>
-											<span class="nav-text">Perbandingan Alternatif</span>
-										</a>
-									</router-link>
-									<router-link to="/alternatif/prioritas-solusi" tag="li">
-										<a>
-											<span class="nav-text">Prioritas Solusi</span>
-										</a>
-									</router-link>
-								</ul>
-							</li>				
+							</router-link>											
 
 							<!-- Pengaturan -->
 							<li class="nav-header hidden-folded">
 								<small class="text-muted">Utility</small>
 							</li>							
-							<router-link to="/pengguna" tag="li" v-if="jkdsas">
+							<router-link to="/pengaturan" tag="li" v-if="jkdsas">
 								<a>
 									<span class="nav-icon">
 										<i class="material-icons">settings</i>

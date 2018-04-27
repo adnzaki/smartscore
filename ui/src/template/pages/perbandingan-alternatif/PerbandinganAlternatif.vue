@@ -22,7 +22,7 @@
 											</div>
 										</div>
 									</div>
-                                    <div class="col-sm-8 col-xs-12">
+                                    <div class="col-sm-8 col-xs-12" v-if="hasData">
 										<a class="btn btn-fw white" @click="lihatHasil"><i class="fa fa-search"></i>&nbsp; Lihat Hasil</a>
 										<router-link to="/alternatif/prioritas-solusi" tag="a" class="btn btn-fw white"><i class="fa fa-check"></i>&nbsp; Prioritas Solusi</router-link>
 									</div>
@@ -45,10 +45,13 @@
                                         <td v-for="value in alternatif[key]">{{ value.nilai_perbandingan }}</td>
 									</tr>
 									<tr v-for="(item, index) in daftarAlternatif" v-if="hasData === false">
-										<td class="nama-kriteria">
+										<td class="nama-kriteria" v-if="pilihKriteria !== ''">
 											<router-link :to="'/alternatif/perbandingan/input/'+ pilihKriteria + '/' + item.id_siswa" tag="a">
 												{{ item.nama_siswa }} (A{{ index + 1 }})
 											</router-link>
+										</td>
+										<td class="nama-kriteria" v-else>
+											{{ item.nama_siswa }} (A{{ index + 1 }})
 										</td>
 									</tr>
 									<tr>
