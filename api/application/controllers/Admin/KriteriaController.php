@@ -28,7 +28,7 @@ class KriteriaController extends SSController
                 'persentase' => $persentase,
                 'jumlahEigen' => number_format(array_sum($eigenArray), 3, '.', ','),
                 'jumlahPersen' => number_format(array_sum($persentase), 1),
-                'rows' => $this->KriteriaModel->getKriteriaRows()
+                'rows' => $this->KriteriaModel->getKriteriaRows($search)
             ]);
         }
         else 
