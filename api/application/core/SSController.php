@@ -241,6 +241,7 @@ class SSController extends CI_Controller
         $idSiswa = [];
         $eigen = [];
         $normalize = [];
+        $wrapper = [];
         foreach ($column as $key => $val) 
         {
             $idSiswa[] = $key;
