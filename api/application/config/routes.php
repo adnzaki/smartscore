@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'dashboard';
 $route['logout'] = 'AuthController/logout';
-$route['cetak-hasil'] = 'admin/PerbandinganAlternatifController/cetakPrioritasSolusi';
+$route['cetak-hasil/(:any)'] = 'admin/PerbandinganAlternatifController/cetakPrioritasSolusi/$1';
+$route['cetak-arsip/(:num)/(:any)'] = 'admin/PengaturanController/cetakArsip/$1/$2';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

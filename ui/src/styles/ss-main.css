@@ -31,6 +31,10 @@
     margin-top: 5px;
 }
 
+.ss-up-margin {
+    top: -20px !important;
+}
+
 /* No border radius! */
 .ss-no-b-r {
     border-radius: 0 !important;
