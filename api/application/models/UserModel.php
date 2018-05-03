@@ -20,7 +20,7 @@ class UserModel extends CI_Model
         {
             $this->db->like('nama_pengguna', $search);
         }
-        $query = $this->db->get($this->table);
+        $query = $this->db->get_where($this->table, ['status_pengguna !=' => 'admin']);
         return $query->num_rows();
     }
 
