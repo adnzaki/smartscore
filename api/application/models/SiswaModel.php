@@ -101,7 +101,8 @@ class SiswaModel extends CI_Model
             'alamat_siswa'          => $this->input->post('alamat_siswa', true),
             'nama_ayah'             => $this->input->post('nama_ayah', true),
             'nama_ibu'              => $this->input->post('nama_ibu', true),
-            'id_rombel'             => $this->input->post('id_rombel', true),
+            //'id_rombel'             => $this->input->post('id_rombel', true),
+            'id_rombel'             => 6
         ];
 
         return $data;

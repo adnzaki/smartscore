@@ -104,7 +104,7 @@
                                             <sserror :msg="error.namaIbu"></sserror>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <!--<div class="form-group row">
                                         <label class="col-sm-2 form-control-label">Rombel</label>
                                         <div class="col-sm-10">
                                             <div class="form-group">
@@ -114,7 +114,7 @@
                                                 <sserror :msg="error.rombel"></sserror>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <!-- ################### END OF FORM ######################## -->
                                     <div class="form-group row m-t-md">
                                         <div class="offset-sm-4 col-sm-8 text-right">
