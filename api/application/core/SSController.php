@@ -236,7 +236,8 @@ class SSController extends CI_Controller
     protected function countResult($kriteria)
     {
         $column = $this->sumColumn($kriteria);
-        $alternatif = $this->AlternatifModel->getDaftarAlternatif();
+        $daftarAlternatif = $this->AlternatifModel->getDaftarAlternatif();
+        $alternatif = [];
         $dataLength = $this->AlternatifModel->perbandinganAlternatifRows();
         $idSiswa = [];
         $eigen = [];
@@ -245,6 +246,14 @@ class SSController extends CI_Controller
         foreach ($column as $key => $val) 
         {
             $idSiswa[] = $key;
+        }
+
+        foreach($daftarAlternatif as $da)
+        {
+            if($this->AlternatifModel->hasComparison($da->id_siswa))
+            {
+                $alternatif[] = $da;
+            }
         }
 
         foreach($alternatif as $res)
@@ -259,19 +268,22 @@ class SSController extends CI_Controller
                 {
                     $container[] = $col->nilai_perbandingan;
                 }
-    
-                $normalize[$res->id_siswa] = $container;                
-                for($j = 0; $j < count($normalize); $j++)
+
+                if(count($container) !== 0)
                 {
-                    $temp = [];
-                    for($k = 0; $k < count($normalize[$idSiswa[$j]]); $k++)
+                    $normalize[$res->id_siswa] = $container;                
+                    for($j = 0; $j < count($normalize); $j++)
                     {
-                        $divider = $column[$idSiswa[$k]];
-                        $hasil = $normalize[$idSiswa[$j]][$k] / $divider;
-                        $temp[] = number_format($hasil, 2);
+                        $temp = [];
+                        for($k = 0; $k < count($normalize[$idSiswa[$j]]); $k++)                        
+                        {
+                            $divider = $column[$idSiswa[$k]];
+                            $hasil = $normalize[$idSiswa[$j]][$k] / $divider;
+                            $temp[] = number_format($hasil, 2);
+                        }
+                        $wrapper[] = $temp;
                     }
-                    $wrapper[] = $temp;
-                }
+                }    
             }
         }
 
@@ -367,7 +379,11 @@ class SSController extends CI_Controller
                 {            
                     $container[] = $col->nilai_perbandingan;
                 }
-                $result[$res->id_siswa] = number_format(array_sum($container), 2);
+
+                if(count($container) !== 0)
+                {
+                    $result[$res->id_siswa] = number_format(array_sum($container), 2);
+                }
             }
         }            
         return $result; 

@@ -134,9 +134,19 @@ class PerbandinganAlternatifController extends SSController
     {
         if($this->hasValidToken($token))
         {
-            $alternatif = $this->AlternatifModel->getDaftarAlternatif();
+            $daftarAlternatif = $this->AlternatifModel->getDaftarAlternatif();
+            $alternatif = [];
             $result = $this->countResult($kriteria);
             $data = [];
+
+            foreach($daftarAlternatif as $da)
+            {
+                if($this->AlternatifModel->hasComparison($da->id_siswa))
+                {
+                    $alternatif[] = $da;
+                }
+            }
+
             for($i = 0; $i < count($alternatif); $i++)
             {
                 $data[$alternatif[$i]->nama_siswa]['angka'] = $result['sumResult'][$i];
@@ -159,26 +169,36 @@ class PerbandinganAlternatifController extends SSController
         }        
     }
 
-    public function cetakPrioritasSolusi()
+    public function cetakPrioritasSolusi($token = '')
     {
-        $data = $this->urls();
-        $data['title'] = 'Laporan Hasil Perbandingan';
-        $prioritas = $this->prioritasSolusi();
-        $data['prioritas'] = $prioritas['nilaiAlternatif'];
-        
-        function sortByScore($a, $b)
+        if($this->hasValidToken($token))
         {
-            $a = $a['jumlah'];
-            $b = $b['jumlah'];
-
-            if ($a === $b) return 0;
-            return ($a > $b) ? -1 : 1;
+            $data = $this->urls();
+            $data['title'] = 'Laporan Hasil Perbandingan';
+            $prioritas = $this->prioritasSolusi();
+            $data['prioritas'] = $prioritas['nilaiAlternatif'];
+            
+            function sortByScore($a, $b)
+            {
+                $a = $a['jumlah'];
+                $b = $b['jumlah'];
+    
+                if ($a === $b) return 0;
+                return ($a > $b) ? -1 : 1;
+            }
+            usort($data['prioritas'], 'sortByScore');
+    
+            $html           = $this->load->view('laporan/prioritas-solusi', $data, true);
+            $filename       = 'Laporan Perbandingan_'.time();
+            $this->pdfgenerator->create($html, $filename, true, 'A4', 'portrait');            
         }
-        usort($data['prioritas'], 'sortByScore');
-
-        $html           = $this->load->view('laporan/prioritas-solusi', $data, true);
-        $filename       = 'Laporan Perbandingan_'.time();
-        $this->pdfgenerator->create($html, $filename, true, 'A4', 'portrait');
+        {
+            $res = [
+                'code'  => 0,
+                'msg'   => lang('unableToGetData')
+            ];
+            echo json_encode($res);
+        }   
     }
 
     public function getTigaBesar($token = '')

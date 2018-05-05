@@ -170,4 +170,10 @@ class AlternatifModel extends CI_Model
             return false;
         }
     }
+
+    public function checkComparison($siswa, $kriteria)
+    {
+        return $this->db->where(['id_siswa' => $siswa, 'id_kriteria' => $kriteria])
+            ->get($this->table['perbandingan'])->result();        
+    }
 }

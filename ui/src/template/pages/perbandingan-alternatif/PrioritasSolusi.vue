@@ -12,7 +12,7 @@
 								<div class="row">
 									<div class="col-xs-12">
 										<button class="btn btn-fw white" @click="close"><i class="material-icons">compare</i>&nbsp; Perbandingan</button>
-										<a class="btn btn-fw white" :href="$store.state.shared.apiUrl+'cetak-hasil'" target="_blank"><i class="fa fa-print"></i>&nbsp; Cetak</a>
+										<a class="btn btn-fw white" :href="$store.state.shared.apiUrl+'cetak-hasil/'+token" target="_blank"><i class="fa fa-print"></i>&nbsp; Cetak</a>
 									</div>
 								</div>
                             </div>
@@ -97,7 +97,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'prioritasSolusi',
+            'prioritasSolusi', 'token',
         ]),
 		jumlahColspan() {
 			if(this.prioritasSolusi['eigenKriteria'] !== undefined) {
