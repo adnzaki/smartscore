@@ -7,7 +7,7 @@
         <!-- sukses simpan arsip -->
         <ssalert :alertClass="'alert-success'" :target="alert.archived" :initMsg="'Sukses!'" :msg="'Data arsip berhasil disimpan'"></ssalert>
         <!-- error tambah arsip -->
-	    <ssalert :alertClass="'alert-danger'" :target="alert.errorArchive" :initMsg="'Error!'" :msg="'TIdak dapat menyimpan arsip, silakan isi form dengan benar.'" />
+	    <ssalert :alertClass="'alert-danger'" :target="alert.errorArchive" :initMsg="'Error!'" :msg="error.msg" />
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="padding">                
                 <div class="row">

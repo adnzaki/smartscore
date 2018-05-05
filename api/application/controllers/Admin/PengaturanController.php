@@ -21,7 +21,7 @@ class PengaturanController extends SSController
     public function __construct()
     {
         parent:: __construct();
-        $this->load->model('PengaturanModel');
+        $this->load->model(['PengaturanModel', 'SiswaModel']);
         $this->load->library('PDFGenerator');
     }
 
@@ -128,37 +128,46 @@ class PengaturanController extends SSController
             if($this->form_validation->run() == FALSE)
             {
                 echo json_encode([
+                    'code' => 'formError',
                     'nama_arsip' => form_error('nama_arsip'),
                     'tgl_arsip' => form_error('tgl_arsip'),
                 ]);
             }
             else 
             {
-                if($event === 'insert' && $id === 'null')
+                $check = $this->SiswaModel->checkAlternatif();
+                if(! $check)
                 {
-                    $prioritas = $this->prioritasSolusi();
-                    $data = $prioritas['nilaiAlternatif'];
-                    $arsip = $this->PengaturanModel->daftarArsip();
-                    foreach($data as $key => $val)
-                    {   
-                        $value = [
-                            'nama_siswa' => $key,
-                            'nis_nisn' => $val['nis'].' / '.$val['nisn'],
-                            'nilai_akhir' => $val['jumlah'],
-                            'persentase' => $val['persentase'],
-                            'id_arsip' => $arsip,
-                        ];
-
-                        $this->PengaturanModel->tambahArsip($value);
+                    echo json_encode('error');
+                }
+                else 
+                {
+                    if($event === 'insert' && $id === 'null')
+                    {
+                        $prioritas = $this->prioritasSolusi();
+                        $data = $prioritas['nilaiAlternatif'];
+                        $arsip = $this->PengaturanModel->daftarArsip();
+                        foreach($data as $key => $val)
+                        {   
+                            $value = [
+                                'nama_siswa' => $key,
+                                'nis_nisn' => $val['nis'].' / '.$val['nisn'],
+                                'nilai_akhir' => $val['jumlah'],
+                                'persentase' => $val['persentase'],
+                                'id_arsip' => $arsip,
+                            ];
+    
+                            $this->PengaturanModel->tambahArsip($value);
+                        }
+    
+                        $this->PengaturanModel->hapusData();
                     }
-
-                    $this->PengaturanModel->hapusData();
+                    elseif($event === 'update')
+                    {
+                        $this->PengaturanModel->updateArsip($id);
+                    }
+                    echo json_encode('success');
                 }
-                elseif($event === 'update')
-                {
-                    $this->PengaturanModel->updateArsip($id);
-                }
-                echo json_encode('success');
             }           
         }  
         else 

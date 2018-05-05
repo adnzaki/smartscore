@@ -165,11 +165,16 @@ export const Pengaturan = new Vuex.Store({
                 },
                 success: msg => {
                     state.loadProgress = false
-                    if (msg !== 'success') {
+                    if (msg.code === 'formError') {
                         state.alert.archived = false
-                        commit('showAlert', 'errorArchived') 
+                        state.error.msg = 'Tidak dapat menyimpan arsip, silakan isi form dengan benar.'
+                        commit('showAlert', 'errorArchive') 
                         state.error.namaArsip = msg.nama_arsip
                         state.error.tglArsip = msg.tgl_arsip
+                    } else if(msg === 'error') {
+                        state.alert.archived = false
+                        state.error.msg = 'Data perbandingan alternatif masih kosong, tidak dapat menyimpan arsip'
+                        commit('showAlert', 'errorArchive') 
                     } else {
                         state.alert.errorArchive = false
                         commit('showAlert', 'archived')
