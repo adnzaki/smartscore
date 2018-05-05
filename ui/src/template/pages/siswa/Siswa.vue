@@ -24,8 +24,10 @@
 							<div class="box-body">
 								<div class="row">
 									<div class="col-sm-6 col-xs-12">
-										<button class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
-										<button class="btn btn-fw white" @click="multipleDeleteSiswa"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+										<button v-if="!hadCompared" class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
+										<button v-else disabled class="btn btn-fw white"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
+										<button v-if="!hadCompared" class="btn btn-fw white" @click="multipleDeleteSiswa"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+										<button v-else disabled class="btn btn-fw white"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
 										<!--<div class="dropdown inline">
 											<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
 											<div class="dropdown-menu">
@@ -89,7 +91,7 @@
 										<td>{{ list.tempat_lahir_siswa }}</td>
 										<td>{{ list.tgl_lahir_siswa }}</td>
 										<td class="text-center ss-cursor-pointer" @click="editSiswa(list.id_siswa)"><i class="material-icons">edit</i></td>
-										<td class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_siswa)"><i class="material-icons">delete</i></td>
+										<td v-if="!hadCompared" class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_siswa)"><i class="material-icons">delete</i></td>
 									</tr>
 								</tbody>
 								<tfoot>
@@ -278,6 +280,9 @@
 				'jmlBaris', 'cariSiswa', 'daftarSiswa', 'selectedID',
 				'localLimit', 'loadingText', 'updateAlert', 'insertAndClose'
 			]),
+			...mapGetters([
+				'hadCompared',
+			])
 		}
 	}
 </script>

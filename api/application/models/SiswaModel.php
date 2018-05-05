@@ -88,6 +88,19 @@ class SiswaModel extends CI_Model
         return $this->db->select('id_rombel, nama_rombel')->from('rombel')->order_by('nama_rombel', 'ASC')->get()->result();
     }
 
+    public function checkAlternatif()
+    {
+        $query = $this->db->get($this->table3)->num_rows();
+        if($query > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     protected function tableSiswaValue()
     {
         $tgl_lahir = $this->input->post('tgl_lahir_siswa', true);

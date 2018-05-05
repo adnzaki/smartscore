@@ -21,6 +21,12 @@ class SiswaController extends SSController
         $this->load->model('SiswaModel');
     }
 
+    public function hadCompared()
+    {
+        $check = $this->SiswaModel->checkAlternatif();
+        echo ($check) ? 1 : 0;
+    }
+
     public function fetchSiswa($limit, $start, $token = '', $search = '')
     {
         if($this->hasValidToken($token))
