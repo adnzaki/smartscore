@@ -43,7 +43,7 @@ class KriteriaModel extends CI_Model
         return $this->db->get($this->table['kriteria'])->result();
     }
 
-    public function getKriteriaRows($search)
+    public function getKriteriaRows($search = '')
     {
         if(! empty($search))
         {
