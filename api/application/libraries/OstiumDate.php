@@ -30,21 +30,21 @@ class OstiumDate
     /**
      * Pemanggil fungsi getdate()
      *
-     * @var array()
+     * @var array
      */
     protected $date;
 
     /**
      * Nama-nama hari dalam bahasa Indonesia
      *
-     * @var array()
+     * @var array
      */
     protected $dayName = array('Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu');
 
     /**
      * Nama-nama bulan dalam bahasa Indonesia
      *
-     * @var array()
+     * @var array
      */
     protected $monthName = array(
         1 => 'Januari', 2 => 'Februari',    3 => 'Maret',
@@ -357,7 +357,7 @@ class OstiumDate
      */
     protected function daysOfFebruary($year)
     {
-        return ($year % 4 === 0) ? $days = 29 : $days = 28;
+        return ($year % 4 === 0) ? 29 : 28;
     }
 
 }
