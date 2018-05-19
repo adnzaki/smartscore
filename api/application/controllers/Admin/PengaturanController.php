@@ -136,7 +136,7 @@ class PengaturanController extends SSController
             else 
             {
                 $check = $this->SiswaModel->checkAlternatif();
-                if(! $check)
+                if(! $check && $event === 'insert')
                 {
                     echo json_encode('error');
                 }
