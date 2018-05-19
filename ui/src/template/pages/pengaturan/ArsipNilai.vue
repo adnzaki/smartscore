@@ -8,6 +8,14 @@
                             <div class="box-header">
                                 <h2>{{ detailArsip.nama_arsip }}</h2>								
                             </div>     
+                            <div class="box-body">
+								<div class="row">
+									<div class="col-xs-12">
+										<button class="btn btn-fw white" @click="kembali"><i class="fa fa-arrow-circle-left"></i>&nbsp; Kembali</button>
+                                        <a class="btn btn-fw white" :href="$store.state.shared.apiUrl+'cetak-arsip/'+detailArsip.id_arsip+'/'+token" target="_blank"><i class="fa fa-print"></i>&nbsp; Cetak</a>
+									</div>
+								</div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-striped b-t">
                                     <thead>
@@ -78,10 +86,13 @@ export default {
         getArsipNilai() {
             this.$store.dispatch('getArsipNilai', this.$route.params.idArsip)
         },
+        kembali() {
+            this.$router.push('/pengaturan')
+        }
     },
     computed: {
         ...mapState([
-            'arsipNilai', 'detailArsip',
+            'arsipNilai', 'detailArsip', 'token',
         ])
     }
 }
