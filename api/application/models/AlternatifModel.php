@@ -43,6 +43,25 @@ class AlternatifModel extends CI_Model
         ])->result();
     }
 
+    public function getAllPerbandingan($kriteria)
+    {
+        return $this->db->get_where($this->table['perbandingan'], ['id_kriteria' => $kriteria])->result();
+    }
+
+    public function getNilaiPerbandingan($idSiswa, $pembanding, $kriteria)
+    {
+        $query = $this->db->get_where($this->table['perbandingan'],
+            ['id_siswa' => $idSiswa, 'pembanding' => $pembanding, 'id_kriteria' => $kriteria]
+        )->result();
+
+        return $query[0]->nilai_perbandingan;
+    }
+
+    public function getComparisonLength($kriteria)
+    {
+        return $this->db->get_where($this->table['perbandingan'], ['id_kriteria' => $kriteria])->num_rows();
+    }
+
     public function getSelectedAlternatif($idSiswa)
     {
         return $this->db->select($this->table['daftar'].'.id_siswa, id_daftar_alternatif, nama_siswa')->from($this->table['daftar'])
@@ -149,7 +168,7 @@ class AlternatifModel extends CI_Model
         $this->db->update($this->table['daftar']);
     }
 
-    public function getPembanding($pembanding, $key, $kriteria)
+    public function getNilaiPembanding($pembanding, $key, $kriteria)
     {
         $this->db->order_by('id_alternatif', 'ASC');
         return $this->db->get_where($this->table['perbandingan'], [

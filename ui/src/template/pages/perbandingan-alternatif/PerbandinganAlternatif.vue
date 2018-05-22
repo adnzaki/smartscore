@@ -22,9 +22,13 @@
 											</div>
 										</div>
 									</div>
-                                    <div class="col-sm-8 col-xs-12" v-if="hasData">
+                                    <div class="col-sm-8 col-xs-12" v-if="hasData && showResultButton">
 										<a class="btn btn-fw white" @click="lihatHasil"><i class="fa fa-search"></i>&nbsp; Lihat Hasil</a>
 										<router-link to="/alternatif/prioritas-solusi" tag="a" class="btn btn-fw white"><i class="fa fa-check"></i>&nbsp; Prioritas Solusi</router-link>
+									</div>
+									<div class="col-sm-8 col-xs-12" v-else>
+										<button class="btn btn-fw white" disabled><i class="fa fa-search"></i>&nbsp; Lihat Hasil</button>
+										<button class="btn btn-fw white" disabled><i class="fa fa-check"></i>&nbsp; Prioritas Solusi</button>
 									</div>
 								</div>
                             </div>                         
@@ -42,7 +46,9 @@
 												{{ key }} (A{{ index + 1 }})
 											</router-link>
 										</td>
-                                        <td v-for="value in alternatif[key]">{{ value.nilai_perbandingan }}</td>
+                                        <td v-for="value in daftarAlternatif">
+											{{ getNilaiPerbandingan(daftarAlternatif[index].id_siswa, value.id_siswa, pilihKriteria) }}
+										</td>
 									</tr>
 									<tr v-for="(item, index) in daftarAlternatif" v-if="hasData === false">
 										<td class="nama-kriteria" v-if="pilihKriteria !== ''">
@@ -127,6 +133,12 @@ export default {
 				this.$router.push(`/alternatif/perbandingan/hasil/${this.pilihKriteria}`)
 			}
 		},
+		getNilaiPerbandingan(siswa, pembanding, kriteria) {
+			let key = `${siswa}-${pembanding}-${kriteria}`
+			return this.nilaiPerbandingan.hasOwnProperty(key)
+					? this.nilaiPerbandingan[key]
+					: '-'
+		},
         ...mapActions([
             'getPerbandinganAlternatif'
 		]),
@@ -137,8 +149,9 @@ export default {
     computed: {
         ...mapState([
             'alternatif', 'kriteria', 'pilihKriteria', 'daftarAlternatif',
-			'hasData', 'alert', 'jumlahKolom', 'loadProgress'
-        ])
+			'hasData', 'alert', 'jumlahKolom', 'loadProgress', 'nilaiPerbandingan',
+        ]),
+		...mapGetters(['showResultButton'])		
     }
 }
 </script>

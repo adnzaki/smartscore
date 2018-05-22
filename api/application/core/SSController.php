@@ -261,7 +261,7 @@ class SSController extends CI_Controller
             $wrapper = [];
             if($this->AlternatifModel->hasComparison($res->id_siswa))
             {
-                $pembanding = $this->AlternatifModel->getPembanding($res->id_siswa, 'id_siswa', $kriteria);
+                $pembanding = $this->AlternatifModel->getNilaiPembanding($res->id_siswa, 'id_siswa', $kriteria);
                 $container = [];
                 $i = 0;
                 foreach($pembanding as $col)
@@ -269,16 +269,23 @@ class SSController extends CI_Controller
                     $container[] = $col->nilai_perbandingan;
                 }
 
+                $normalize[$res->id_siswa] = $container;                
                 if(count($container) !== 0)
                 {
-                    $normalize[$res->id_siswa] = $container;                
                     for($j = 0; $j < count($normalize); $j++)
                     {
                         $temp = [];
                         for($k = 0; $k < count($normalize[$idSiswa[$j]]); $k++)                        
                         {
                             $divider = $column[$idSiswa[$k]];
-                            $hasil = $normalize[$idSiswa[$j]][$k] / $divider;
+                            if($divider === 0)
+                            {
+                                $hasil = 0;
+                            }
+                            else 
+                            {
+                                $hasil = $normalize[$idSiswa[$j]][$k] / $divider;                                
+                            }
                             $temp[] = number_format($hasil, 2);
                         }
                         $wrapper[] = $temp;
@@ -309,7 +316,14 @@ class SSController extends CI_Controller
             $eigenXcolumn = [];
             for($y = 0; $y < count($idSiswa); $y++)
             {
-                $eigenXcolumn[] = number_format(($column[$idSiswa[$y]] * $eigen[$y]), 3);
+                if($wrapperLength === 0)
+                {
+                    break;
+                }
+                else 
+                {
+                    $eigenXcolumn[] = number_format(($column[$idSiswa[$y]] * $eigen[$y]), 3);
+                }
             }
 
             $maxEigen = array_sum($eigenXcolumn);
@@ -368,21 +382,24 @@ class SSController extends CI_Controller
     {
         $alternatif = $this->AlternatifModel->getDaftarAlternatif();
         $result = [];
-        $x = 0;
         foreach($alternatif as $res)
         {
             if($this->AlternatifModel->hasComparison($res->id_siswa))
             {
-                $pembanding = $this->AlternatifModel->getPembanding($res->id_siswa, 'pembanding', $kriteria);
+                $pembanding = $this->AlternatifModel->getNilaiPembanding($res->id_siswa, 'pembanding', $kriteria);
                 $container = [];
                 foreach($pembanding as $col)
-                {            
+                {           
                     $container[] = $col->nilai_perbandingan;
                 }
 
                 if(count($container) !== 0)
                 {
                     $result[$res->id_siswa] = number_format(array_sum($container), 2);
+                }
+                else 
+                {
+                    $result[$res->id_siswa] = 0;
                 }
             }
         }            

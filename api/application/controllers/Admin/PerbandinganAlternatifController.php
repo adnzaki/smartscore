@@ -60,6 +60,9 @@ class PerbandinganAlternatifController extends SSController
                 'alternatif' => $data,
                 'filled' => count($filled),
                 'jumlahKolom' => $sumColumn,
+                'nilaiPerbandingan' => $this->getNilaiPerbandingan($kriteria),
+                'panjangPerbandingan' => $this->getComparisonLength($kriteria),
+                'panjangPerbandinganSeharusnya' => pow(count($alternatif), 2),
             ]);
         }
         else
@@ -71,6 +74,30 @@ class PerbandinganAlternatifController extends SSController
             echo json_encode($res);
         }
     }    
+
+    private function getComparisonLength($kriteria)
+    {
+        $data = $this->AlternatifModel->getComparisonLength($kriteria);
+        return $data;
+    }
+
+    private function getExactComparisonLength($kriteria)
+    {
+
+    }
+
+    private function getNilaiPerbandingan($kriteria)
+    {
+        $perbandingan = $this->AlternatifModel->getAllPerbandingan($kriteria);
+        $nilai = [];
+        foreach($perbandingan as $res)
+        {
+            $key = $res->id_siswa.'-'.$res->pembanding.'-'.$res->id_kriteria;
+            $nilai[$key] = $this->AlternatifModel->getNilaiPerbandingan($res->id_siswa, $res->pembanding, $res->id_kriteria);
+        }
+
+        return $nilai;
+    }
 
     public function getAlternatifToCompare($idSiswa, $token = '')
     {

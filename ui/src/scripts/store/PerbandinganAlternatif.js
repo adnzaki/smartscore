@@ -22,7 +22,8 @@ export const PerbandinganAlternatif = new Vuex.Store({
     },
     state: {
         daftarAlternatif: [], alternatifToCompare: [],
-        alternatif: [], token: '', kriteria: [],
+        alternatif: [], token: '', kriteria: [], nilaiPerbandingan: '',
+        panjangPerbandingan: 0, panjangPerbandinganSeharusnya: 0,
         CR: '', konsistensi: '', jumlahKolom: {},
         hasilPerbandingan: [], eigen: [],
         pilihKriteria: '', namaAlternatif: '', saveProgress: false,
@@ -35,6 +36,12 @@ export const PerbandinganAlternatif = new Vuex.Store({
             setTimeout(() => {
                 state.alert[type] = false
             }, 4000)
+        },
+    },
+    getters: {
+        showResultButton: state => {
+            return state.panjangPerbandingan === state.panjangPerbandinganSeharusnya ?
+                true : false
         },
     },
     actions: {
@@ -106,6 +113,9 @@ export const PerbandinganAlternatif = new Vuex.Store({
                         state.loadProgress = false             
                         state.alternatif = data['alternatif']
                         state.jumlahKolom = data['jumlahKolom']
+                        state.nilaiPerbandingan = data['nilaiPerbandingan']
+                        state.panjangPerbandingan = data['panjangPerbandingan']
+                        state.panjangPerbandinganSeharusnya = data['panjangPerbandinganSeharusnya']
                         if(data['filled'] > 0) {
                             state.hasData = true
                         } else if (data['filled'] === 0) {
