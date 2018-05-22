@@ -144,6 +144,14 @@
 									<span class="nav-text">Pengaturan</span>
 								</a>
 							</router-link>
+							<router-link to="/daftar-arsip" tag="li" v-if="jkdsas === false">
+								<a>
+									<span class="nav-icon">
+										<i class="material-icons">archive</i>
+									</span>
+									<span class="nav-text">Arsip</span>
+								</a>
+							</router-link>
 							<router-link to="/pengguna" tag="li" v-if="jkdsas">
 								<a>
 									<span class="nav-icon">

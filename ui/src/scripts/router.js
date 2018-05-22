@@ -36,6 +36,7 @@ import HasilPerbandinganAlternatif from '../template/pages/perbandingan-alternat
 import PrioritasSolusi from '../template/pages/perbandingan-alternatif/PrioritasSolusi.vue'
 import Pengaturan from '../template/pages/Pengaturan/Pengaturan.vue'
 import ArsipNilai from '../template/pages/Pengaturan/ArsipNilai.vue'
+import DaftarArsip from '../template/pages/Pengaturan/DaftarArsip.vue'
 import Pengguna from '../template/pages/pengguna/Pengguna.vue'
 import SkalaDasarAHP from '../template/pages/skala-ahp/SkalaDasarAHP.vue'
 import ssalert from '../template/content/alert.vue'
@@ -67,6 +68,7 @@ const routes = [
     { path: '/alternatif/prioritas-solusi', component: PrioritasSolusi },
     { path: '/pengaturan', component: Pengaturan },
     { path: '/pengaturan/arsip-nilai/:idArsip', component: ArsipNilai },
+    { path: '/daftar-arsip', component: DaftarArsip },
     { path: '/pengguna', component: Pengguna },
     { path: '/skala-ahp', component: SkalaDasarAHP },
 ]
