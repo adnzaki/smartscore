@@ -57,9 +57,14 @@ class AlternatifModel extends CI_Model
         return $query[0]->nilai_perbandingan;
     }
 
-    public function getComparisonLength($kriteria)
+    public function getComparisonLength($kriteria = '')
     {
-        return $this->db->get_where($this->table['perbandingan'], ['id_kriteria' => $kriteria])->num_rows();
+        if(! empty($kriteria))
+        {
+            $this->db->where('id_kriteria', $kriteria);
+        }
+        
+        return $this->db->get($this->table['perbandingan'])->num_rows();
     }
 
     public function getSelectedAlternatif($idSiswa)

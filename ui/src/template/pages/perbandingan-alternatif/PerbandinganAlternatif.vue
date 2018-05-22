@@ -24,7 +24,10 @@
 									</div>
                                     <div class="col-sm-8 col-xs-12" v-if="hasData && showResultButton">
 										<a class="btn btn-fw white" @click="lihatHasil"><i class="fa fa-search"></i>&nbsp; Lihat Hasil</a>
-										<router-link to="/alternatif/prioritas-solusi" tag="a" class="btn btn-fw white"><i class="fa fa-check"></i>&nbsp; Prioritas Solusi</router-link>
+										<router-link to="/alternatif/prioritas-solusi" tag="a" class="btn btn-fw white" v-if="showPrioritasSolusiButton">
+											<i class="fa fa-check"></i>&nbsp; Prioritas Solusi
+										</router-link>
+										<button class="btn btn-fw white" disabled v-else><i class="fa fa-check"></i>&nbsp; Prioritas Solusi</button>
 									</div>
 									<div class="col-sm-8 col-xs-12" v-else>
 										<button class="btn btn-fw white" disabled><i class="fa fa-search"></i>&nbsp; Lihat Hasil</button>
@@ -151,7 +154,7 @@ export default {
             'alternatif', 'kriteria', 'pilihKriteria', 'daftarAlternatif',
 			'hasData', 'alert', 'jumlahKolom', 'loadProgress', 'nilaiPerbandingan',
         ]),
-		...mapGetters(['showResultButton'])		
+		...mapGetters(['showResultButton', 'showPrioritasSolusiButton'])		
     }
 }
 </script>

@@ -61,8 +61,10 @@ class PerbandinganAlternatifController extends SSController
                 'filled' => count($filled),
                 'jumlahKolom' => $sumColumn,
                 'nilaiPerbandingan' => $this->getNilaiPerbandingan($kriteria),
-                'panjangPerbandingan' => $this->getComparisonLength($kriteria),
+                'panjangPerbandingan' => $this->AlternatifModel->getComparisonLength($kriteria),
                 'panjangPerbandinganSeharusnya' => pow(count($alternatif), 2),
+                'panjangSeluruhPerbandingan' => $this->AlternatifModel->getComparisonLength(),
+                'exactAllComparisonLength' => (pow(count($alternatif), 2) * $this->KriteriaModel->getKriteriaRows()),
             ]);
         }
         else
@@ -74,17 +76,6 @@ class PerbandinganAlternatifController extends SSController
             echo json_encode($res);
         }
     }    
-
-    private function getComparisonLength($kriteria)
-    {
-        $data = $this->AlternatifModel->getComparisonLength($kriteria);
-        return $data;
-    }
-
-    private function getExactComparisonLength($kriteria)
-    {
-
-    }
 
     private function getNilaiPerbandingan($kriteria)
     {
