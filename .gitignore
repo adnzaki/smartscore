@@ -16,3 +16,5 @@ ui/src/scripts/plugins/select2.full.min.js
 ui/src/styles/select2.min.css
 ui/src/styles/select2.css
 smartscore_empty.sql
+Smartscore.zip
+smartscore_filled.sql
