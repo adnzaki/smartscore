@@ -37,6 +37,10 @@ export const Dashboard = new Vuex.Store({
                     dataType: 'json',
                     success: data => {
                         state.ringkasan = data
+                        if(data.cekAlternatif === '0')  {
+                            localStorage.setItem('siswaTerbaik', 'Tidak ada data')
+                            localStorage.setItem('nilaiTerbaik', 0)
+                        }
                         dispatch('getTigaBesar')
                     }
                 })

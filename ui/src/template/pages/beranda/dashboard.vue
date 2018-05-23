@@ -47,7 +47,7 @@
 			<div class="col-sm-12 col-md-7">
 				<div class="box">
 					<div class="box-header">
-						<h3><b>IDENTITAS SEKOLAH</b></h3>
+						<h3><b>DATA SEKOLAH</b></h3>
 					</div>
 					<ul class="list no-border p-b">
 						<data-sekolah name="Nama Sekolah" :value="dataSekolah.nama" />
@@ -107,7 +107,7 @@ export default {
 	name: 'Dashboard',
 	store: Dashboard,
 	components: {
-		'data-sekolah': DataSekolah
+		'data-sekolah': DataSekolah,
 	},
 	beforeRouteEnter(to, from, next) {
 		next(vm => vm.getData())
@@ -141,9 +141,6 @@ export default {
 		...mapActions([
 			
 		]),
-		hello() {
-			this.$store.dispatch('hello')
-		},
 		getData() {
 			this.$store.dispatch('getData')
 		}

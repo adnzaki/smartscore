@@ -7,7 +7,7 @@ class DashboardController extends SSController
     public function __construct()
     {
         parent:: __construct();
-        $this->load->model(['AlternatifModel', 'UserModel']);
+        $this->load->model(['AlternatifModel', 'UserModel', 'SiswaModel']);
     }
 
     public function getData($token = '')
@@ -18,6 +18,7 @@ class DashboardController extends SSController
             $response = [
                 'alternatif' => $this->AlternatifModel->getAlternatifRows(),
                 'onlineUser' => $this->UserModel->getOnlineUser($decoded->username),
+                'cekAlternatif' => ($this->SiswaModel->checkAlternatif()) ? 1 : 0,
             ];
             echo json_encode($response);
         }
