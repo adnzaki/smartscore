@@ -24,9 +24,9 @@
 							<div class="box-body">
 								<div class="row">
 									<div class="col-sm-6 col-xs-12">
-										<button v-if="!hadCompared" class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
+										<button v-if="lockStatus !== '1'" class="btn btn-fw white" @click="showForm('showFormAdd')"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
 										<button v-else disabled class="btn btn-fw white"><i class="fa fa-plus"></i>&nbsp; Tambah</button>
-										<button v-if="!hadCompared" class="btn btn-fw white" @click="multipleDeleteSiswa"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
+										<button v-if="lockStatus !== '1'" class="btn btn-fw white" @click="multipleDeleteSiswa"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
 										<button v-else disabled class="btn btn-fw white"><i class="fa fa-trash"></i>&nbsp; Hapus</button>
 										<!--<div class="dropdown inline">
 											<button class="btn white dropdown-toggle" data-toggle="dropdown">Impor </button>
@@ -236,6 +236,7 @@
 			next(vm => vm.getSiswa(10, 0, ''))
 		},
 		beforeRouteUpdate(to, from, next) {
+			this.getSiswa(10, 0, '')
 			next()
 		},
 		beforeRouteLeave(to, from, next) {
@@ -253,7 +254,8 @@
 				'showForm',
 				'closeImportDialog',
 				'getFilename',
-				'selectAll'
+				'selectAll',
+				'hadCompared',
 			]),
 			...mapActions([
 				'multipleDeleteSiswa',
@@ -268,6 +270,7 @@
 					offset,
 					search
 				})
+				this.hadCompared()
 			},
 			paging(param) {
 				return this.$store.state.paging[param]
@@ -278,11 +281,9 @@
 				'deleteAlert', 'unableToDelete', 'showDaftarSiswa',
 				'deleteConfirm', 'importDialog', 'importProgress',
 				'jmlBaris', 'cariSiswa', 'daftarSiswa', 'selectedID',
-				'localLimit', 'loadingText', 'updateAlert', 'insertAndClose'
+				'localLimit', 'loadingText', 'updateAlert', 'insertAndClose',
+				'lockStatus'
 			]),
-			...mapGetters([
-				'hadCompared',
-			])
 		}
 	}
 </script>

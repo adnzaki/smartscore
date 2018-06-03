@@ -30,7 +30,7 @@ export const Siswa = new Vuex.Store({
         importProgress: false, jmlBaris: 10, localLimit: 10,
         allSelected: false, rombel: [],
         token: '', 
-        lockMsg: '', // status pengecekan data perbandingan alternatif
+        lockStatus: '', // status pengecekan data perbandingan alternatif
 
         // alert
         insertAlert: false, updateAlert: false, deleteAlert: false, insertAndClose: false,
@@ -139,6 +139,17 @@ export const Siswa = new Vuex.Store({
             state.error.namaAyah = ''
             state.error.namaIbu = ''
             state.error.rombel = ''
+        },
+        hadCompared: state => {
+            $.ajax({
+                url: `${state.shared.apiUrl}admin/SiswaController/hadCompared`,
+                type: 'GET',
+                crossDomain: true,
+                success: msg => {
+                    state.lockStatus = msg
+                }
+            })
+            return (state.lockStatus === '1') ? true : false
         },
     },
     actions: {
@@ -372,17 +383,4 @@ export const Siswa = new Vuex.Store({
             }
         },
     },
-    getters: {
-        hadCompared: state => {
-            $.ajax({
-                url: `${state.shared.apiUrl}admin/SiswaController/hadCompared`,
-                type: 'GET',
-                crossDomain: true,
-                success: msg => {
-                    state.lockMsg = msg
-                }
-            })
-            return (state.lockMsg === '1') ? true : false
-        },
-    }
 })
