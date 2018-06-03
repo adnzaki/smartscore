@@ -21,7 +21,7 @@ class PengaturanController extends SSController
     public function __construct()
     {
         parent:: __construct();
-        $this->load->model(['PengaturanModel', 'SiswaModel']);
+        $this->load->model('PengaturanModel');
         $this->load->library('PDFGenerator');
     }
 
@@ -135,7 +135,7 @@ class PengaturanController extends SSController
             }
             else 
             {
-                $check = $this->SiswaModel->checkAlternatif();
+                $check = $this->validateArsip();
                 if(! $check && $event === 'insert')
                 {
                     echo json_encode('error');
@@ -178,6 +178,29 @@ class PengaturanController extends SSController
             ];
             echo json_encode($res);
         }   
+    }
+
+    /**
+     * Validate Arsip 
+     * Fungsi untuk mengecek apakah jumlah data perbandingan alternatif 
+     * sudah sesuai dengan jumlah perbandingan alternatif yang seharusnya atau belum
+     * 
+     * @return bool
+     */
+    private function validateArsip()
+    {
+        $this->load->model(['AlternatifModel', 'KriteriaModel']);
+        $comparisonLength = $this->AlternatifModel->getComparisonLength();
+        if($comparisonLength === 0)
+        {
+            return false;
+        }
+        else 
+        {
+            $alternatif = $this->AlternatifModel->getDaftarAlternatif();
+            $exactLength = (pow(count($alternatif), 2) * $this->KriteriaModel->getKriteriaRows());
+            return ($comparisonLength === $exactLength) ? true : false;
+        }
     }
 
     public function getArsipNilai($id, $token = '')

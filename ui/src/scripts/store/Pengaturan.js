@@ -173,7 +173,7 @@ export const Pengaturan = new Vuex.Store({
                         state.error.tglArsip = msg.tgl_arsip
                     } else if(msg === 'error') {
                         state.alert.archived = false
-                        state.error.msg = 'Data perbandingan alternatif masih kosong, tidak dapat menyimpan arsip'
+                        state.error.msg = 'Perbandingan alternatif belum lengkap, tidak dapat menyimpan arsip'
                         commit('showAlert', 'errorArchive') 
                     } else {
                         state.alert.errorArchive = false
