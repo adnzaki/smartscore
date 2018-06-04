@@ -73,9 +73,11 @@ export default {
 		next(vm => vm.getPerbandinganKriteria())
 	},
 	beforeRouteUpdate(to, from, next) {
+		this.getPerbandinganKriteria()
 		next()
 	},
 	beforeRouteLeave(to, from, next) {
+		this.getPerbandinganKriteria()
 		next()
 	},
     data() {

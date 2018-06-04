@@ -176,6 +176,7 @@ class PerbandinganKriteriaController extends SSController
         $idKriteria = [];
         $eigen = [];
         $normalize = [];
+        $wrapper = [];
         foreach ($kriteria as $key) 
         {
             $idKriteria[] = $key->id_kriteria;
