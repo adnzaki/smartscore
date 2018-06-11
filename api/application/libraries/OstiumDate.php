@@ -39,19 +39,19 @@ class OstiumDate
      *
      * @var array
      */
-    protected $dayName = array('Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu');
+    protected $dayName = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
     /**
      * Nama-nama bulan dalam bahasa Indonesia
      *
      * @var array
      */
-    protected $monthName = array(
+    protected $monthName = [
         1 => 'Januari', 2 => 'Februari',    3 => 'Maret',
         4 => 'April',   5 => 'Mei',         6 => 'Juni',
         7 => 'Juli',    8 => 'Agustus',     9 => 'September',
         10 => 'Oktober', 11 => 'November',  12 => 'Desember',
-    );
+    ];
 
     /**
      * Memanggil fungsi getdate()
@@ -188,8 +188,8 @@ class OstiumDate
 
     /**
      * Format tanggal khusus dengan pilihan format d, D, Dd, m, M, Mm, Y
-     * Contoh: 'd' = 26, 'D' = Sen, 26, 'Dd' = Senin, 26
-     *         'm' = 12, 'M' = Des, Mm = Desember, Y = 2016
+     * Contoh: 'd' = 26, 'D' = Sen, 26, 'DD' = Senin, 26
+     *         'm' = 12, 'M' = Des, MM = Desember, y atau Y = 2016
      * Contoh eksekusi: format('D-M-Y', '1-9-2016', '-')
      * akan menampilkan hasil: Kam, 1-Sep-2016
      * => argumen ke-3 akan menghasilkan spasi jika dikosongkan
@@ -218,7 +218,7 @@ class OstiumDate
         else
         {
             $pattern = explode("-", $pattern);
-            if(sizeof($pattern) < 3)
+            if(count($pattern) < 3)
             {
                 $hint = $pattern[0];
             }
@@ -238,7 +238,7 @@ class OstiumDate
                 $dayName = substr($dayName, 0, 3);
                 $output = $dayName . ", " . $day;
             }
-            elseif($pattern[0] === 'Dd')
+            elseif($pattern[0] === 'DD')
             {
                 $dayName = $this->setDay($day, $month, $year);
                 $output = $dayName . ", " . $day;
@@ -259,7 +259,7 @@ class OstiumDate
                 $month = substr($month, 0, 3);
                 $output .= $separator . $month;
             }
-            elseif($pattern[1] === 'Mm')
+            elseif($pattern[1] === 'MM')
             {
                 $month = $this->getMonthName($month);
                 $output .= $separator . $month;
