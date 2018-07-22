@@ -20,14 +20,14 @@
 									<thead>
 										<tr>										
 											<th>Nama Siswa</th>
-											<th v-for="(value, key, index) in hasilPerbandingan">K{{ index + 1}}</th>
+											<th v-for="(value, key, index) in hasilPerbandingan">A{{ index + 1}}</th>
                                             <th>Nilai Eigen</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr v-for="(value, key, index) in hasilPerbandingan">
 											<td class="nama-kriteria">
-												{{ key }} (K{{ index + 1 }})
+												{{ key }} (A{{ index + 1 }})
 											</td>
 											<td v-if="hasilPerbandingan[key]['angka'].length === panjangHasil"
 											 v-for="value in hasilPerbandingan[key]['angka']">
