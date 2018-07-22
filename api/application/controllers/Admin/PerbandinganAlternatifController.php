@@ -223,18 +223,22 @@ class PerbandinganAlternatifController extends SSController
     {
         if($this->hasValidToken($token))
         {
-            $prioritas = $this->prioritasSolusi();
-            $data['prioritas'] = $prioritas['nilaiAlternatif'];
-            function sortByScore($a, $b)
+            $dataLength = $this->AlternatifModel->perbandinganAlternatifRows();
+            if($dataLength > 0)
             {
-                $a = $a['jumlah'];
-                $b = $b['jumlah'];
-
-                if ($a === $b) return 0;
-                return ($a > $b) ? -1 : 1;
+                $prioritas = $this->prioritasSolusi();
+                $data['prioritas'] = $prioritas['nilaiAlternatif'];
+                function sortByScore($a, $b)
+                {
+                    $a = $a['jumlah'];
+                    $b = $b['jumlah'];
+    
+                    if ($a === $b) return 0;
+                    return ($a > $b) ? -1 : 1;
+                }
+                usort($data['prioritas'], 'sortByScore');
+                echo json_encode($data['prioritas']);
             }
-            usort($data['prioritas'], 'sortByScore');
-            echo json_encode($data['prioritas']);
         }
         else 
         {
