@@ -16,7 +16,7 @@
                     <th>NIS / NISN</th>
                     <th class="center-align">Nilai Akhir</th>
                     <th class="center-align">Persentase</th>
-                    <th>Ket.</th>
+                    <!-- <th>Ket.</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                     <td><?= $res->nis_nisn ?></td>
                     <td class="center-align"><?= $res->nilai_akhir ?></td>
                     <td class="center-align"><?= $res->persentase ?>%</td>
-                    <td></td>
+                    <!-- <td></td> -->
                 </tr>
                 <?php $no++; endforeach; ?>
             </tbody>
