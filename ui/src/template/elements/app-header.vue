@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             welcomeMsg: 'Selamat Datang di Smartscore',
-            description: 'Sistem Pendukung Keputusan Pemilihan Siswa Berprestasi SDN Pengasinan VII'
+            description: 'Sistem Pendukung Keputusan Pemilihan Siswa Terbaik SDN Pengasinan VII'
         }
     }
 }
