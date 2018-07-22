@@ -82,7 +82,7 @@
                                         <div class="col-sm-10">
                                             <div class="form-group">
                                                 <div class='input-group date' id='datetimepicker1'>
-                                                    <input type='text' class="form-control" name="tgl_lahir_siswa" minlength="10" maxlength="10" />
+                                                    <input type='text' class="form-control" placeholder="DD/MM/YYYY" name="tgl_lahir_siswa" minlength="10" maxlength="10" />
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </span>
