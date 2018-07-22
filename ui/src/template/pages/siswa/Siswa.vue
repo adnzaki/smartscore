@@ -90,8 +90,8 @@
 										<td>{{ list.j_kelamin_siswa }}</td>
 										<td>{{ list.tempat_lahir_siswa }}</td>
 										<td>{{ list.tgl_lahir_siswa }}</td>
-										<td class="text-center ss-cursor-pointer" @click="editSiswa(list.id_siswa)"><i class="material-icons">edit</i></td>
-										<td v-if="!hadCompared" class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_siswa)"><i class="material-icons">delete</i></td>
+										<td class="text-center ss-cursor-pointer" ui-scroll-to="content" @click="editSiswa(list.id_siswa)"><i class="material-icons">edit</i></td>
+										<td v-if="lockStatus !== '1'" class="text-center ss-cursor-pointer" @click="showDeleteConfirm(list.id_siswa)"><i class="material-icons">delete</i></td>
 									</tr>
 								</tbody>
 								<tfoot>
