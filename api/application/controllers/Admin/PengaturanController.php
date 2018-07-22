@@ -292,7 +292,7 @@ class PengaturanController extends SSController
             $formatted = [];
             foreach($data as $res)
             {
-                $res->tgl_arsip = $this->ostiumdate->format('d-Mm-y', reverse($res->tgl_arsip, '-', '-'));
+                $res->tgl_arsip = $this->ostiumdate->format('d-MM-y', reverse($res->tgl_arsip, '-', '-'));
                 array_push($formatted, $res);
             }
             echo json_encode([

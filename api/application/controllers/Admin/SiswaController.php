@@ -35,7 +35,7 @@ class SiswaController extends SSController
             $formatted = [];
             foreach($data as $data)
             {
-                $data->tgl_lahir_siswa = $this->ostiumdate->format('d-Mm-y', reverse($data->tgl_lahir_siswa, '-', '-'));
+                $data->tgl_lahir_siswa = $this->ostiumdate->format('d-MM-y', reverse($data->tgl_lahir_siswa, '-', '-'));
                 array_push($formatted, $data);
             }
 
@@ -101,7 +101,7 @@ class SiswaController extends SSController
                 [
                     'field' => 'tgl_lahir_siswa',
                     'label' => 'tanggal lahir',
-                    'rules' => 'required|exact_length[10]'
+                    'rules' => 'required|exact_length[10]|callback_valid_date[d/m/Y]'
                 ],
                 [
                     'field' => 'alamat_siswa',
@@ -132,6 +132,7 @@ class SiswaController extends SSController
             $this->form_validation->set_message('exact_length', 'Panjang kolom %s harus %s karakter');
             $this->form_validation->set_message('numeric', 'Kolom {field} hanya boleh diisi angka');
             $this->form_validation->set_message('is_unique', 'Data %s sudah ada');
+            $this->form_validation->set_message('callback_valid_date', 'format tanggal tidak sesuai');
             $this->form_validation->set_error_delimiters('', '');
     
             if($this->form_validation->run() == FALSE)
