@@ -10,7 +10,7 @@
 						</span>
 					</div>
 					<div class="clear">
-						<h4 class="m-a-0 text-lg _300"><a href>{{ nilaiTerbaik }}% <span class="text-sm">{{ siswaTerbaik }}</span></a></h4>
+						<h4 class="m-a-0 text-lg _300"><a href="javascript:void()">{{ nilaiTerbaik }}% <span class="text-sm">{{ siswaTerbaik }}</span></a></h4>
 						<small class="text-muted">Rekomendasi Siswa Terbaik</small>
 					</div>
 				</div>
@@ -23,7 +23,7 @@
 						</span>
 					</div>
 					<div class="clear">
-						<h4 class="m-a-0 text-lg _300"><a href>{{ ringkasan.alternatif }} <span class="text-sm">Alternatif</span></a></h4>
+						<h4 class="m-a-0 text-lg _300"><a href="javascript:void()">{{ ringkasan.alternatif }} <span class="text-sm">Alternatif</span></a></h4>
 						<small class="text-muted">Nominasi Siswa Terbaik</small>
 					</div>
 				</div>
@@ -36,7 +36,7 @@
 						</span>
 					</div>
 					<div class="clear">
-						<h4 class="m-a-0 text-lg _300"><a href>{{ ringkasan.onlineUser }} <span class="text-sm">Online</span></a></h4>
+						<h4 class="m-a-0 text-lg _300"><a href="javascript:void()">{{ ringkasan.onlineUser }} <span class="text-sm">Online</span></a></h4>
 						<small class="text-muted">Pengguna lain yang sedang masuk aplikasi</small>
 					</div>
 				</div>
@@ -153,7 +153,9 @@ export default {
 			return localStorage.getItem('siswaTerbaik')
 		},
 		nilaiTerbaik() {
-			return (localStorage.getItem('nilaiTerbaik') * 100)
+			let nilai = localStorage.getItem('nilaiTerbaik') * 100
+			nilai = nilai.toString()
+			return nilai.substr(0, 4)
 		}
 	}
 }
